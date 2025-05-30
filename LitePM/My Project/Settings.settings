@@ -1,0 +1,339 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="ProcessInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="ServiceInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2500</Value>
+    </Setting>
+    <Setting Name="SystemInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="TrayInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="HistorySize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">102400</Value>
+    </Setting>
+    <Setting Name="WindowsStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="StartHidden" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Lang" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English</Value>
+    </Setting>
+    <Setting Name="TopMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="NewItemColor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-8323328</Value>
+    </Setting>
+    <Setting Name="DeletedItemColor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-49104</Value>
+    </Setting>
+    <Setting Name="CloseLitePMWithCloseButton" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ShowTrayIcon" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="Priority" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="TaskInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="NetworkInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="SearchEngine" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://duckduckgo.com/?q=ITEM</Value>
+    </Setting>
+    <Setting Name="WarnDangerousActions" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HideWhenMinimized" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HideWhenClosed" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ReplaceTaskmgr" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SelectedTab" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Processes</Value>
+    </Setting>
+    <Setting Name="ProcSelectedTab" Type="System.String" Scope="User">
+      <Value Profile="(Default)">General</Value>
+    </Setting>
+    <Setting Name="ServSelectedTab" Type="System.String" Scope="User">
+      <Value Profile="(Default)">General - 1</Value>
+    </Setting>
+    <Setting Name="AutomaticInternetInfos" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShouldUpgrade" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingBeingDebugged" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingElevated" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingJobProcess" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingOwnedProcess" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingServiceProcess" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingSystemProcess" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingCriticalProcess" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingSuspendedThread" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HighlightingColorBeingDebugged" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 192, 255</Value>
+    </Setting>
+    <Setting Name="HighlightingColorJobProcess" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 255, 192</Value>
+    </Setting>
+    <Setting Name="HighlightingColorOwnedProcess" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 255, 192</Value>
+    </Setting>
+    <Setting Name="HighlightingColorServiceProcess" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 255, 255</Value>
+    </Setting>
+    <Setting Name="HighlightingColorSystemProcess" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 192, 255</Value>
+    </Setting>
+    <Setting Name="HighlightingColorCriticalProcess" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 128, 0</Value>
+    </Setting>
+    <Setting Name="HighlightingColorSuspendedThread" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 255, 192</Value>
+    </Setting>
+    <Setting Name="HighlightingColorElevatedProcess" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">255, 192, 128</Value>
+    </Setting>
+    <Setting Name="HighlightingPriorityBeingDebugged" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="HighlightingPriorityJobProcess" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">4</Value>
+    </Setting>
+    <Setting Name="HighlightingPriorityOwnedProcess" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">6</Value>
+    </Setting>
+    <Setting Name="HighlightingPriorityServiceProcess" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="HighlightingPrioritySystemProcess" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="HighlightingPriorityCriticalProcess" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+    <Setting Name="HighlightingPriorityElevatedProcess" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="HighlightingPrioritySuspendedThread" Type="System.Byte" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ShowUserGroupDomain" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RemotePort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8081</Value>
+    </Setting>
+    <Setting Name="COLmain_task" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?540?0?Left$CpuUsage?73?1?Right$Process?233?2?Left$</Value>
+    </Setting>
+    <Setting Name="COLmain_process" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?161?0?Left$PID?50?1?Left$UserName?78?2?Left$CpuUsage?68?3?Right$TotalCpuTime?90?5?Right$WorkingSet?76?6?Right$TotalIoDelta?71?4?Left$CommandLine?438?7?Left$</Value>
+    </Setting>
+    <Setting Name="COLmain_module" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?107?0$Version?113?1$Description?279?2$CompanyName?138?3$Path?330?4$ProcessId?60?5$</Value>
+    </Setting>
+    <Setting Name="COLmain_thread" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Id?60?0$Priority?88?1$State?74?2$WaitReason?98?3$CreateTime?173?4?Right$TotalTime?90?5?Right$StartAddress?83?6?Right$AffinityMask?78?7?Right$ContextSwitchCount?118?8?Right$ContextSwitchDelta?114?9?Right$ProcessId?68?10$</Value>
+    </Setting>
+    <Setting Name="COLmain_handle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Type?113?0$Name?400?1$HandleCount?70??Right2$PointerCount?70?3?Right$ObjectCount?70?4?Right$Handle?60?5?Right$Process?51?6$</Value>
+    </Setting>
+    <Setting Name="COLmain_window" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Id?84?0$Caption?368?1$Process?162?2$IsTask?49?3$Enabled?56?4$Visible?47?5$ThreadId?61?6$</Value>
+    </Setting>
+    <Setting Name="COLmain_service" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?112?0$DisplayName?144?1$State?77?2$StartType?86?3$ImagePath?230?4$ServiceType?113?5$Process?127?6$</Value>
+    </Setting>
+    <Setting Name="COLmain_network" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Local?226?0$Remote?214?1$Protocol?65?2$State?99?3$LocalPortDescription?182?4$Process?100?5</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_privilege" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?177?0$Status?100?1$Description?327?2$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_memory" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?173?0$Protection?66?1$Address?90?2?Right$Size?66?3?Right$File?223?4$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_service" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?121?0$DisplayName?243?1$State?79?2$StartType?70?3$ImagePath?250?4$ServiceType?100?5$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_network" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Local?214?0$Remote?214?1$Protocol?50?2$State?90?3$LocalPortDescription?140?4$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_handle" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Type?95?0$Name?400?1$HandleCount?70?2?Right$PointerCount?69?3?Right$ObjectCount?66?4?Right$Handle?52?5?Right$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_window" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Id?96?0$Caption?325?1$IsTask?44?2$Enabled?64?3$Visible?51?4$ThreadId?63?5$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_thread" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Id?60?0$ContextSwitchDelta?118?1?Right$Priority?100?2$State?70?3$WaitReason?100?4$CreateTime?119?5?Right$TotalTime?200?6?Right$StartAddress?100?7?Right$ContextSwitchCount?200?8?Right$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_module" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Name?90?0$Version?85?1$Description?210?2$CompanyName?150?3$Path?300?4$Address?80?5$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_envvariable" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Variable?176?0$Value?445?1$</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_log" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Date &amp; Time?164?0$State?50?1$Type?102?2$Description?343?3$</Value>
+    </Setting>
+    <Setting Name="ShowStatusBar" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="NotifyNewProcesses" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="NotifyDeletedServices" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="NotifyNewServices" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="NotifyTerminatedProcesses" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="HighlightingColorRelocatedModule" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">192, 255, 192</Value>
+    </Setting>
+    <Setting Name="EnableHighlightingRelocatedModule" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="JobInterval" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2000</Value>
+    </Setting>
+    <Setting Name="JobSelectedTab" Type="System.String" Scope="User">
+      <Value Profile="(Default)">General</Value>
+    </Setting>
+    <Setting Name="AutomaticWintrust" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ShowFindWindowDetailedForm" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="FirstTimeShowFindWindowWasClosed" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClientIP" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ShowFixedTab" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FixedTab" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Tasks</Value>
+    </Setting>
+    <Setting Name="UpdateAlpha" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UpdateBeta" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UpdateAuto" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UpdateServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ShowClassicMessageBoxes" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="RemoteMachineName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RemoteMachineNameW" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RemoteMachineUserW" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="CoefTimeMul" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">250</Value>
+    </Setting>
+    <Setting Name="COLprocdetail_heaps" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Address?101?0$BlockCount?101?1$MemCommitted?117?2$MemAllocated?100?3$Flags?100?4$</Value>
+    </Setting>
+    <Setting Name="SystemInfoTopMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SystemInfoOneGraph" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="NetworkInfoTopMost" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="PSfrmMain" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="PSfrmNetworkInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="PSfrmSystemInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="PSfrmJobInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="PSfrmServiceInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="PSfrmProcessInfo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="RememberPosAndSize" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PSfrmScripting" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0|0|0|0</Value>
+    </Setting>
+    <Setting Name="IconsInList" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SaveErrorLog" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FirstTime" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="FirstTimeSBA" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="UseRibbonStyle" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

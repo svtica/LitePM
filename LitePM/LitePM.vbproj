@@ -1,0 +1,1478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - replace taskmgr|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug - replace taskmgr\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=0</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Sub Main</StartupObject>
+    <RootNamespace>
+    </RootNamespace>
+    <AssemblyName>LitePM</AssemblyName>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <OptionStrict>Off</OptionStrict>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <SignAssembly>false</SignAssembly>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <SignManifests>false</SignManifests>
+    <TargetZone>LocalIntranet</TargetZone>
+    <GenerateManifests>false</GenerateManifests>
+    <TargetFrameworkProfile />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=0</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=1</DefineConstants>
+    <Prefer32Bit>false</Prefer32Bit>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug - server|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug_server\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=0</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release - server|AnyCPU' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Release - server\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug %28replace taskmgr%29|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug %28replace taskmgr%29\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=0</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Make zip release|AnyCPU' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Make zip release\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'BuildZipRelease|AnyCPU' ">
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\BuildZipRelease\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=1</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+    <DefineDebug>false</DefineDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugServer|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\DebugServer\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=0</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug_CreateSnapshot|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug_CreateSnapshot\</OutputPath>
+    <DefineConstants>CONFIG_INTO_APPDATA0, RELEASE_MODE=0</DefineConstants>
+    <RemoveIntegerChecks>true</RemoveIntegerChecks>
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <WarningsAsErrors>
+    </WarningsAsErrors>
+    <NoWarn>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036,42353,42354,42355</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>941EAB14377DDE4FAD6BB4101C2F316EC690A27E</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>LitePM_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Aga.Controls">
+      <HintPath>..\Aga.Controls\bin\Release\Aga.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="SecureChannel">
+      <HintPath>..\SecureChannel\bin\Release\SecureChannel.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms.Ribbon">
+      <HintPath>.\System.Windows.Forms.Ribbon.dll</HintPath>
+    </Reference>
+    <Reference Include="System.XML" />
+    <Reference Include="TaskDialog">
+      <HintPath>..\TaskDialog\bin\Release\TaskDialog.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Common" />
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Runtime.InteropServices" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\MainForms\frmMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmMain.Designer.vb">
+      <DependentUpon>frmMain.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmBasedStateAction.resx">
+      <DependentUpon>frmBasedStateAction.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmDepViewerMain.resx">
+      <DependentUpon>frmDepViewerMain.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmGlobalReport.resx">
+      <DependentUpon>frmGlobalReport.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmHexEditor.resx">
+      <DependentUpon>frmHexEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmScripting.resx">
+      <DependentUpon>frmScripting.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmHandleInfo.resx">
+      <DependentUpon>frmHandleInfo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmJobInfo.resx">
+      <DependentUpon>frmJobInfo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmCheckSignatures.resx">
+      <DependentUpon>frmCheckSignatures.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmSnapshotInfos.resx">
+      <DependentUpon>frmSnapshotInfos.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmSaveSystemSnapshot.resx">
+      <DependentUpon>frmSaveSystemSnapshot.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmNetworkTool.resx">
+      <DependentUpon>frmNetworkTool.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmHeapBlocks.resx">
+      <DependentUpon>frmHeapBlocks.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmNewVersionAvailable.resx">
+      <DependentUpon>frmNewVersionAvailable.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmObjDetails.resx">
+      <DependentUpon>frmObjDetails.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmCreateService.resx">
+      <DependentUpon>frmCreateService.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmChooseClientIp.resx">
+      <DependentUpon>frmChooseClientIp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmSetJobLimits.resx">
+      <DependentUpon>frmSetJobLimits.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmKillProcessByMethod.resx">
+      <DependentUpon>frmKillProcessByMethod.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmAddToJob.resx">
+      <DependentUpon>frmAddToJob.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmChangeMemoryProtection.resx">
+      <DependentUpon>frmChangeMemoryProtection.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmSBASimulationConsole.resx">
+      <DependentUpon>frmSBASimulationConsole.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmServiceInfo.resx">
+      <DependentUpon>frmServiceInfo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmError.resx">
+      <DependentUpon>frmError.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmHiddenProcesses.resx">
+      <DependentUpon>frmHiddenProcesses.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmChooseProcess.resx">
+      <DependentUpon>frmChooseProcess.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmConnection.resx">
+      <DependentUpon>frmConnection.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmInput.resx">
+      <DependentUpon>frmInput.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmNetworkInfo.resx">
+      <DependentUpon>frmNetworkInfo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmThreadAffinity.resx">
+      <DependentUpon>frmThreadAffinity.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmHotkeys.resx">
+      <DependentUpon>frmHotkeys.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmAboutG.resx">
+      <DependentUpon>frmAboutG.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmTracker.resx">
+      <DependentUpon>frmTracker.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmDumpFile.resx">
+      <DependentUpon>frmDumpFile.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Preferences\frmLogOptions.resx">
+      <DependentUpon>frmLogOptions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmServer.resx">
+      <DependentUpon>frmServer.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\networkConnectionsList.resx">
+      <DependentUpon>networkConnectionsList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\serviceList.resx">
+      <DependentUpon>serviceList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\heapList.resx">
+      <DependentUpon>heapList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\jobLimitList.resx">
+      <DependentUpon>jobLimitList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\processesInJobList.resx">
+      <DependentUpon>processesInJobList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\mainJobList.resx">
+      <DependentUpon>mainJobList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HandleProps\HJobProp.resx">
+      <DependentUpon>HJobProp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HandleProps\HThreadProp.resx">
+      <DependentUpon>HThreadProp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HandleProps\HProcessProp.resx">
+      <DependentUpon>HProcessProp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HandleProps\HKeyProp.resx">
+      <DependentUpon>HKeyProp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HandleProps\HFileProp.resx">
+      <DependentUpon>HFileProp.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\MemoryHexEditor.resx">
+      <DependentUpon>MemoryHexEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\DoubleBufferedLV.resx">
+      <DependentUpon>DoubleBufferedLV.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\envVariableList.resx">
+      <DependentUpon>envVariableList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\handleList.resx">
+      <DependentUpon>handleList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\logList.resx">
+      <DependentUpon>logList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\memRegionList.resx">
+      <DependentUpon>memRegionList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\moduleList.resx">
+      <DependentUpon>moduleList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\mainNetworkConnectionsList.resx">
+      <DependentUpon>mainNetworkConnectionsList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\privilegeList.resx">
+      <DependentUpon>privilegeList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\mainProcessList.resx">
+      <DependentUpon>mainProcessList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\searchList.resx">
+      <DependentUpon>searchList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\serviceDependenciesList.resx">
+      <DependentUpon>serviceDependenciesList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\mainServiceList.resx">
+      <DependentUpon>mainServiceList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\mainTaskList.resx">
+      <DependentUpon>mainTaskList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\threadList.resx">
+      <DependentUpon>threadList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\windowList.resx">
+      <DependentUpon>windowList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Providers\CustomListviews\customLV.resx">
+      <DependentUpon>customLV.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Preferences\frmChooseColumns.resx">
+      <DependentUpon>frmChooseColumns.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmPendingTasks.resx">
+      <DependentUpon>frmPendingTasks.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\HorizontalLine.resx">
+      <DependentUpon>HorizontalLine.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmAddProcessMonitor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmAddProcessMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmDownload.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmDownload.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmFileRelease.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmFileRelease.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmFindWindow.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmFindWindow.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmLog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmLog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmMain.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Preferences\frmPreferences.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmPreferences.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmProcessAffinity.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmProcessAffinity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForms\frmProcessInfo.resx">
+      <DependentUpon>frmProcessInfo.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmSaveReport.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSaveReport.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmSearchMonitor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSearchMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmSystemInfo.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmSystemInfo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Misc\frmWindowPosition.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmWindowPosition.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AdditionalMainForms\frmWindowsList.resx">
+      <DependentUpon>frmWindowsList.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\GraphChart.resx">
+      <DependentUpon>GraphChart.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserControls\Graph.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Graph.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="LitePM_TemporaryKey.pfx" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\process.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Async.vb" />
+    <Compile Include="Classes\Download\BugReporter.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Download\cUpdate.vb" />
+    <Compile Include="Classes\Download\cAsyncProcInfoDownload.vb" />
+    <Compile Include="Classes\Download\cDownload.vb" />
+    <Compile Include="Classes\Exceptions\cError.vb" />
+    <Compile Include="Classes\Exceptions\SerializableException.vb" />
+    <Compile Include="Classes\Misc\SerializableFileVersionInfo.vb" />
+    <Compile Include="Classes\Socket\RemotingServerClient.vb" />
+    <Compile Include="Common\Objects\Token.vb" />
+    <Compile Include="Forms\MainForms\frmScripting.Designer.vb">
+      <DependentUpon>frmScripting.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmScripting.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmHandleInfo.Designer.vb">
+      <DependentUpon>frmHandleInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmHandleInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmJobInfo.Designer.vb">
+      <DependentUpon>frmJobInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmJobInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmCheckSignatures.Designer.vb">
+      <DependentUpon>frmCheckSignatures.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmCheckSignatures.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSnapshotInfos.Designer.vb">
+      <DependentUpon>frmSnapshotInfos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSnapshotInfos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSaveSystemSnapshot.Designer.vb">
+      <DependentUpon>frmSaveSystemSnapshot.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSaveSystemSnapshot.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmNetworkTool.Designer.vb">
+      <DependentUpon>frmNetworkTool.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmNetworkTool.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmHeapBlocks.Designer.vb">
+      <DependentUpon>frmHeapBlocks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmHeapBlocks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmNewVersionAvailable.Designer.vb">
+      <DependentUpon>frmNewVersionAvailable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmNewVersionAvailable.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmObjDetails.Designer.vb">
+      <DependentUpon>frmObjDetails.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmObjDetails.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmCreateService.Designer.vb">
+      <DependentUpon>frmCreateService.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmCreateService.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmChooseClientIp.Designer.vb">
+      <DependentUpon>frmChooseClientIp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmChooseClientIp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSetJobLimits.Designer.vb">
+      <DependentUpon>frmSetJobLimits.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSetJobLimits.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmKillProcessByMethod.Designer.vb">
+      <DependentUpon>frmKillProcessByMethod.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmKillProcessByMethod.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmAddToJob.Designer.vb">
+      <DependentUpon>frmAddToJob.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmAddToJob.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmNetworkInfo.Designer.vb">
+      <DependentUpon>frmNetworkInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmNetworkInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\LitePMService.Designer.vb">
+      <DependentUpon>LitePMService.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Main\LitePMService.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Native\Driver\DriverCtrl.vb" />
+    <Compile Include="Native\Objects\DebugBuffer.vb" />
+    <Compile Include="Native\Objects\Heap.vb" />
+    <Compile Include="Native\Objects\HandleEnumeration.vb" />
+    <Compile Include="Classes\Hotkeys\cHotkeys.vb" />
+    <Compile Include="Classes\Hotkeys\cShortcut.vb" />
+    <Compile Include="Classes\HTML\cHTML.vb" />
+    <Compile Include="Classes\HTML\cHTML2.vb" />
+    <Compile Include="Classes\Misc\cConnection.vb" />
+    <Compile Include="Classes\Misc\cEnvironment.vb" />
+    <Compile Include="Classes\Misc\cFile.vb" />
+    <Compile Include="Classes\Misc\cLog.vb" />
+    <Compile Include="Classes\Misc\cMonitor.vb" />
+    <Compile Include="Native\Objects\Job.vb" />
+    <Compile Include="Native\Objects\System.vb" />
+    <Compile Include="Classes\Misc\cSystemInfo.vb" />
+    <Compile Include="Classes\Misc\cTrayIcon.vb" />
+    <Compile Include="Classes\Misc\cWinTrust.vb" />
+    <Compile Include="Classes\Shutdown\asyncMethods\asyncCallbackShutdownAction.vb" />
+    <Compile Include="Classes\Shutdown\cShutdownConnection.vb" />
+    <Compile Include="Classes\Socket\AsynchronousClient.vb" />
+    <Compile Include="Classes\Socket\AsynchronousServer.vb" />
+    <Compile Include="Classes\Socket\cSerialization.vb" />
+    <Compile Include="Classes\Socket\cSocketData.vb" />
+    <Compile Include="Classes\StateBasedActions\cBasedStateActionState.vb" />
+    <Compile Include="Classes\StateBasedActions\cStateBasedActions.vb" />
+    <Compile Include="Common\Misc.vb" />
+    <Compile Include="Forms\AdditionalMainForms\frmDepViewerMain.Designer.vb">
+      <DependentUpon>frmDepViewerMain.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmDepViewerMain.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DependencyViewer\Directories\ExportDirectory.vb" />
+    <Compile Include="DependencyViewer\Directories\ImportDirectory.vb" />
+    <Compile Include="DependencyViewer\Headers\NTHeader.vb" />
+    <Compile Include="DependencyViewer\Headers\OptionalHeader.vb" />
+    <Compile Include="DependencyViewer\Headers\Section.vb" />
+    <Compile Include="DependencyViewer\NativeDependenceTree.vb" />
+    <Compile Include="DependencyViewer\NotSupportedPEFormat.vb" />
+    <Compile Include="DependencyViewer\PEFile.vb" />
+    <Compile Include="Forms\AdditionalMainForms\frmBasedStateAction.Designer.vb">
+      <DependentUpon>frmBasedStateAction.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmBasedStateAction.vb">
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmGlobalReport.Designer.vb">
+      <DependentUpon>frmGlobalReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmGlobalReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmHexEditor.Designer.vb">
+      <DependentUpon>frmHexEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmHexEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmChangeMemoryProtection.Designer.vb">
+      <DependentUpon>frmChangeMemoryProtection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmChangeMemoryProtection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSBASimulationConsole.Designer.vb">
+      <DependentUpon>frmSBASimulationConsole.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSBASimulationConsole.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmServiceInfo.Designer.vb">
+      <DependentUpon>frmServiceInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmServiceInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmError.Designer.vb">
+      <DependentUpon>frmError.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmError.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmHiddenProcesses.Designer.vb">
+      <DependentUpon>frmHiddenProcesses.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmHiddenProcesses.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmChooseProcess.Designer.vb">
+      <DependentUpon>frmChooseProcess.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmChooseProcess.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmConnection.Designer.vb">
+      <DependentUpon>frmConnection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmConnection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmInput.Designer.vb">
+      <DependentUpon>frmInput.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmInput.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmThreadAffinity.Designer.vb">
+      <DependentUpon>frmThreadAffinity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmThreadAffinity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmHotkeys.Designer.vb">
+      <DependentUpon>frmHotkeys.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmHotkeys.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmAboutG.Designer.vb">
+      <DependentUpon>frmAboutG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmAboutG.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmTracker.Designer.vb">
+      <DependentUpon>frmTracker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmTracker.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmDumpFile.Designer.vb">
+      <DependentUpon>frmDumpFile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmDumpFile.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Preferences\frmLogOptions.Designer.vb">
+      <DependentUpon>frmLogOptions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Preferences\frmLogOptions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmServer.Designer.vb">
+      <DependentUpon>frmServer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmServer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main\Program.vb" />
+    <Compile Include="Native\Functions\FMisc.vb" />
+    <Compile Include="Native\Objects\EnvVariable.vb" />
+    <Compile Include="Native\Objects\SystemInfo.vb" />
+    <Compile Include="Native\Security\JobAccess.vb" />
+    <Compile Include="Native\Win32\NativeConstants.vb" />
+    <Compile Include="Native\Win32\NativeEnums.vb" />
+    <Compile Include="Native\Win32\NativeFunctions.vb" />
+    <Compile Include="Native\Win32\NativeStructs.vb" />
+    <Compile Include="Native\Enums.vb" />
+    <Compile Include="Native\Functions\FService.vb" />
+    <Compile Include="Native\Functions\FThread.vb" />
+    <Compile Include="Native\IntPtrExtensions.vb" />
+    <Compile Include="Native\Objects\General.vb" />
+    <Compile Include="Native\Objects\Handle.vb" />
+    <Compile Include="Native\Objects\MemRegion.vb" />
+    <Compile Include="Native\Objects\Service.vb" />
+    <Compile Include="Native\Objects\Task.vb" />
+    <Compile Include="Native\Objects\Window.vb" />
+    <Compile Include="Native\Security\ProcessAccess.vb" />
+    <Compile Include="Native\Security\ServiceAccess.vb" />
+    <Compile Include="Native\Security\ServiceManagerAccess.vb" />
+    <Compile Include="Native\Security\StandardRights.vb" />
+    <Compile Include="Native\Security\ThreadAccess.vb" />
+    <Compile Include="Native\Security\TokenAccess.vb" />
+    <Compile Include="Native\Win32\Win32.vb" />
+    <Compile Include="Native\Objects\File.vb" />
+    <Compile Include="Native\Objects\Module.vb" />
+    <Compile Include="Native\Objects\Network.vb" />
+    <Compile Include="Native\Objects\Thread.vb" />
+    <Compile Include="Native\Objects\Token.vb" />
+    <Compile Include="Native\Structs.vb" />
+    <Compile Include="Native\Objects\Process.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\asyncMethods\asyncCallbackMemRegionDump.vb" />
+    <Compile Include="Providers\Classes\Modules\asyncMethods\asyncCallbackModuleUnload.vb" />
+    <Compile Include="Providers\Classes\Heaps\cHeap.vb" />
+    <Compile Include="Providers\Classes\Heaps\heapInfos.vb" />
+    <Compile Include="Providers\Classes\Jobs\asyncMethods\asyncCallbackJobLimitsSetLimits.vb" />
+    <Compile Include="Providers\Classes\JobLimits\cJobLimit.vb" />
+    <Compile Include="Providers\Classes\JobLimits\jobLimitsInfos.vb" />
+    <Compile Include="Providers\Classes\General\cGeneralConnection.vb" />
+    <Compile Include="Providers\Classes\General\cGeneralObject.vb" />
+    <Compile Include="Providers\Classes\EnvVariables\cEnvVariable.vb" />
+    <Compile Include="Providers\Classes\EnvVariables\envVariableInfos.vb" />
+    <Compile Include="Providers\Classes\General\generalInfos.vb" />
+    <Compile Include="Providers\Classes\Handles\asyncMethods\asyncCallbackHandleUnload.vb" />
+    <Compile Include="Providers\Classes\Handles\cHandle.vb" />
+    <Compile Include="Providers\Classes\Handles\handleInfos.vb" />
+    <Compile Include="Providers\Classes\Jobs\asyncMethods\asyncCallbackJobAddProcess.vb" />
+    <Compile Include="Providers\Classes\Jobs\asyncMethods\asyncCallbackJobTerminateJob.vb" />
+    <Compile Include="Providers\Classes\Jobs\cJob.vb" />
+    <Compile Include="Providers\Classes\Jobs\jobInfos.vb" />
+    <Compile Include="Providers\Classes\Log\cLogItem.vb" />
+    <Compile Include="Providers\Classes\Log\logItemInfos.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\asyncMethods\asyncCallbackMemRegionEnumerate.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\asyncMethods\asyncCallbackMemRegionFree.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\asyncMethods\asyncCallbackMemRegionChangeProtection.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\cMemRegion.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\cMemRegionConnection.vb" />
+    <Compile Include="Providers\Classes\MemoryRegions\memRegionInfos.vb" />
+    <Compile Include="Providers\Classes\Modules\cModule.vb" />
+    <Compile Include="Providers\Classes\Modules\moduleInfos.vb" />
+    <Compile Include="Providers\Classes\NetworkConnections\asyncMethods\asyncCallbackNetworkCloseConnection.vb" />
+    <Compile Include="Providers\Classes\NetworkConnections\cNetwork.vb" />
+    <Compile Include="Providers\Classes\NetworkConnections\networkInfos.vb" />
+    <Compile Include="Providers\Classes\Privileges\asyncMethods\asyncCallbackPrivilegeChangeStatus.vb" />
+    <Compile Include="Providers\Classes\Privileges\cPrivilege.vb" />
+    <Compile Include="Providers\Classes\Privileges\privilegeInfos.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcDecreasePriority.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcEmptyWorkingSet.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcGetAllNonFixedInfos.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcGetNonFixedInfos.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcIncreasePriority.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcKill.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcKillTree.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcMinidump.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcNewProcess.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcResume.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcSetAffinity.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcSetPriority.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcSuspend.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcUnloadModule.vb" />
+    <Compile Include="Providers\Classes\Processes\asyncMethods\asyncCallbackProcKillByMethod.vb" />
+    <Compile Include="Providers\Classes\Processes\cProcess.vb" />
+    <Compile Include="Native\Memory\ProcessMemReader.vb" />
+    <Compile Include="Native\Objects\ProcessRW.vb" />
+    <Compile Include="Native\Memory\MemoryAlloc.vb" />
+    <Compile Include="Providers\Classes\Processes\processInfos.vb" />
+    <Compile Include="Providers\Classes\Search\asyncMethods\asyncCallbackSearchEnumerate.vb" />
+    <Compile Include="Providers\Classes\Search\cSearchItem.vb" />
+    <Compile Include="Providers\Classes\Search\cSearchConnection.vb" />
+    <Compile Include="Providers\Classes\Search\searchInfos.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServDepEnumerate.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServicePause.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServiceResume.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServiceSetStartType.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServiceStart.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServiceStop.vb" />
+    <Compile Include="Providers\Classes\Services\asyncMethods\asyncCallbackServiceDelete.vb" />
+    <Compile Include="Providers\Classes\Services\cServDepConnection.vb" />
+    <Compile Include="Providers\Classes\Services\cService.vb" />
+    <Compile Include="Providers\Classes\Services\serviceInfos.vb" />
+    <Compile Include="Providers\Classes\Tasks\cTask.vb" />
+    <Compile Include="Providers\Classes\Tasks\taskInfos.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadDecreasePriority.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadGetOtherInfos.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadIncreasePriority.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadKill.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadResume.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadSetAffinity.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadSetPriority.vb" />
+    <Compile Include="Providers\Classes\Threads\asyncMethods\asyncCallbackThreadSuspend.vb" />
+    <Compile Include="Providers\Classes\Threads\cThread.vb" />
+    <Compile Include="Providers\Classes\Threads\threadInfos.vb" />
+    <Compile Include="Providers\Classes\Windows\asyncMethods\asyncCallbackWindowAction.vb" />
+    <Compile Include="Providers\Classes\Windows\cWindow.vb" />
+    <Compile Include="Providers\Classes\Windows\windowInfos.vb" />
+    <Compile Include="Providers\CustomListviews\networkConnectionsList.Designer.vb">
+      <DependentUpon>networkConnectionsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\networkConnectionsList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\serviceList.Designer.vb">
+      <DependentUpon>serviceList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\serviceList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\heapList.Designer.vb">
+      <DependentUpon>heapList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\heapList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\jobLimitList.Designer.vb">
+      <DependentUpon>jobLimitList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\jobLimitList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\processesInJobList.Designer.vb">
+      <DependentUpon>processesInJobList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\processesInJobList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainJobList.Designer.vb">
+      <DependentUpon>mainJobList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainJobList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\Providers\LogProvider.vb" />
+    <Compile Include="Providers\Providers\HandleProvider.vb" />
+    <Compile Include="Providers\Providers\MemRegionProvider.vb" />
+    <Compile Include="Providers\Providers\ThreadProvider.vb" />
+    <Compile Include="Providers\Providers\ModuleProvider.vb" />
+    <Compile Include="Providers\Providers\JobLimitsProvider.vb" />
+    <Compile Include="Providers\Providers\JobProvider.vb" />
+    <Compile Include="Providers\Providers\WindowProvider.vb" />
+    <Compile Include="Providers\Providers\PrivilegeProvider.vb" />
+    <Compile Include="Providers\Providers\HeapProvider.vb" />
+    <Compile Include="Providers\Providers\NetworkConnectionsProvider.vb" />
+    <Compile Include="Providers\Providers\EnvVariableProvider.vb" />
+    <Compile Include="Providers\InstanceIdProvider.vb" />
+    <Compile Include="Providers\Providers\ServiceProvider.vb" />
+    <Compile Include="Providers\Providers\ProcessProvider.vb" />
+    <Compile Include="Scripting\Command.vb" />
+    <Compile Include="Scripting\Engine.vb" />
+    <Compile Include="Scripting\Enums.vb" />
+    <Compile Include="Scripting\Machine.vb" />
+    <Compile Include="Scripting\Tools.vb" />
+    <Compile Include="Snapshot\cSnapshot250.vb" />
+    <Compile Include="Snapshot\v2.4.2\cSnap242to250Binder.vb" />
+    <Compile Include="Snapshot\v2.4.2\cSnapshot242.vb" />
+    <Compile Include="Snapshot\SnapshotSystemInfo.vb" />
+    <Compile Include="UserControls\HandleProps\HJobProp.Designer.vb">
+      <DependentUpon>HJobProp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HJobProp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HThreadProp.Designer.vb">
+      <DependentUpon>HThreadProp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HThreadProp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HProcessProp.Designer.vb">
+      <DependentUpon>HProcessProp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HProcessProp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HKeyProp.Designer.vb">
+      <DependentUpon>HKeyProp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HKeyProp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HFileProp.Designer.vb">
+      <DependentUpon>HFileProp.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HFileProp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\HandleProps\HXXXProp.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserControls\MemoryHexEditor.Designer.vb">
+      <DependentUpon>MemoryHexEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\MemoryHexEditor.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\DoubleBufferedLV.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Misc\ListViewComparer.vb" />
+    <Compile Include="Providers\CustomListviews\envVariableList.Designer.vb">
+      <DependentUpon>envVariableList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\envVariableList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\handleList.Designer.vb">
+      <DependentUpon>handleList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\handleList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\logList.Designer.vb">
+      <DependentUpon>logList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\logList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\memRegionList.Designer.vb">
+      <DependentUpon>memRegionList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\memRegionList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\moduleList.Designer.vb">
+      <DependentUpon>moduleList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\moduleList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainNetworkConnectionsList.Designer.vb">
+      <DependentUpon>mainNetworkConnectionsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainNetworkConnectionsList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\privilegeList.Designer.vb">
+      <DependentUpon>privilegeList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\privilegeList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainProcessList.Designer.vb">
+      <DependentUpon>mainProcessList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainProcessList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\searchList.Designer.vb">
+      <DependentUpon>searchList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\searchList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\serviceDependenciesList.Designer.vb">
+      <DependentUpon>serviceDependenciesList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\serviceDependenciesList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainServiceList.Designer.vb">
+      <DependentUpon>mainServiceList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainServiceList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainTaskList.Designer.vb">
+      <DependentUpon>mainTaskList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\mainTaskList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\threadList.Designer.vb">
+      <DependentUpon>threadList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\threadList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\windowList.Designer.vb">
+      <DependentUpon>windowList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\windowList.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\customLV.Designer.vb">
+      <DependentUpon>customLV.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Providers\CustomListviews\customLV.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Preferences\frmChooseColumns.Designer.vb">
+      <DependentUpon>frmChooseColumns.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Preferences\frmChooseColumns.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmPendingTasks.Designer.vb">
+      <DependentUpon>frmPendingTasks.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmPendingTasks.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\HorizontalLine.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmFindWindow.Designer.vb">
+      <DependentUpon>frmFindWindow.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmFindWindow.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmProcessAffinity.Designer.vb">
+      <DependentUpon>frmProcessAffinity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmProcessAffinity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmAddProcessMonitor.Designer.vb">
+      <DependentUpon>frmAddProcessMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmAddProcessMonitor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmBox.Designer.vb">
+      <DependentUpon>frmBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmDownload.Designer.vb">
+      <DependentUpon>frmDownload.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmDownload.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmFileRelease.Designer.vb">
+      <DependentUpon>frmFileRelease.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmFileRelease.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmLog.Designer.vb">
+      <DependentUpon>frmLog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmLog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Preferences\frmPreferences.Designer.vb">
+      <DependentUpon>frmPreferences.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Preferences\frmPreferences.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmProcessInfo.Designer.vb">
+      <DependentUpon>frmProcessInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForms\frmProcessInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSaveReport.Designer.vb">
+      <DependentUpon>frmSaveReport.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSaveReport.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSearchMonitor.Designer.vb">
+      <DependentUpon>frmSearchMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmSearchMonitor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmSystemInfo.Designer.vb">
+      <DependentUpon>frmSystemInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmSystemInfo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Misc\frmWindowPosition.Designer.vb">
+      <DependentUpon>frmWindowPosition.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Misc\frmWindowPosition.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmWindowsList.Designer.vb">
+      <DependentUpon>frmWindowsList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\AdditionalMainForms\frmWindowsList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserControls\GraphChart.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UserControls\Graph.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Classes\Misc\Pref.vb" />
+    <Compile Include="Wmi\Objects\Job.vb" />
+    <Compile Include="Wmi\Objects\System.vb" />
+    <Compile Include="Wmi\Objects\Module.vb" />
+    <Compile Include="Wmi\Objects\Process.vb" />
+    <Compile Include="Wmi\Objects\Service.vb" />
+    <Compile Include="Wmi\Objects\Thread.vb" />
+    <None Include="Resources\folder_info.png" />
+    <None Include="Resources\info.png" />
+    <None Include="Resources\process1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Misc\down.gif" />
+    <None Include="Misc\monitoring2.gif" />
+    <None Include="Misc\lv3.gif" />
+    <None Include="Misc\tv2.gif" />
+    <None Include="Misc\hideDetails.gif" />
+    <None Include="Misc\display.gif" />
+    <None Include="Misc\kill.gif" />
+    <None Include="Misc\exe.gif" />
+    <None Include="Misc\copy16.gif" />
+    <None Include="Misc\magnify16.gif" />
+    <None Include="Misc\ie7_16.gif" />
+    <None Include="Misc\ok.gif" />
+    <None Include="Misc\close.gif" />
+    <None Include="Misc\black.ico" />
+    <None Include="Misc\pause32.png" />
+    <None Include="Misc\play32.png" />
+    <None Include="Misc\stop32.png" />
+    <None Include="Misc\delete2.gif" />
+    <None Include="Misc\dll.png" />
+    <None Include="Misc\key.png" />
+    <None Include="Misc\thread.gif" />
+    <None Include="Misc\options.gif" />
+    <None Include="Misc\OK_32.png" />
+    <None Include="Misc\yapm32.png" />
+    <None Include="Misc\display16.gif" />
+    <None Include="Misc\p6.gif" />
+    <None Include="Misc\p3.gif" />
+    <None Include="Misc\p0.gif" />
+    <None Include="Misc\p1.gif" />
+    <None Include="Misc\p2.gif" />
+    <None Include="Misc\p4.gif" />
+    <None Include="Misc\p5.gif" />
+    <None Include="Misc\icon2.gif" />
+    <None Include="Misc\dll.gif" />
+    <None Include="Misc\handle.gif" />
+    <None Include="Misc\refresh16.gif" />
+    <None Include="Misc\target16.gif" />
+    <None Include="Misc\help16.png" />
+    <None Include="Misc\options16.gif" />
+    <None Include="Misc\right.gif" />
+    <None Include="Misc\shield_32.png" />
+    <None Include="Resources\application_blue.png" />
+    <None Include="Resources\information_frame.png" />
+    <None Include="Resources\control_stop_square.png" />
+    <None Include="Resources\folder_open.png" />
+    <None Include="Resources\control.png" />
+    <None Include="Resources\control_pause.png" />
+    <None Include="Resources\cross.png" />
+    <None Include="Resources\arrow_000_medium.png" />
+    <None Include="Resources\arrow_180_medium.png" />
+    <None Include="Resources\document_text.png" />
+    <None Include="Resources\document_text_image.png" />
+    <None Include="Resources\magnifier.png" />
+    <None Include="Resources\folder_open_document.png" />
+    <None Include="Resources\096.png" />
+    <None Include="Resources\application_text_image.png" />
+    <None Include="Resources\globe.png" />
+    <None Include="Resources\cross_circle1.png" />
+    <None Include="Resources\cross_circle.png" />
+    <None Include="Resources\plus_circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logo.ico" />
+    <None Include="Resources\logo.png" />
+    <None Include="Misc\locked.gif" />
+    <None Include="Misc\target3.gif" />
+    <None Include="Misc\refresh.gif" />
+    <None Include="Misc\save.gif" />
+    <None Include="Misc\window_add.png" />
+    <None Include="Misc\add.gif" />
+    <None Include="Misc\download.gif" />
+    <None Include="Misc\ie7.gif" />
+    <None Include="Misc\magnify.gif" />
+    <None Include="Misc\network32.png" />
+    <None Include="Misc\open.gif" />
+    <None Include="Misc\page_info.gif" />
+    <None Include="Misc\process.gif" />
+    <None Include="Misc\speef.gif" />
+    <None Include="Misc\start2.gif" />
+    <None Include="Misc\warning1.png" />
+    <None Include="Misc\info.gif" />
+    <None Include="Misc\file_info.gif" />
+    <None Include="Misc\network49.png" />
+    <None Include="Misc\paypal.gif" />
+    <None Include="Misc\sf3.gif" />
+    <None Include="Misc\shield.png" />
+    <None Include="Misc\trash.gif" />
+    <None Include="Misc\unlock.gif" />
+    <None Include="Misc\exe32.png" />
+    <None Include="Misc\up.gif" />
+    <None Include="Misc\scripting16.png" />
+    <None Include="Misc\warning16.png" />
+    <Content Include="logo.ico" />
+    <None Include="Resources\help_static.html" />
+    <None Include="My Project\app.manifest" />
+    <None Include="Resources\tcp.txt" />
+    <None Include="Resources\udp.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Providers\Classes\EnvVariables\asyncMethods\" />
+    <Folder Include="Providers\Classes\Heaps\asyncMethods\" />
+    <Folder Include="Providers\Classes\JobLimits\asyncMethods\" />
+    <Folder Include="Providers\Classes\Log\asyncMethods\" />
+    <Folder Include="Providers\Classes\Tasks\asyncMethods\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InteractiveProcessFromService\InteractiveProcessFromService.csproj">
+      <Project>{6c8a134f-e0e8-4f5d-8dc5-57313cec1e3a}</Project>
+      <Name>InteractiveProcessFromService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecurePasswordTextBox\SecurePasswordTextBox.csproj">
+      <Project>{12ee0447-8ac7-4e1c-87b3-428a1a414cdf}</Project>
+      <Name>SecurePasswordTextBox</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName)==BuildZipRelease "$(TargetDir)\make.bat"</PostBuildEvent>
+  </PropertyGroup>
+</Project>
