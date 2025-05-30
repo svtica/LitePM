@@ -35,7 +35,7 @@ jobs:
       run: nuget restore LitePM.sln
       
     - name: Build solution
-      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath=bin\Release\
+      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform=x64 /p:OutputPath=bin\Release\
       
     - name: Copy dependencies and assets
       run: |
@@ -71,16 +71,16 @@ jobs:
           $version = "1.0.0-$branch-$sha"
         }
         
-        Compress-Archive -Path "publish\*" -DestinationPath "LitePM-$version-win.zip"
+        Compress-Archive -Path "publish\*" -DestinationPath "LitePM-$version-win-x64.zip"
         echo "PACKAGE_VERSION=$version" >> $env:GITHUB_ENV
-        echo "PACKAGE_NAME=LitePM-$version-win.zip" >> $env:GITHUB_ENV
+        echo "PACKAGE_NAME=LitePM-$version-win-x64.zip" >> $env:GITHUB_ENV
       shell: powershell
       
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: LitePM-${{ env.PACKAGE_VERSION }}
-        path: LitePM-${{ env.PACKAGE_VERSION }}-win.zip
+        name: LitePM-${{ env.PACKAGE_VERSION }}-x64
+        path: LitePM-${{ env.PACKAGE_VERSION }}-win-x64.zip
         
     - name: Upload to release (if tag)
       if: startsWith(github.ref, 'refs/tags/')
@@ -89,8 +89,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ github.event.release.upload_url }}
-        asset_path: ./LitePM-${{ env.PACKAGE_VERSION }}-win.zip
-        asset_name: LitePM-${{ env.PACKAGE_VERSION }}-win.zip
+        asset_path: ./LitePM-${{ env.PACKAGE_VERSION }}-win-x64.zip
+        asset_name: LitePM-${{ env.PACKAGE_VERSION }}-win-x64.zip
         asset_content_type: application/zip
 
   security:
@@ -114,7 +114,7 @@ jobs:
       run: nuget restore LitePM.sln
       
     - name: Build for analysis
-      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform="Any CPU"
+      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform=x64
       
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
