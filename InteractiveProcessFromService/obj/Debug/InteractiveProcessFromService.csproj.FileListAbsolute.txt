@@ -1,0 +1,11 @@
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Debug\LitePMService.exe.config
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Debug\LitePMService.exe.manifest
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Debug\LitePMService.application
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Debug\LitePMService.exe
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Debug\LitePMService.pdb
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Debug\InteractiveProcessFromService.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Debug\InteractiveProcessFromService.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Debug\LitePMService.exe.manifest
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Debug\LitePMService.application
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Debug\LitePMService.exe
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Debug\LitePMService.pdb

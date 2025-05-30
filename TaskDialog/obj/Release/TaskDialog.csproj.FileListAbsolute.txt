@@ -1,0 +1,12 @@
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\TaskDialog\bin\Release\TaskDialog.dll
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\TaskDialog\bin\Release\TaskDialog.pdb
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\TaskDialog\obj\Release\TaskDialog.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\TaskDialog\obj\Release\TaskDialog.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\TaskDialog\obj\Release\TaskDialog.dll
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\TaskDialog\obj\Release\TaskDialog.pdb
+C:\Users\dricard\Dev\sttr\LitePM\TaskDialog\bin\Release\TaskDialog.dll
+C:\Users\dricard\Dev\sttr\LitePM\TaskDialog\bin\Release\TaskDialog.pdb
+C:\Users\dricard\Dev\sttr\LitePM\TaskDialog\obj\Release\TaskDialog.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\LitePM\TaskDialog\obj\Release\TaskDialog.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\LitePM\TaskDialog\obj\Release\TaskDialog.dll
+C:\Users\dricard\Dev\sttr\LitePM\TaskDialog\obj\Release\TaskDialog.pdb

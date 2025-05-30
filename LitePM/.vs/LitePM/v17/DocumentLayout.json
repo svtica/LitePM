@@ -1,0 +1,479 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\mainforms\\frmprocessinfo.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\mainforms\\frmprocessinfo.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmcreateservice.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmcreateservice.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\providers\\classes\\processes\\cprocess.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:providers\\classes\\processes\\cprocess.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\main\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:main\\program.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\additionalmainforms\\frmglobalreport.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\additionalmainforms\\frmglobalreport.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmerror.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmerror.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\classes\\socket\\asynchronousserver.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:classes\\socket\\asynchronousserver.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmaddtojob.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmaddtojob.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\classes\\socket\\asynchronousclient.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:classes\\socket\\asynchronousclient.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\forms\\mainforms\\frmscripting.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\mainforms\\frmscripting.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmsavesystemsnapshot.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmsavesystemsnapshot.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\classes\\exceptions\\cerror.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:classes\\exceptions\\cerror.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\forms\\mainforms\\frmmain.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\mainforms\\frmmain.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmprocessaffinity.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmprocessaffinity.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmsavereport.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmsavereport.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\preferences\\frmpreferences.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\preferences\\frmpreferences.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmthreadaffinity.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmthreadaffinity.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\mainforms\\frmconnection.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\mainforms\\frmconnection.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|LitePM||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\forms\\misc\\frmdownload.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmdownload.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|InteractiveProcessFromService||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|Aga.Controls||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|TaskDialog||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SecureChannel||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|SecurePasswordTextBox||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\forms\\mainforms\\frmconnection.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\mainforms\\frmconnection.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\forms\\misc\\frmcreateservice.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}",
+      "RelativeMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|solutionrelative:forms\\misc\\frmcreateservice.designer.vb||{2C015C70-C72C-11D0-88C3-00A0C9110049}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6C8A134F-E0E8-4F5D-8DC5-57313CEC1E3A}|..\\InteractiveProcessFromService\\InteractiveProcessFromService.csproj|c:\\users\\dricard\\dev\\sttr\\litepm\\interactiveprocessfromservice\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4483B5B3-F749-4A2B-BEAC-DD0350C5B891}|LitePM.vbproj|c:\\users\\dricard\\dev\\sttr\\litepm\\litepm\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|eda661ea-dc61-4750-b3a5-f6e9c74060f5"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{eefa5220-e298-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "LitePM",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\LitePM.vbproj",
+              "RelativeDocumentMoniker": "LitePM.vbproj",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\LitePM.vbproj",
+              "RelativeToolTip": "LitePM.vbproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-15T18:01:54.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AsynchronousClient.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Classes\\Socket\\AsynchronousClient.vb",
+              "RelativeDocumentMoniker": "Classes\\Socket\\AsynchronousClient.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Classes\\Socket\\AsynchronousClient.vb",
+              "RelativeToolTip": "Classes\\Socket\\AsynchronousClient.vb",
+              "ViewState": "AgIAAEkAAAAAAAAAAAD4v1wAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:59:12.25Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "cProcess.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Providers\\Classes\\Processes\\cProcess.vb",
+              "RelativeDocumentMoniker": "Providers\\Classes\\Processes\\cProcess.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Providers\\Classes\\Processes\\cProcess.vb",
+              "RelativeToolTip": "Providers\\Classes\\Processes\\cProcess.vb",
+              "ViewState": "AgIAAGcBAAAAAAAAAAAIwHsBAABkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:59:07.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "frmProcessAffinity.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmProcessAffinity.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmProcessAffinity.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmProcessAffinity.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmProcessAffinity.vb",
+              "ViewState": "AgIAAG4AAAAAAAAAAAAIwIIAAACBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:59:02.264Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "frmProcessInfo.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmProcessInfo.vb",
+              "RelativeDocumentMoniker": "Forms\\MainForms\\frmProcessInfo.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmProcessInfo.vb",
+              "RelativeToolTip": "Forms\\MainForms\\frmProcessInfo.vb",
+              "ViewState": "AgIAAA4KAAAAAAAAAAAYwCAKAABwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:58:56.431Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "frmAddToJob.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmAddToJob.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmAddToJob.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmAddToJob.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmAddToJob.vb",
+              "ViewState": "AgIAADEAAAAAAAAAAAAkwEQAAACLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:58:25.093Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "frmCreateService.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmCreateService.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmCreateService.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmCreateService.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmCreateService.vb",
+              "ViewState": "AgIAACsAAAAAAAAAAAAIwD8AAAB/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:58:19.361Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "frmDownload.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmDownload.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmDownload.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmDownload.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmDownload.vb",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAawBIAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:58:14.357Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "frmError.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmError.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmError.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmError.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmError.vb",
+              "ViewState": "AgIAAFMAAAAAAAAAAAAIwGcAAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:58:10.183Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Main\\Program.vb",
+              "RelativeDocumentMoniker": "Main\\Program.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Main\\Program.vb",
+              "RelativeToolTip": "Main\\Program.vb",
+              "ViewState": "AgIAAE0DAAAAAAAAAAAAwF4DAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:58:02.788Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "frmPreferences.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Preferences\\frmPreferences.vb",
+              "RelativeDocumentMoniker": "Forms\\Preferences\\frmPreferences.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Preferences\\frmPreferences.vb",
+              "RelativeToolTip": "Forms\\Preferences\\frmPreferences.vb",
+              "ViewState": "AgIAAIEBAAAAAAAAAAAuwJIBAABcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:57:58.072Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "frmThreadAffinity.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmThreadAffinity.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmThreadAffinity.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmThreadAffinity.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmThreadAffinity.vb",
+              "ViewState": "AgIAAJQAAAAAAAAAAAAQwKkAAACAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:57:52.437Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "frmSaveSystemSnapshot.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmSaveSystemSnapshot.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmSaveSystemSnapshot.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmSaveSystemSnapshot.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmSaveSystemSnapshot.vb",
+              "ViewState": "AgIAACYAAAAAAAAAAAAQwEQAAABKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:57:20.346Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "frmSaveReport.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmSaveReport.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmSaveReport.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmSaveReport.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmSaveReport.vb",
+              "ViewState": "AgIAALQAAAAAAAAAAAAkwMcAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:56:50.039Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "frmConnection.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmConnection.vb",
+              "RelativeDocumentMoniker": "Forms\\MainForms\\frmConnection.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmConnection.vb",
+              "RelativeToolTip": "Forms\\MainForms\\frmConnection.vb",
+              "ViewState": "AgIAAGQBAAAAAAAAAAAkwHcBAACCAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:56:26.923Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "frmGlobalReport.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\AdditionalMainForms\\frmGlobalReport.vb",
+              "RelativeDocumentMoniker": "Forms\\AdditionalMainForms\\frmGlobalReport.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\AdditionalMainForms\\frmGlobalReport.vb",
+              "RelativeToolTip": "Forms\\AdditionalMainForms\\frmGlobalReport.vb",
+              "ViewState": "AgIAAD8BAAAAAAAAAAAQwFQBAABNAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:56:24.917Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AsynchronousServer.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Classes\\Socket\\AsynchronousServer.vb",
+              "RelativeDocumentMoniker": "Classes\\Socket\\AsynchronousServer.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Classes\\Socket\\AsynchronousServer.vb",
+              "RelativeToolTip": "Classes\\Socket\\AsynchronousServer.vb",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAQwF4AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:56:23.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "InteractiveProcessFromService",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\InteractiveProcessFromService\\InteractiveProcessFromService.csproj",
+              "RelativeDocumentMoniker": "..\\InteractiveProcessFromService\\InteractiveProcessFromService.csproj",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\InteractiveProcessFromService\\InteractiveProcessFromService.csproj",
+              "RelativeToolTip": "..\\InteractiveProcessFromService\\InteractiveProcessFromService.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-15T17:55:39.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "Aga.Controls",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\Aga.Controls\\Aga.Controls.csproj",
+              "RelativeDocumentMoniker": "..\\Aga.Controls\\Aga.Controls.csproj",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\Aga.Controls\\Aga.Controls.csproj",
+              "RelativeToolTip": "..\\Aga.Controls\\Aga.Controls.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-15T17:55:31.939Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "TaskDialog",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\TaskDialog\\TaskDialog.csproj",
+              "RelativeDocumentMoniker": "..\\TaskDialog\\TaskDialog.csproj",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\TaskDialog\\TaskDialog.csproj",
+              "RelativeToolTip": "..\\TaskDialog\\TaskDialog.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-15T17:55:27.286Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "SecureChannel",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\SecureChannel\\SecureChannel.csproj",
+              "RelativeDocumentMoniker": "..\\SecureChannel\\SecureChannel.csproj",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\SecureChannel\\SecureChannel.csproj",
+              "RelativeToolTip": "..\\SecureChannel\\SecureChannel.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-15T17:55:23.675Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "SecurePasswordTextBox",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\SecurePasswordTextBox\\SecurePasswordTextBox.csproj",
+              "RelativeDocumentMoniker": "..\\SecurePasswordTextBox\\SecurePasswordTextBox.csproj",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\SecurePasswordTextBox\\SecurePasswordTextBox.csproj",
+              "RelativeToolTip": "..\\SecurePasswordTextBox\\SecurePasswordTextBox.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-15T17:55:20.339Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "frmMain.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmMain.vb",
+              "RelativeDocumentMoniker": "Forms\\MainForms\\frmMain.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmMain.vb",
+              "RelativeToolTip": "Forms\\MainForms\\frmMain.vb",
+              "ViewState": "AgIAAH8IAAAAAAAAAAAAwJAIAABdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:53:03.604Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "frmScripting.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmScripting.vb",
+              "RelativeDocumentMoniker": "Forms\\MainForms\\frmScripting.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmScripting.vb",
+              "RelativeToolTip": "Forms\\MainForms\\frmScripting.vb",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAYwIsAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:52:29.824Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "cError.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Classes\\Exceptions\\cError.vb",
+              "RelativeDocumentMoniker": "Classes\\Exceptions\\cError.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Classes\\Exceptions\\cError.vb",
+              "RelativeToolTip": "Classes\\Exceptions\\cError.vb",
+              "ViewState": "AgIAACcAAAAAAAAAAAAQwD0AAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:52:21.866Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "frmConnection.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmConnection.Designer.vb",
+              "RelativeDocumentMoniker": "Forms\\MainForms\\frmConnection.Designer.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\MainForms\\frmConnection.Designer.vb",
+              "RelativeToolTip": "Forms\\MainForms\\frmConnection.Designer.vb",
+              "ViewState": "AgIAAKgBAAAAAAAAAAAUwKwBAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:51:16.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "frmCreateService.Designer.vb",
+              "DocumentMoniker": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmCreateService.Designer.vb",
+              "RelativeDocumentMoniker": "Forms\\Misc\\frmCreateService.Designer.vb",
+              "ToolTip": "C:\\Users\\dricard\\Dev\\sttr\\LitePM\\LitePM\\Forms\\Misc\\frmCreateService.Designer.vb",
+              "RelativeToolTip": "Forms\\Misc\\frmCreateService.Designer.vb",
+              "ViewState": "AgIAAG8BAAAAAAAAAAAUwIUBAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003361|",
+              "WhenOpened": "2024-10-15T17:50:09.105Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

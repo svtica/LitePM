@@ -1,0 +1,10 @@
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\SecureChannel\bin\Release\SecureChannel.dll
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\SecureChannel\bin\Release\SecureChannelDocs.xml
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\SecureChannel\obj\Release\SecureChannel.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\SecureChannel\obj\Release\SecureChannel.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\SecureChannel\obj\Release\SecureChannel.dll
+C:\Users\dricard\Dev\sttr\LitePM\SecureChannel\bin\Release\SecureChannel.dll
+C:\Users\dricard\Dev\sttr\LitePM\SecureChannel\bin\Release\SecureChannelDocs.xml
+C:\Users\dricard\Dev\sttr\LitePM\SecureChannel\obj\Release\SecureChannel.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\LitePM\SecureChannel\obj\Release\SecureChannel.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\LitePM\SecureChannel\obj\Release\SecureChannel.dll

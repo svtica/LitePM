@@ -1,0 +1,13 @@
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\InteractiveProcessFromService\bin\Release\YAPMLauncherService.exe
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\InteractiveProcessFromService\bin\Release\YAPMLauncherService.pdb
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\InteractiveProcessFromService\obj\Release\InteractiveProcessFromService.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\InteractiveProcessFromService\obj\Release\InteractiveProcessFromService.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\InteractiveProcessFromService\obj\Release\YAPMLauncherService.exe
+C:\Users\dricard\Dev\sttr\TaskManager\YAPM\YAPM-v2.4.2-source\InteractiveProcessFromService\obj\Release\YAPMLauncherService.pdb
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Release\LitePMService.exe.config
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Release\LitePMService.exe
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\bin\Release\LitePMService.pdb
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Release\InteractiveProcessFromService.csproj.AssemblyReference.cache
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Release\InteractiveProcessFromService.csproj.CoreCompileInputs.cache
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Release\LitePMService.exe
+C:\Users\dricard\Dev\sttr\LitePM\InteractiveProcessFromService\obj\Release\LitePMService.pdb
