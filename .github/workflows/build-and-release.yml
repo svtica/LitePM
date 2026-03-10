@@ -27,32 +27,35 @@ jobs:
 
     - name: Restore Ribbon dependency
       run: |
-        nuget install RibbonWinForms -OutputDirectory packages
-        Copy-Item "packages\RibbonWinForms.*\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        nuget install RibbonWinForms -Version 5.0.1.1 -OutputDirectory packages
+        if (!(Test-Path "packages\RibbonWinForms.5.0.1.1\lib\net48\System.Windows.Forms.Ribbon.dll")) {
+          Write-Host "Available package contents:"
+          Get-ChildItem -Path packages -Recurse | ForEach-Object { Write-Host $_.FullName }
+          throw "System.Windows.Forms.Ribbon.dll not found in NuGet package"
+        }
+        Copy-Item "packages\RibbonWinForms.5.0.1.1\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        Write-Host "Successfully copied System.Windows.Forms.Ribbon.dll to LitePM\"
       shell: powershell
 
     - name: Build solution
-      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform="Any CPU"
-      shell: cmd
+      run: |
+        msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU"
+      shell: powershell
 
     - name: Copy dependencies and assets
       run: |
         $buildPath = "LitePM\bin\Release"
         $publishPath = "publish"
 
-        # Create publish directory
         New-Item -ItemType Directory -Force -Path $publishPath
 
-        # Copy main executable and dependencies
         Copy-Item "$buildPath\*.exe" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "$buildPath\*.dll" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "$buildPath\*.config" -Destination $publishPath -ErrorAction SilentlyContinue
 
-        # Copy documentation and license
         Copy-Item "README.md" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "LICENSE" -Destination $publishPath -ErrorAction SilentlyContinue
 
-        # Copy any additional resources
         if (Test-Path "Resources") {
           Copy-Item "Resources" -Destination $publishPath -Recurse -ErrorAction SilentlyContinue
         }
@@ -107,13 +110,14 @@ jobs:
 
     - name: Restore Ribbon dependency (for CodeQL)
       run: |
-        nuget install RibbonWinForms -OutputDirectory packages
-        Copy-Item "packages\RibbonWinForms.*\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        nuget install RibbonWinForms -Version 5.0.1.1 -OutputDirectory packages
+        Copy-Item "packages\RibbonWinForms.5.0.1.1\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
       shell: powershell
 
     - name: Build for analysis
-      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform="Any CPU"
-      shell: cmd
+      run: |
+        msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU"
+      shell: powershell
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
