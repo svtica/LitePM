@@ -280,6 +280,12 @@ Public Class frmMain
             ' This avoid to call ExitLitePM recursively when exiting
             Me.CallExitWhenExitLitePM = False
 
+            ' Remove event handlers to prevent leak via static events
+            RemoveHandler ProcessProvider.GotNewItems, AddressOf Me.processCreated
+            RemoveHandler ProcessProvider.GotDeletedItems, AddressOf Me.processDeleted
+            RemoveHandler ServiceProvider.GotNewItems, AddressOf Me.serviceCreated
+            RemoveHandler ServiceProvider.GotDeletedItems, AddressOf Me.serviceDeleted
+
             ' Save position & size
             Pref.SaveFormPositionAndSize(Me, "PSfrmMain")
 
