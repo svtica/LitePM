@@ -22,14 +22,33 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Restore Ribbon dependency
+    - name: Restore external dependencies from res/
       run: |
-        Copy-Item "LitePM\publish\Application Files\LitePM_1_0_0_1\System.Windows.Forms.Ribbon.dll.deploy" -Destination "LitePM\System.Windows.Forms.Ribbon.dll"
+        Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        Write-Host "Copied System.Windows.Forms.Ribbon.dll from res/ to LitePM/"
       shell: powershell
 
     - name: Build solution
       run: |
         msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU"
+      shell: powershell
+
+    - name: Copy fallback DLLs from res/ if missing
+      run: |
+        $buildPath = "LitePM\bin\Release"
+        $fallbackDlls = @(
+          "Aga.Controls.dll",
+          "SecureChannel.dll",
+          "SecurePasswordTextBox.dll",
+          "System.Windows.Forms.Ribbon.dll",
+          "TaskDialog.dll"
+        )
+        foreach ($dll in $fallbackDlls) {
+          if (!(Test-Path "$buildPath\$dll")) {
+            Write-Host "Missing $dll in build output, copying from res/"
+            Copy-Item "res\$dll" -Destination "$buildPath\"
+          }
+        }
       shell: powershell
 
     - name: Copy dependencies and assets
@@ -95,9 +114,9 @@ jobs:
     - name: Setup MSBuild (for CodeQL)
       uses: microsoft/setup-msbuild@v2
 
-    - name: Restore Ribbon dependency (for CodeQL)
+    - name: Restore external dependencies from res/ (for CodeQL)
       run: |
-        Copy-Item "LitePM\publish\Application Files\LitePM_1_0_0_1\System.Windows.Forms.Ribbon.dll.deploy" -Destination "LitePM\System.Windows.Forms.Ribbon.dll"
+        Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
       shell: powershell
 
     - name: Build for analysis
