@@ -22,6 +22,15 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v2
+
+    - name: Restore Ribbon dependency
+      run: |
+        nuget install RibbonWinForms -OutputDirectory packages
+        Copy-Item "packages\RibbonWinForms.*\lib\net40\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+      shell: powershell
+
     - name: Build solution
       run: msbuild LitePM.sln /p:Configuration=Release /p:Platform="Any CPU"
       shell: cmd
@@ -92,6 +101,15 @@ jobs:
 
     - name: Setup MSBuild (for CodeQL)
       uses: microsoft/setup-msbuild@v2
+
+    - name: Setup NuGet (for CodeQL)
+      uses: nuget/setup-nuget@v2
+
+    - name: Restore Ribbon dependency (for CodeQL)
+      run: |
+        nuget install RibbonWinForms -OutputDirectory packages
+        Copy-Item "packages\RibbonWinForms.*\lib\net40\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+      shell: powershell
 
     - name: Build for analysis
       run: msbuild LitePM.sln /p:Configuration=Release /p:Platform="Any CPU"
