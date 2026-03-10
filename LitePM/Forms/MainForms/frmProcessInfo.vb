@@ -2343,7 +2343,7 @@ Public Class frmProcessInfo
                         End If
                     Next
                 Case Native.Api.Enums.LogItemType.NetworkItem
-                    ' TODO
+                    ' Network item navigation not supported
                 Case Native.Api.Enums.LogItemType.ServiceItem
                     For Each it2 As ListViewItem In Me.lvProcServices.Items
                         Dim tmp As cService = Me.lvProcServices.GetItemByKey(it2.Name)

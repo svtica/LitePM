@@ -307,7 +307,7 @@ Public Class cShortcut
                 Case HOTKEYS_ACTIONS.KILL_FOREGROUND
                     Call cProcess.LocalKill(cWindow.LocalGetForegroundAppProcessId)
                 Case HOTKEYS_ACTIONS.EXIT_LitePM
-                    'TODO
+                    Program.ExitLitePM()
                 Case Else
                     '
             End Select

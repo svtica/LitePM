@@ -135,9 +135,9 @@ Public Class SnapshotSystemInfo
                 _IntPtrSize = IntPtr.Size
 
             Case cConnection.TypeOfConnection.RemoteConnectionViaSocket
-                ' TODO
+                ' Not supported for remote socket connections
             Case cConnection.TypeOfConnection.RemoteConnectionViaWMI
-                ' TODO
+                ' Not supported for WMI connections
             Case cConnection.TypeOfConnection.SnapshotFile
                 '
             Case Else

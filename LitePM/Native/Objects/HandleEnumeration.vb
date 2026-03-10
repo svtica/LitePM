@@ -375,21 +375,20 @@ Namespace Native.Objects
             ' Get the name of the object
             If m_ObjectTypeName = "File" Then
                 ' Have to use our kernel if it is a file
-                ' = requête pour obtenir le nom d'un handle
+                ' = requï¿½te pour obtenir le nom d'un handle
                 ' hDevice : handle du driver KernelMemory
                 ' dwIoControlCode : IOCTL_KERNELMEMORY_GETOBJECTNAME
                 ' lpInBuffer : une structure SYSTEM_HANDLE_INFORMATION contenant les infos sur le handle
                 ' nInBufferSize : taille de la structure SYSTEM_HANDLE_INFORMATION
-                ' lpOutBuffer : tampon d'une taille suffisante pour contenir le nom du handle (au moins MAX_PATH caractères)
+                ' lpOutBuffer : tampon d'une taille suffisante pour contenir le nom du handle (au moins MAX_PATH caractï¿½res)
                 ' nOutBufferSize : taille de ce tampon
-                ' lpBytesReturned : taille des données retournée (sauf erreur : nOutBufferSize)
+                ' lpBytesReturned : taille des donnï¿½es retournï¿½e (sauf erreur : nOutBufferSize)
                 ' lpOverlapped : nul
                 ' renvoie ERROR_SUCCESS ou ERROR_BUFFER_TOO_SMALL
                 NativeFunctions.DeviceIoControl(hDriver, IOCTL_KERNELMEMORY_GETOBJECTNAME, _
                                                         Handle, 16, BufferObjName.Pointer, _
                                                         512, ret, IntPtr.Zero)
                 ObjName = BufferObjName.ReadStruct(Of NativeStructs.ObjectNameInformation)(0)
-                ' TODO64 -> x64 not compatible !!!!!
                 m_ObjectName = Marshal.PtrToStringUni(BufferObjName.Pointer.Increment(8))
             Else
                 ' Not a file, so we query handle name withNtQueryObject

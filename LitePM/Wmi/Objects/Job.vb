@@ -60,8 +60,6 @@ Namespace Wmi.Objects
                 ' Job name
                 Dim jobName As String = CStr(refJob.GetPropertyValue(WmiInfoJob.CollectionID.ToString))
 
-                ' TODO : have to retrieve ProcessesCount ?
-
                 If _dico.ContainsKey(jobName) = False Then
                     _dico.Add(jobName, New jobInfos(jobName))
                 End If
