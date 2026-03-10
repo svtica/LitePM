@@ -21,46 +21,39 @@
 
 Option Strict On
 
+Imports System.IO
+
 Public Class cLog
 
     Private frm As New frmLog
     Private Const MAX_LOG_ITEMS As Integer = 5000
-
-    'Private _lineCount As Integer
-    'Private _spaces As Integer = 5
-    'Private _addTime As Boolean = True
-    'Private _s() As String
+    Private _logFilePath As String = Nothing
+    Private _logToFile As Boolean = False
 
     ' Constructors
     Public Sub New(ByVal stringValue As String)
-        '_lineCount = 0
-        'ReDim _s(250)
     End Sub
     Public Sub New()
-        '_lineCount = 0
-        'ReDim _s(250)
     End Sub
 
 
-    ' Propeties
-    'Public Property SpacesBetweenTimeAndText() As Integer
-    '    Get
-    '        Return _spaces
-    '    End Get
-    '    Set(ByVal value As Integer)
-    '        If value >= 0 Then
-    '            _spaces = value
-    '        End If
-    '    End Set
-    'End Property
-    'Public Property AddDateTime() As Boolean
-    '    Get
-    '        Return _addTime
-    '    End Get
-    '    Set(ByVal value As Boolean)
-    '        _addTime = value
-    '    End Set
-    'End Property
+    ' Properties
+    Public Property LogToFile() As Boolean
+        Get
+            Return _logToFile
+        End Get
+        Set(ByVal value As Boolean)
+            _logToFile = value
+        End Set
+    End Property
+    Public Property LogFilePath() As String
+        Get
+            Return _logFilePath
+        End Get
+        Set(ByVal value As String)
+            _logFilePath = value
+        End Set
+    End Property
     Public ReadOnly Property LineCount() As Integer
         Get
             Return Me.frm.lv.Items.Count
@@ -71,15 +64,6 @@ Public Class cLog
             Return Me.frm.lv.Items
         End Get
     End Property
-    'Public ReadOnly Property Line(ByVal index As Integer) As String
-    '    Get
-    '        If index > 0 And index <= Me.LineCount Then
-    '            Return _s(index)
-    '        Else
-    '            Return vbNullString
-    '        End If
-    '    End Get
-    'End Property
     Public WriteOnly Property ShowForm() As Boolean
         Set(ByVal value As Boolean)
             If value Then
@@ -100,28 +84,12 @@ Public Class cLog
 
     ' Public functions
     Public Sub Clear()
-        'ReDim _s(0)
-        '_lineCount = 0
         frm.lv.Items.Clear()
     End Sub
 
     Public Sub AppendLine(ByVal line As String)
-        'Dim s As String = ""
-        'If _lineCount > 0 Then
-        '    s &= vbNewLine
-        'End If
-        'If _addTime Then
-        '    s &= Date.Now.ToLongDateString & " -- " & Date.Now.ToLongTimeString & Space(_spaces)
-        'End If
-        's &= line
-        '_lineCount += 1
+        Dim timestamp As String = Date.Now.ToLongDateString & " -- " & Date.Now.ToLongTimeString
 
-        '' Redim array if necessary
-        '' Size *2 -> size each time (reduces number of redim calls)
-        'If _lineCount >= _s.Length Then
-        '    ReDim Preserve _s(_s.Length * 2)
-        'End If
-        '_s(_lineCount) = s
         ' Evict oldest entries when the log exceeds the max size
         If Me.frm.lv.Items.Count >= MAX_LOG_ITEMS Then
             Dim toRemove As Integer = Me.frm.lv.Items.Count - MAX_LOG_ITEMS + 1
@@ -129,33 +97,28 @@ Public Class cLog
                 Me.frm.lv.Items.RemoveAt(0)
             Next
         End If
-        Dim it As New ListViewItem(Date.Now.ToLongDateString & " -- " & Date.Now.ToLongTimeString)
+        Dim it As New ListViewItem(timestamp)
         it.SubItems.Add(line)
         Async.ListView.AddItem(Me.frm.lv, it)
+
+        ' Append to log file if enabled
+        If _logToFile AndAlso _logFilePath IsNot Nothing Then
+            Try
+                Using stream As New StreamWriter(_logFilePath, True)
+                    stream.WriteLine(timestamp & vbTab & line)
+                End Using
+            Catch ex As Exception
+                ' Silently ignore file write errors to avoid recursive logging
+            End Try
+        End If
     End Sub
 
     Public Function GetLog() As String
-        'Dim logSize As Integer = System.Runtime.InteropServices.Marshal.SizeOf(_s)
-        'Dim sb As New StringBuilder(logSize)
-        'For Each ss As String In _s
-        '    sb.AppendLine(ss)
-        'Next
-        'Return sb.ToString
         Dim s As String = ""
         For Each it As ListViewItem In frm.lv.Items
             s &= it.Text & vbTab & it.SubItems(1).Text
         Next
         Return s
     End Function
-
-    'Public Sub AddEmptyLine()
-    '    ' Redim array if necessary
-    '    ' Size *2 -> size each time (reduces number of redim calls)
-    '    _lineCount += 1
-    '    If _lineCount > _s.Length Then
-    '        ReDim Preserve _s(_s.Length * 2)
-    '    End If
-    '    _s(_lineCount) = vbNewLine
-    'End Sub
 
 End Class
