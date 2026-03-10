@@ -24,6 +24,7 @@ Option Strict On
 Public Class cLog
 
     Private frm As New frmLog
+    Private Const MAX_LOG_ITEMS As Integer = 5000
 
     'Private _lineCount As Integer
     'Private _spaces As Integer = 5
@@ -121,6 +122,13 @@ Public Class cLog
         '    ReDim Preserve _s(_s.Length * 2)
         'End If
         '_s(_lineCount) = s
+        ' Evict oldest entries when the log exceeds the max size
+        If Me.frm.lv.Items.Count >= MAX_LOG_ITEMS Then
+            Dim toRemove As Integer = Me.frm.lv.Items.Count - MAX_LOG_ITEMS + 1
+            For i As Integer = 0 To toRemove - 1
+                Me.frm.lv.Items.RemoveAt(0)
+            Next
+        End If
         Dim it As New ListViewItem(Date.Now.ToLongDateString & " -- " & Date.Now.ToLongTimeString)
         it.SubItems.Add(line)
         Async.ListView.AddItem(Me.frm.lv, it)
