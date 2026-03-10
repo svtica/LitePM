@@ -180,8 +180,11 @@ Public Class MemoryHexEditor
 
     ' Constructor & destructor
     Protected Overrides Sub Finalize()
+        If _rw IsNot Nothing Then
+            _rw.Dispose()
+            _rw = Nothing
+        End If
         MyBase.Finalize()
-        ''
     End Sub
     Public Sub NewProc(ByVal MemRegion As MemoryRegion, ByVal ProcessId As Integer)
 
