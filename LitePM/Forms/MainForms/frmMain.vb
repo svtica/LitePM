@@ -2362,8 +2362,7 @@ Public Class frmMain
     End Sub
 
     Private Sub timerStateBasedActions_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerStateBasedActions.Tick
-        'TODO_ (sba)
-        'Me.emStateBasedActions.ProcessActions(lvProcess.GetAllItems)
+        ' State-based actions not yet integrated
     End Sub
 
     Private Sub butNewProcess_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butNewProcess.Click
@@ -2848,8 +2847,7 @@ Public Class frmMain
         For Each it As cService In Me.lvServices.GetSelectedItems
             Dim sP As String = it.GetInformation("ImagePath")
             If sP <> NO_INFO_RETRIEVED Then
-                'TODO_
-                s = sP  'cService.GetFileNameFromSpecial(sP)
+                s = sP
                 If IO.File.Exists(s) Then
                     cFile.ShowFileProperty(s, Me.Handle)
                 Else

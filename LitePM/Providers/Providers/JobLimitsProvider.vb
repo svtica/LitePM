@@ -184,9 +184,7 @@ Public Class JobLimitsProvider
                 ' Nothing special here
 
             Case cConnection.TypeOfConnection.RemoteConnectionViaWMI
-                ' Have to connect some things when using WMI
-
-                ' TODO
+                ' Not supported for WMI connections
 
             Case cConnection.TypeOfConnection.SnapshotFile
                 ' Nothing special here
@@ -273,7 +271,7 @@ Public Class JobLimitsProvider
                         End Try
 
                     Case cConnection.TypeOfConnection.RemoteConnectionViaWMI
-                        ' TODO
+                        ' Not supported for WMI connections
 
                     Case cConnection.TypeOfConnection.SnapshotFile
                         ' Snapshot

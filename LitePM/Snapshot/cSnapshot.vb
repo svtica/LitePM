@@ -624,13 +624,12 @@ Public Class cSnapshot
             End If
 
             ' Heaps
-            ' TODO (have to fix heap enumeration before implenting it)
             If (options And Native.Api.Enums.SnapshotObject.[Heaps]) = Native.Api.Enums.SnapshotObject.[Heaps] Then
                 For Each proc As processInfos In Me.Processes.Values
                     Dim pid As Integer = proc.ProcessId
                     If pid > 0 Then
-                        'Dim _dico As Dictionary(Of String, heapInfos) = asyncCallbackHeapEnumerate.SharedLocalSyncEnumerate(New asyncCallbackHeapEnumerate.poolObj(pid, 0))
-                        'Me.HeapsByProcessId(pid) = _dico
+                        Dim _dico As Dictionary(Of String, heapInfos) = asyncCallbackHeapEnumerate.SharedLocalSyncEnumerate(New asyncCallbackHeapEnumerate.poolObj(pid, 0))
+                        Me.HeapsByProcessId(pid) = _dico
                     End If
                 Next
             End If
