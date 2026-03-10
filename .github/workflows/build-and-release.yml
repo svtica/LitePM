@@ -24,18 +24,12 @@ jobs:
       
     - name: Setup NuGet
       uses: NuGet/setup-nuget@v1
-      
-    - name: Setup .NET Framework
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: '4.7.2'
-      continue-on-error: true
-        
+
     - name: Restore NuGet packages
       run: nuget restore LitePM.sln
       
     - name: Build solution
-      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform=x64 /p:OutputPath=bin\Release\
+      run: msbuild LitePM.sln /p:Configuration=Release "/p:Platform=Any CPU" /p:OutputPath=bin\Release\
       
     - name: Copy dependencies and assets
       run: |
@@ -102,7 +96,7 @@ jobs:
     - name: Run CodeQL Analysis
       uses: github/codeql-action/init@v3
       with:
-        languages: 'csharp'
+        languages: 'csharp-and-vb'
         
     - name: Setup MSBuild (for CodeQL)
       uses: microsoft/setup-msbuild@v1.3
@@ -114,7 +108,7 @@ jobs:
       run: nuget restore LitePM.sln
       
     - name: Build for analysis
-      run: msbuild LitePM.sln /p:Configuration=Release /p:Platform=x64
+      run: msbuild LitePM.sln /p:Configuration=Release "/p:Platform=Any CPU"
       
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
