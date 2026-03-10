@@ -16,6 +16,7 @@ Namespace RemotingServerClient
         Private Shared _NewUser As delUserInfo
         Private Shared _ClientToHost As delCommsInfo
         Private Shared _list As New List(Of ClientWrap)()
+        Private Shared ReadOnly _listLock As New Object
 
         ' Unlimited lifetime
         Public Overrides Function InitializeLifetimeService() As Object
@@ -23,7 +24,9 @@ Namespace RemotingServerClient
         End Function
 
         Public Sub RegisterHostToClient(ByVal UserID As String, ByVal htc As delCommsInfo)
-            _list.Add(New ClientWrap(UserID, htc))
+            SyncLock _listLock
+                _list.Add(New ClientWrap(UserID, htc))
+            End SyncLock
             _NewUser(UserID)
         End Sub
 
@@ -56,7 +59,11 @@ Namespace RemotingServerClient
         ' the static method that will be invoked by the server when it wants to send a message
         ' to a specific user or all of them.
         Public Shared Sub RaiseHostToClient(ByVal UserID As String, ByVal Message As String)
-            For Each client As ClientWrap In _list
+            Dim snapshot As List(Of ClientWrap)
+            SyncLock _listLock
+                snapshot = New List(Of ClientWrap)(_list)
+            End SyncLock
+            For Each client As ClientWrap In snapshot
                 If (client.UserID = UserID OrElse UserID = "*") AndAlso client.HostToClient IsNot Nothing Then
                     Dim D As delCommsInfo = client.HostToClient
                     D(New CommsInfo(Message))
@@ -64,7 +71,11 @@ Namespace RemotingServerClient
             Next
         End Sub
         Public Shared Sub RaiseHostToClient(ByVal UserID As String, ByVal data As Byte())
-            For Each client As ClientWrap In _list
+            Dim snapshot As List(Of ClientWrap)
+            SyncLock _listLock
+                snapshot = New List(Of ClientWrap)(_list)
+            End SyncLock
+            For Each client As ClientWrap In snapshot
                 If (client.UserID = UserID OrElse UserID = "*") AndAlso client.HostToClient IsNot Nothing Then
                     Dim D As delCommsInfo = client.HostToClient
                     D(New CommsInfo(data))

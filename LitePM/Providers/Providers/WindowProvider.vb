@@ -150,7 +150,7 @@ Public Class WindowProvider
                     Try
                         tt = New cWindow(_currentWindows.Item(handle.ToString))
                     Catch ex As Exception
-
+                        ' Item removed between ContainsKey and Item access (race condition)
                     End Try
                 End If
             End If

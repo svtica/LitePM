@@ -1041,21 +1041,17 @@ Namespace Common
 
             ' Write error to log (if enabled)
             If My.Settings.SaveErrorLog Then
-                Dim stream As StreamWriter = Nothing
                 Try
-                    stream = New StreamWriter(Program.LogPath, True)
-                    stream.WriteLine("=====")
-                    stream.WriteLine("Got an error, date = " & Date.Now.ToLongDateString & " - " & Date.Now.ToLongTimeString)
-                    stream.Write(Program.ErrorLog(ex) & vbNewLine)
-                    stream.WriteLine("=====")
-                    stream.WriteLine()
-                    stream.WriteLine()
+                    Using stream As New StreamWriter(Program.LogPath, True)
+                        stream.WriteLine("=====")
+                        stream.WriteLine("Got an error, date = " & Date.Now.ToLongDateString & " - " & Date.Now.ToLongTimeString)
+                        stream.Write(Program.ErrorLog(ex) & vbNewLine)
+                        stream.WriteLine("=====")
+                        stream.WriteLine()
+                        stream.WriteLine()
+                    End Using
                 Catch ex2 As Exception
-                    ' Won't catch this...
-                Finally
-                    If stream IsNot Nothing Then
-                        stream.Close()
-                    End If
+                    ' Cannot write to log file — ignore to avoid recursive errors
                 End Try
             End If
 

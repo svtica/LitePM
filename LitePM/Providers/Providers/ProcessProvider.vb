@@ -195,7 +195,7 @@ Public Class ProcessProvider
                     Try
                         tt = New cProcess(_currentProcesses.Item(id))
                     Catch ex As Exception
-
+                        ' Item removed between ContainsKey and Item access (race condition)
                     End Try
                 End If
             End If
@@ -220,7 +220,7 @@ Public Class ProcessProvider
                     Try
                         tt = New cProcess(_currentProcesses.Item(id))
                     Catch ex As Exception
-
+                        ' Item removed between ContainsKey and Item access (race condition)
                     End Try
                 End If
             End If

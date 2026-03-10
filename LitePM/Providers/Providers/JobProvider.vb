@@ -155,7 +155,7 @@ Public Class JobProvider
                     Try
                         tt = New cJob(_currentJobs.Item(name))
                     Catch ex As Exception
-
+                        ' Item removed between ContainsKey and Item access (race condition)
                     End Try
                 End If
             End If

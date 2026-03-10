@@ -171,7 +171,7 @@ Public Class ServiceProvider
                     Try
                         tt = New cService(_currentServices.Item(name))
                     Catch ex As Exception
-
+                        ' Item removed between ContainsKey and Item access (race condition)
                     End Try
                 End If
             End If

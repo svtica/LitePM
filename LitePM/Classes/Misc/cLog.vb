@@ -22,6 +22,7 @@
 Option Strict On
 
 Imports System.IO
+Imports System.Text
 
 Public Class cLog
 
@@ -114,11 +115,11 @@ Public Class cLog
     End Sub
 
     Public Function GetLog() As String
-        Dim s As String = ""
+        Dim sb As New StringBuilder(frm.lv.Items.Count * 80)
         For Each it As ListViewItem In frm.lv.Items
-            s &= it.Text & vbTab & it.SubItems(1).Text
+            sb.Append(it.Text).Append(vbTab).AppendLine(it.SubItems(1).Text)
         Next
-        Return s
+        Return sb.ToString()
     End Function
 
 End Class
