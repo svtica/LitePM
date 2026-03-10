@@ -45,6 +45,8 @@ Public Class cMonitor
     Private _counterName As String
     Private _instanceName As String
     Private _colInfos As Collection
+    Private _colInfosKeys As New List(Of String)
+    Private _maxItems As Integer = 3600         ' Keep at most 1 hour of data at 1s interval
     Private _enabled As Boolean = False
     Private _monitorCreated As Date
     Private _machineName As String
@@ -155,6 +157,7 @@ Public Class cMonitor
     End Sub
     Protected Overloads Overrides Sub Finalize()
         _colInfos = Nothing
+        _colInfosKeys = Nothing
         If timer IsNot Nothing Then
             Me.StopMonitoring()
             timer.Dispose()
@@ -166,6 +169,7 @@ Public Class cMonitor
     End Sub
     Public Sub Dispose() Implements System.IDisposable.Dispose
         _colInfos = Nothing
+        _colInfosKeys = Nothing
         If timer IsNot Nothing Then
             Me.StopMonitoring()
             timer.Dispose()
@@ -197,6 +201,12 @@ Public Class cMonitor
         End With
         Try
             _colInfos.Add(it, Key)
+            _colInfosKeys.Add(Key)
+            ' Evict oldest entries when the collection exceeds the max size
+            While _colInfos.Count > _maxItems AndAlso _colInfosKeys.Count > 0
+                _colInfos.Remove(_colInfosKeys(0))
+                _colInfosKeys.RemoveAt(0)
+            End While
         Catch ex As Exception
             Misc.ShowDebugError(ex)
         End Try
