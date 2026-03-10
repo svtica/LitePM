@@ -16,6 +16,7 @@ Public Class NativeDependenciesTree
     Public Class NativeDependency
         'liste des dll d�j� trouv�es
         Private Shared Cache As New Dictionary(Of String, NativeDependency)
+        Private Shared ReadOnly CacheLock As New Object
 
         Private m_PE As PEFile
         ''' <summary>
@@ -115,13 +116,15 @@ Public Class NativeDependenciesTree
                 If Me.PE IsNot Nothing AndAlso m_Dependencies Is Nothing Then
                     m_Dependencies = New List(Of NativeDependency)
                     'pour chaque dll import�e
-                    For Each i As DllImportEntry In Me.PE.ImportDirectory.DllEntries
-                        'si pas d�j� rencontr�, on l'ajoute au cache des "trouv�es"
-                        If Not Cache.ContainsKey(i.DllName) Then
-                            Cache.Add(i.DllName, New NativeDependency(i.DllName))
-                        End If
-                        Me.m_Dependencies.Add(Cache(i.DllName))
-                    Next
+                    SyncLock CacheLock
+                        For Each i As DllImportEntry In Me.PE.ImportDirectory.DllEntries
+                            'si pas d�j� rencontr�, on l'ajoute au cache des "trouv�es"
+                            If Not Cache.ContainsKey(i.DllName) Then
+                                Cache.Add(i.DllName, New NativeDependency(i.DllName))
+                            End If
+                            Me.m_Dependencies.Add(Cache(i.DllName))
+                        Next
+                    End SyncLock
                 End If
                 Return m_Dependencies
             End Get
