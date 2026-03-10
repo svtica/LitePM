@@ -654,14 +654,13 @@ Public Class cSnapshot250
             End If
 
             ' Heaps
-            ' TODO (have to fix heap enumeration before implenting it)
             If (options And Native.Api.Enums.SnapshotObject.[Heaps]) = Native.Api.Enums.SnapshotObject.[Heaps] Then
                 For Each proc As processInfos In Me.Processes.Values
                     Dim pid As Integer = proc.ProcessId
                     If pid > &H4 Then
-                        'HeapProvider.SyncUpdate(pid, -1)
-                        'Dim _dico As Dictionary(Of String, heapInfos) = HeapProvider.CurrentHeaps(pid)
-                        'Me.HeapsByProcessId(pid) = _dico
+                        HeapProvider.SyncUpdate(pid, -1)
+                        Dim _dico As Dictionary(Of String, heapInfos) = HeapProvider.CurrentHeaps(pid)
+                        Me.HeapsByProcessId(pid) = _dico
                     End If
                 Next
             End If

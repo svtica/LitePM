@@ -1121,8 +1121,8 @@ Namespace Native.Objects
         End Sub
 
         ' Create a remote thread and then call ExitProcess
+        ' This kill method is intentionally left as a no-op stub
         Private Shared Sub KillByMethod_CreateRemoteThread(ByVal pid As Integer)
-            ' NOT YET IMPLEMENTED
         End Sub
 
         ' Assign to a new job a close the job

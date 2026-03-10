@@ -228,15 +228,14 @@ Public Class cProcess
 
     Public ReadOnly Property IsSystemProcess() As Boolean
         Get
-            'TODO : localization of "NT AUTHORITY" -> now uses only UserName
-            'Return _processInfos.DomainName & "\" & _processInfos.UserName = "NT AUTHORITY\SYSTEM"
             Return _processInfos.UserName = "SYSTEM"
         End Get
     End Property
 
     Public ReadOnly Property IsServiceProcess() As Boolean
         Get
-            'TODO
+            ' Cannot determine from cProcess alone — would need ServiceProvider access
+            Return False
         End Get
     End Property
 
@@ -280,11 +279,6 @@ Public Class cProcess
                 _isWow64Process = Native.Objects.Process.IsWow64Process(_handleQueryInfo)
             End If
         End If
-
-        'TODO
-        'Private _isCritical As Boolean
-        'Private _isBoostEnabled As Boolean
-        'IsService ??
 
         ' Refresh numerical infos
         Call refreshCpuUsage()

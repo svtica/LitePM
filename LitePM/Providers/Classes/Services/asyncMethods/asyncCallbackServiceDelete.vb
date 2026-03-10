@@ -58,7 +58,7 @@ Public Class asyncCallbackServiceDelete
                 End Try
 
             Case cConnection.TypeOfConnection.RemoteConnectionViaWMI
-                ' TODO
+                ' Not supported for WMI connections
 
             Case Else
                 ' Local

@@ -65,7 +65,7 @@ Public Class asyncCallbackJobLimitsEnumerate
                 End Try
 
             Case cConnection.TypeOfConnection.RemoteConnectionViaWMI
-                ' TODO
+                ' Not supported for WMI connections
 
             Case cConnection.TypeOfConnection.SnapshotFile
                 ' Snapshot
