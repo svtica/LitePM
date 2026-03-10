@@ -24,8 +24,15 @@ jobs:
 
     - name: Restore external dependencies from res/
       run: |
+        # Ribbon DLL is a pure external dependency (no project builds it)
         Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
-        Write-Host "Copied System.Windows.Forms.Ribbon.dll from res/ to LitePM/"
+
+        # Pre-copy SecureChannel to its HintPath location so LitePM can resolve
+        # it during build (SecureChannel project builds after LitePM in MSBuild order)
+        New-Item -ItemType Directory -Force -Path "SecureChannel\bin\Release"
+        Copy-Item "res\SecureChannel.dll" -Destination "SecureChannel\bin\Release\"
+
+        Write-Host "Restored dependencies from res/"
       shell: powershell
 
     - name: Build solution
@@ -117,6 +124,8 @@ jobs:
     - name: Restore external dependencies from res/ (for CodeQL)
       run: |
         Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        New-Item -ItemType Directory -Force -Path "SecureChannel\bin\Release"
+        Copy-Item "res\SecureChannel.dll" -Destination "SecureChannel\bin\Release\"
       shell: powershell
 
     - name: Build for analysis
