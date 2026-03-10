@@ -517,6 +517,8 @@ Public Module Program
                 _pref = New Pref                        ' Preferences
                 _hotkeys = New cHotkeys                 ' Hotkeys
                 _log = New cLog                         ' Log instance
+                _log.LogToFile = My.Settings.SaveErrorLog
+                _log.LogFilePath = LogPath
                 _trayIcon = New cTrayIcon(2)            ' Tray icons
                 _updater = New cUpdate                  ' Updater class
                 _frmNetworkInfo = New frmNetworkInfo    ' Network info
