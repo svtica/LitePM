@@ -22,19 +22,9 @@ jobs:
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
 
-    - name: Setup NuGet
-      uses: nuget/setup-nuget@v2
-
     - name: Restore Ribbon dependency
       run: |
-        nuget install RibbonWinForms -Version 5.0.1.1 -OutputDirectory packages
-        if (!(Test-Path "packages\RibbonWinForms.5.0.1.1\lib\net48\System.Windows.Forms.Ribbon.dll")) {
-          Write-Host "Available package contents:"
-          Get-ChildItem -Path packages -Recurse | ForEach-Object { Write-Host $_.FullName }
-          throw "System.Windows.Forms.Ribbon.dll not found in NuGet package"
-        }
-        Copy-Item "packages\RibbonWinForms.5.0.1.1\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
-        Write-Host "Successfully copied System.Windows.Forms.Ribbon.dll to LitePM\"
+        Copy-Item "LitePM\publish\Application Files\LitePM_1_0_0_1\System.Windows.Forms.Ribbon.dll.deploy" -Destination "LitePM\System.Windows.Forms.Ribbon.dll"
       shell: powershell
 
     - name: Build solution
@@ -105,13 +95,9 @@ jobs:
     - name: Setup MSBuild (for CodeQL)
       uses: microsoft/setup-msbuild@v2
 
-    - name: Setup NuGet (for CodeQL)
-      uses: nuget/setup-nuget@v2
-
     - name: Restore Ribbon dependency (for CodeQL)
       run: |
-        nuget install RibbonWinForms -Version 5.0.1.1 -OutputDirectory packages
-        Copy-Item "packages\RibbonWinForms.5.0.1.1\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        Copy-Item "LitePM\publish\Application Files\LitePM_1_0_0_1\System.Windows.Forms.Ribbon.dll.deploy" -Destination "LitePM\System.Windows.Forms.Ribbon.dll"
       shell: powershell
 
     - name: Build for analysis
