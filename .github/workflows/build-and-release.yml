@@ -28,7 +28,7 @@ jobs:
     - name: Restore Ribbon dependency
       run: |
         nuget install RibbonWinForms -OutputDirectory packages
-        Copy-Item "packages\RibbonWinForms.*\lib\net40\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        Copy-Item "packages\RibbonWinForms.*\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
       shell: powershell
 
     - name: Build solution
@@ -108,7 +108,7 @@ jobs:
     - name: Restore Ribbon dependency (for CodeQL)
       run: |
         nuget install RibbonWinForms -OutputDirectory packages
-        Copy-Item "packages\RibbonWinForms.*\lib\net40\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        Copy-Item "packages\RibbonWinForms.*\lib\net48\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
       shell: powershell
 
     - name: Build for analysis
