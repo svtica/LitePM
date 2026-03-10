@@ -29,23 +29,7 @@ jobs:
       run: nuget restore LitePM.sln
       
     - name: Build solution
-      run: msbuild LitePM.sln /p:Configuration=Release "/p:Platform=Any CPU" /p:OutputPath=bin\Release\
-
-    - name: Force 64-bit execution
-      run: |
-        $sdkDir = (Get-Command msbuild).Path | Split-Path
-        $corflags = Get-ChildItem (Split-Path $sdkDir -Parent) -Recurse -Filter "CorFlags.exe" -ErrorAction SilentlyContinue | Select-Object -First 1
-        if (-not $corflags) {
-          $vsWhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
-          $vsPath = & $vsWhere -latest -property installationPath
-          $corflags = Get-ChildItem $vsPath -Recurse -Filter "CorFlags.exe" | Select-Object -First 1
-        }
-        if (-not $corflags) { throw "CorFlags.exe not found" }
-        Get-ChildItem "bin\Release\*.exe" | ForEach-Object {
-          Write-Host "Marking as 64-bit: $($_.Name)"
-          & $corflags.FullName /32BITREQ- /Force /nologo $_.FullName
-        }
-      shell: powershell
+      run: msbuild LitePM.sln /p:Configuration=Release "/p:Platform=Any CPU" /p:Prefer32Bit=false /p:OutputPath=bin\Release\
 
     - name: Copy dependencies and assets
       run: |
@@ -112,7 +96,7 @@ jobs:
     - name: Run CodeQL Analysis
       uses: github/codeql-action/init@v3
       with:
-        languages: 'csharp-and-vb'
+        languages: 'csharp'
         
     - name: Setup MSBuild (for CodeQL)
       uses: microsoft/setup-msbuild@v1.3
