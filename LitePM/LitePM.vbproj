@@ -216,13 +216,6 @@
     <ManifestKeyFile>LitePM_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aga.Controls">
-      <HintPath>..\Aga.Controls\bin\Release\Aga.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="SecureChannel">
-      <HintPath>..\SecureChannel\bin\Release\SecureChannel.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Drawing" />
@@ -234,9 +227,6 @@
       <HintPath>.\System.Windows.Forms.Ribbon.dll</HintPath>
     </Reference>
     <Reference Include="System.XML" />
-    <Reference Include="TaskDialog">
-      <HintPath>..\TaskDialog\bin\Release\TaskDialog.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Common" />
@@ -1493,6 +1483,18 @@
     <ProjectReference Include="..\SecurePasswordTextBox\SecurePasswordTextBox.csproj">
       <Project>{12ee0447-8ac7-4e1c-87b3-428a1a414cdf}</Project>
       <Name>SecurePasswordTextBox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SecureChannel\SecureChannel.csproj">
+      <Project>{602F813A-2157-4050-8ADA-10217636F33E}</Project>
+      <Name>SecureChannel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aga.Controls\Aga.Controls.csproj">
+      <Project>{E73BB233-D88B-44A7-A98F-D71EE158381D}</Project>
+      <Name>Aga.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TaskDialog\TaskDialog.csproj">
+      <Project>{5BF15AF5-DEB8-46A8-99C7-21993617D0C8}</Project>
+      <Name>TaskDialog</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
