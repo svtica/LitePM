@@ -79,13 +79,13 @@ jobs:
 
     - name: Create release package
       run: |
-        $version = "1.0.0"
+        $version = "1.0.1"
         if ($env:GITHUB_REF -like "refs/tags/*") {
           $version = $env:GITHUB_REF -replace "refs/tags/v", ""
         } elseif ($env:GITHUB_REF -like "refs/heads/*") {
           $branch = $env:GITHUB_REF -replace "refs/heads/", ""
           $sha = $env:GITHUB_SHA.Substring(0,7)
-          $version = "1.0.0-$branch-$sha"
+          $version = "1.0.1-$branch-$sha"
         }
 
         Compress-Archive -Path "publish\*" -DestinationPath "LitePM-$version-win-x64.zip"
