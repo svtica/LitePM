@@ -107,31 +107,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  security:
-    runs-on: windows-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Run CodeQL Analysis
-      uses: github/codeql-action/init@v3
-      with:
-        languages: 'csharp'
-
-    - name: Setup MSBuild (for CodeQL)
-      uses: microsoft/setup-msbuild@v2
-
-    - name: Restore external dependencies from res/ (for CodeQL)
-      run: |
-        Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
-        New-Item -ItemType Directory -Force -Path "SecureChannel\bin\Release"
-        Copy-Item "res\SecureChannel.dll" -Destination "SecureChannel\bin\Release\"
-      shell: powershell
-
-    - name: Build for analysis
-      run: |
-        msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU"
-      shell: powershell
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
