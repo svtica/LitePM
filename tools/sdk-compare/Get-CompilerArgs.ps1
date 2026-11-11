@@ -7,13 +7,13 @@ foreach ($line in Get-Content $Log) {
     if ($line -notmatch '(vbc|csc)(\.exe|\.dll)"?\s+/noconfig') { continue }
     $hits++
     $cmd = $line.Substring($line.IndexOf('/noconfig'))
-    $out = if ($cmd -match '/out:("[^"]+"|\S+)') { Split-Path ($Matches[1].Trim('"')) -Leaf } else { 'unknown' }
+    $target = if ($cmd -match '/out:("[^"]+"|\S+)') { Split-Path ($Matches[1].Trim('"')) -Leaf } else { 'unknown' }
     $tokens = [regex]::Matches($cmd, '("[^"]*"|\S)+') | ForEach-Object { $_.Value.Trim('"') }
     foreach ($t in $tokens) {
         $t = $t.Replace($Root, '<ROOT>')
         # framework reference paths differ between the legacy and SDK resolution
         $t = $t -replace '^/reference:.*\\([^\\]+)$', '/reference:$1'
-        $result.Add("$out $t")
+        $result.Add("$target $t")
     }
 }
 Set-Content -Path $Out -Encoding UTF8 -Value (($result | Sort-Object -Unique) -join "`r`n")
