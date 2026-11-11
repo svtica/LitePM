@@ -105,7 +105,7 @@ jobs:
     - name: Before / after summary
       run: |
         {
-          echo "## LitePM memory soak — before (base) vs after (head)"
+          echo "## LitePM memory soak - before (base) vs after (head)"
           echo
           for v in base head; do
             if [ -f "soak-$v.md" ]; then cat "soak-$v.md"; echo; else echo "_No result for $v._"; echo; fi
