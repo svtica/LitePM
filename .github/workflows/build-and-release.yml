@@ -165,13 +165,17 @@ jobs:
 
     - name: Create release package
       run: |
-        $version = "1.0.1"
+        # Version of branch builds: AssemblyVersion (Major.Minor.Build). Not stored
+        # in this file: a workflow cannot push changes to workflow files.
+        $asm = Get-Content "LitePM\My Project\AssemblyInfo.vb" -Raw
+        $m = [regex]::Match($asm, '(?m)^<Assembly:\s*AssemblyVersion\("(\d+\.\d+\.\d+)\.\d+"\)>')
+        $version = if ($m.Success) { $m.Groups[1].Value } else { "0.0.0" }
         if ($env:RELEASE_REF -like "refs/tags/*") {
           $version = $env:RELEASE_REF -replace "refs/tags/v", ""
         } elseif ($env:RELEASE_REF -like "refs/heads/*") {
           $branch = ($env:RELEASE_REF -replace "refs/heads/", "") -replace "[^A-Za-z0-9._-]", "-"
           $sha = $env:GITHUB_SHA.Substring(0,7)
-          $version = $version + "-$branch-$sha"   # not a quoted literal: bump-version.ps1 only rewrites the line above
+          $version = "$version-$branch-$sha"
         }
 
         Compress-Archive -Path "publish\*" -DestinationPath "LitePM.zip"
