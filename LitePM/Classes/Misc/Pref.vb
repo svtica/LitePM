@@ -117,16 +117,13 @@ Public Class Pref
         If first Then
             first = False
 
-            ' Ribbon style ?
-            Call _frmMain.permuteMenuStyle(My.Settings.UseRibbonStyle)
-
             ' Update ?
             If My.Settings.UpdateAuto Then
                 Program.Updater.CheckUpdates(True)
             End If
 
             _frmMain.TopMost = My.Settings.TopMost
-            _frmMain.butAlwaysDisplay.Checked = My.Settings.TopMost
+            _frmMain.MenuItemSystemAlwaysVisible.Checked = My.Settings.TopMost
             _frmMain.Visible = Not (My.Settings.StartHidden)
             _frmMain.MenuItemMainAlwaysVisible.Checked = My.Settings.TopMost
             _frmMain.MenuItemNotifNP.Checked = My.Settings.NotifyNewProcesses

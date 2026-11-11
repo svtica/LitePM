@@ -25,6 +25,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - A process handle leaked when the token of a process could not be opened,
     and `NtGetNextProcess` handles leaked in the fallback handle lookup.
 
+### Changed
+- Lighter user interface: the ribbon (and `System.Windows.Forms.Ribbon.dll`)
+  is removed; LitePM always uses the menus and tabs. The ribbon control was
+  built at every start even in menu mode, where the window title and some
+  refreshes followed the hidden ribbon tab instead of the displayed one.
+  Ribbon-only commands now in the menus: *Run a new process...* (File and
+  Processes), *Help > About LitePM*, and in Files: file properties, open file
+  directory, directory properties, Internet search.
+- Only the displayed list is refreshed: tasks, jobs, network connections and
+  the monitor graph are no longer refreshed every second in the background;
+  services only when displayed or when service notifications are on. The
+  process list (filter used by LiteTask, notifications) is unchanged.
+- The system and network information windows are created when first opened
+  and only refresh while visible (their timers ran from startup before).
+- System information is sampled once per second instead of twice (the tray
+  icon reused to refresh it, which also halved the CPU usage interval).
+
+### Removed
+- Ribbon option in Preferences (`UseRibbonStyle` setting).
+- Entries for features that were not implemented: State based actions (and
+  its 1-second timer that did nothing), TraceRoute and WhoIs network tools.
+  The "Free memory" ribbon button (a forced garbage collection of LitePM
+  itself) is not carried over.
+
 ### Added
 - `tools/soak/Measure-LitePM.ps1` and the **Memory soak** workflow: a
   multi-hour run under process churn that compares Private Bytes, handles,

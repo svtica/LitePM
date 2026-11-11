@@ -24,9 +24,6 @@ jobs:
 
     - name: Restore external dependencies from res/
       run: |
-        # Ribbon DLL is a pure external dependency (no project builds it)
-        Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
-
         # Pre-copy SecureChannel to its HintPath location so LitePM can resolve
         # it during build (SecureChannel project builds after LitePM in MSBuild order)
         New-Item -ItemType Directory -Force -Path "SecureChannel\bin\Release"
@@ -47,7 +44,6 @@ jobs:
           "Aga.Controls.dll",
           "SecureChannel.dll",
           "SecurePasswordTextBox.dll",
-          "System.Windows.Forms.Ribbon.dll",
           "TaskDialog.dll"
         )
         foreach ($dll in $fallbackDlls) {
