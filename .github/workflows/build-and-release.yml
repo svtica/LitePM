@@ -59,7 +59,7 @@ jobs:
 
     - name: Build solution
       run: |
-        msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU"
+        msbuild LitePM.sln --% -restore /p:Configuration=Release /p:Platform="Any CPU"
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       shell: powershell
 
