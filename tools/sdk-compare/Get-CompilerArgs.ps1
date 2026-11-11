@@ -2,8 +2,10 @@
 # each project from a detailed msbuild log, one sorted argument per line.
 param([Parameter(Mandatory)] [string] $Log, [Parameter(Mandatory)] [string] $Root, [Parameter(Mandatory)] [string] $Out)
 $result = New-Object System.Collections.Generic.List[string]
+$hits = 0
 foreach ($line in Get-Content $Log) {
     if ($line -notmatch '(vbc|csc)(\.exe|\.dll)"?\s+/noconfig') { continue }
+    $hits++
     $cmd = $line.Substring($line.IndexOf('/noconfig'))
     $out = if ($cmd -match '/out:("[^"]+"|\S+)') { Split-Path ($Matches[1].Trim('"')) -Leaf } else { 'unknown' }
     $tokens = [regex]::Matches($cmd, '("[^"]*"|\S)+') | ForEach-Object { $_.Value.Trim('"') }
@@ -14,5 +16,5 @@ foreach ($line in Get-Content $Log) {
         $result.Add("$out $t")
     }
 }
-$result | Sort-Object -Unique | Set-Content -Path $Out -Encoding UTF8
-Write-Host "$($result.Count) arguments -> $Out"
+Set-Content -Path $Out -Encoding UTF8 -Value (($result | Sort-Object -Unique) -join "`r`n")
+Write-Host "$hits compiler command lines, $($result.Count) arguments -> $Out"
