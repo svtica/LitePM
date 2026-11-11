@@ -73,7 +73,7 @@ This project is **Production Ready** but **not actively developed**. Moderate co
 ## System Requirements
 
 - Windows 7 or later
-- .NET Framework 4.7.2 or higher
+- .NET Framework 4.8
 - Administrative privileges recommended for full functionality
 
 ## License
