@@ -9,6 +9,10 @@
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <!-- The SDK infers a RuntimeIdentifier for .NET Framework executables (win-x64
+         for the x64 Release build): make restore produce assets for it. -->
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <Deterministic>false</Deterministic>
     <DisableImplicitFrameworkDefines>true</DisableImplicitFrameworkDefines>
     <EmbeddedResourceUseDependentUponConvention>false</EmbeddedResourceUseDependentUponConvention>
