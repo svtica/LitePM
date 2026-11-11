@@ -10,8 +10,9 @@ What it does:
 - keeps starting short-lived processes (copies of `ping.exe` under several
   names, ~30 per minute plus their `conhost.exe`), so LitePM constantly sees
   processes appear and disappear;
-- samples every 30 s: Private Bytes, Working Set, kernel handles, GDI objects,
-  USER objects, threads and the .NET GC heap;
+- records how long the main window takes to appear, then samples every 30 s:
+  Private Bytes, Working Set, kernel handles, GDI objects,
+  USER objects, threads, CPU (% of one core) and the .NET GC heap;
 - writes a CSV and a Markdown summary: value after the warm-up (short run),
   value at the end, and the linear growth per hour after the warm-up.
 
