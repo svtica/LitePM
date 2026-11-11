@@ -25,6 +25,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   - A process handle leaked when the token of a process could not be opened,
     and `NtGetNextProcess` handles leaked in the fallback handle lookup.
 
+### Added
+- `tools/soak/Measure-LitePM.ps1` and the **Memory soak** workflow: a
+  multi-hour run under process churn that compares Private Bytes, handles,
+  GDI and USER objects between `main` and a pull request.
+- Authenticode signing in CI: `LitePM.exe`, `LitePMService.exe` and the DLLs
+  built by the solution are signed (SHA-256, DigiCert timestamp) before the
+  release zip is created, when the `SIGNING_CERTIFICATE` and
+  `CERTIFICATE_PASSWORD` secrets exist. Each signature is verified
+  (`tools/ci/Sign-Binaries.ps1`). Without the secrets, CI still exercises the
+  signing script on a copy of the binaries with a throw-away self-signed
+  certificate; the package then stays unsigned.
+- CI check of the release package against the LiteTask contract (asset name,
+  `LitePM.exe` and its dependencies at the zip root).
+
 ### Changed
 - Lighter user interface: the ribbon (and `System.Windows.Forms.Ribbon.dll`)
   is removed; LitePM always uses the menus and tabs. The ribbon control was
@@ -41,6 +55,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   and only refresh while visible (their timers ran from startup before).
 - System information is sampled once per second instead of twice (the tray
   icon reused to refresh it, which also halved the CPU usage interval).
+- Pushing a `v*` tag now builds and publishes the release (as
+  `bump-version.ps1` already assumed); publishing a release still works.
+- Branch build packages no longer break on branch names containing `/`.
+- `softprops/action-gh-release` v1 -> v2.
 
 ### Removed
 - Ribbon option in Preferences (`UseRibbonStyle` setting).
@@ -48,12 +66,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   its 1-second timer that did nothing), TraceRoute and WhoIs network tools.
   The "Free memory" ribbon button (a forced garbage collection of LitePM
   itself) is not carried over.
-
-### Added
-- `tools/soak/Measure-LitePM.ps1` and the **Memory soak** workflow: a
-  multi-hour run under process churn that compares Private Bytes, handles,
-  GDI and USER objects between `main` and a pull request.
-
-### Removed
 - The memory leak warning and the "restart every few hours" workaround from
   the README.

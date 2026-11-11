@@ -76,6 +76,26 @@ This project is **Production Ready** but **not actively developed**. Moderate co
 - .NET Framework 4.8
 - Administrative privileges recommended for full functionality
 
+## Releases and code signing
+
+Releases are built by `.github/workflows/build-and-release.yml` when a `v<semver>`
+tag is pushed (`bump-version.ps1 -Version 1.2.3.0` updates the version, tags and
+pushes). The release asset is `LitePM-<version>-win-x64.zip`, with `LitePM.exe` and
+all its DLLs and `.config` at the root of the zip: LiteTask downloads this asset
+(Tools > Process manager) and keeps that layout.
+
+`LitePM.exe`, `LitePMService.exe` and the DLLs built by the solution are signed
+with Authenticode (SHA-256, RFC 3161 timestamp) when the repository has these
+Actions secrets:
+
+| Secret | Content |
+|---|---|
+| `SIGNING_CERTIFICATE` | the code-signing `.pfx`, base64-encoded |
+| `CERTIFICATE_PASSWORD` | the `.pfx` password |
+
+Without them the build still succeeds and the package is unsigned (a warning is
+shown on tag builds). Never commit a certificate or password to the repository.
+
 ## License
 
 This software is released under [The Unlicense](LICENSE) - public domain.
