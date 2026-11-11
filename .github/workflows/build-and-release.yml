@@ -111,41 +111,28 @@ jobs:
 
     - name: Sign executables and DLLs
       if: ${{ env.CERTIFICATE_BASE64 != '' }}
+      run: ./tools/ci/Sign-Binaries.ps1 -Dir publish -CertPath "$env:CERTIFICATE_PATH"
+      shell: pwsh
+
+    # Without the secret, still exercise the signing script on a copy of the
+    # binaries with a throw-away self-signed certificate (trusted on this
+    # ephemeral runner only). The package itself stays unsigned.
+    - name: Signing self-test (no secret)
+      if: ${{ env.CERTIFICATE_BASE64 == '' }}
       run: |
-        # Find signtool.exe dynamically (latest Windows SDK)
-        $signtool = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe" -ErrorAction SilentlyContinue |
-                    Sort-Object FullName -Descending |
-                    Select-Object -First 1
-        if (-not $signtool) {
-          Write-Error "signtool.exe not found in Windows SDK"
-          exit 1
-        }
-        Write-Host "Using signtool: $($signtool.FullName)"
-
-        # Binaries built by this solution.
-        # third-party precompiled DLL (res/) and keeps its own (lack of) signature.
-        $files = @(
-          "LitePM.exe",
-          "LitePMService.exe",
-          "Aga.Controls.dll",
-          "TaskDialog.dll",
-          "SecurePasswordTextBox.dll",
-          "SecureChannel.dll"
-        ) | ForEach-Object { Join-Path "publish" $_ } | Where-Object { Test-Path $_ }
-
-        foreach ($file in $files) {
-          Write-Host "Signing: $file"
-          & $signtool.FullName sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSWORD" /tr http://timestamp.digicert.com /td sha256 /fd sha256 "$file"
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Failed to sign $file"
-            exit 1
-          }
-          & $signtool.FullName verify /pa "$file"
-          if ($LASTEXITCODE -ne 0) {
-            Write-Error "Signature verification failed for $file"
-            exit 1
-          }
-        }
+        $cert = New-SelfSignedCertificate -Type CodeSigningCert -Subject "CN=LitePM CI self-test" -CertStoreLocation Cert:\CurrentUser\My -NotAfter (Get-Date).AddDays(1)
+        $pfxPassword = [guid]::NewGuid().ToString()
+        $env:SELFTEST_PASSWORD = $pfxPassword
+        $pfx = Join-Path $env:RUNNER_TEMP "selftest.pfx"
+        Export-PfxCertificate -Cert $cert -FilePath $pfx -Password (ConvertTo-SecureString $pfxPassword -AsPlainText -Force) | Out-Null
+        $cer = Join-Path $env:RUNNER_TEMP "selftest.cer"
+        Export-Certificate -Cert $cert -FilePath $cer | Out-Null
+        Import-Certificate -FilePath $cer -CertStoreLocation Cert:\LocalMachine\Root | Out-Null
+        $copy = Join-Path $env:RUNNER_TEMP "sign-selftest"
+        New-Item -ItemType Directory -Force -Path $copy | Out-Null
+        Copy-Item "publish\*.exe", "publish\*.dll" -Destination $copy
+        ./tools/ci/Sign-Binaries.ps1 -Dir $copy -CertPath $pfx -PasswordEnvVar SELFTEST_PASSWORD
+        Remove-Item $pfx, $cer -Force
       shell: pwsh
 
     - name: Remove certificate
