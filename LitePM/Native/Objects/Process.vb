@@ -473,6 +473,10 @@ Namespace Native.Objects
 
                     Return True
                 Else
+                    ' Token not accessible: still close the process handle
+                    If hProc.IsNotNull Then
+                        NativeFunctions.CloseHandle(hProc)
+                    End If
                     _UserName = ""
                     Return False
                 End If
@@ -998,8 +1002,15 @@ Namespace Native.Objects
                 ' Try to find a handle using NtGetNextProcess
                 Dim i As Integer = 0        ' Watchdog
                 Do While True
-                    NativeFunctions.NtGetNextProcess(curHandle, access, 0, 0, curHandle)
+                    Dim nextHandle As IntPtr
+                    NativeFunctions.NtGetNextProcess(curHandle, access, 0, 0, nextHandle)
+                    ' Each step returns a new handle: close the previous one
+                    If curHandle.IsNotNull Then
+                        NativeFunctions.CloseHandle(curHandle)
+                    End If
+                    curHandle = nextHandle
                     ' Get process Id of this handle
+                    ' (a null handle restarts the enumeration from the beginning)
                     If curHandle.IsNotNull Then
                         Dim thePid As Integer = NativeFunctions.GetProcessId(curHandle)
                         If thePid = pid Then
@@ -1009,6 +1020,9 @@ Namespace Native.Objects
                     i += 1
                     ' We assume there are less than 800 processes...
                     If i > 800 Then
+                        If curHandle.IsNotNull Then
+                            NativeFunctions.CloseHandle(curHandle)
+                        End If
                         Exit Do
                     End If
                 Loop

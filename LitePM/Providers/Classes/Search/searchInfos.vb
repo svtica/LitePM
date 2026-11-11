@@ -105,9 +105,8 @@ Imports Native.Api.Enums
 
             If obj.TypeOfObject <> GeneralObjectType.Service Then
                 ' Try to get the owner process
-                Dim _curProc As cProcess = ProcessProvider.GetProcessById(_pid)
-                If _curProc IsNot Nothing Then
-                    Dim nn As String = _curProc.Infos.Name
+                Dim nn As String = ProcessProvider.GetProcessNameById(_pid)
+                If nn IsNot Nothing Then
                     If String.IsNullOrEmpty(nn) = False Then
                         res = "Process " & nn & " (" & _pid.ToString & ")"
                     Else

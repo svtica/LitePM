@@ -61,16 +61,10 @@ LitePM is a comprehensive process management application that provides detailed 
 
 ## Technology Stack
 
-- **Platform**: .NET Framework 4.7.2
+- **Platform**: .NET Framework 4.8
 - **Language**: VB.NET
 - **UI**: Windows Forms
 - **System APIs**: WMI, Windows APIs for process management
-
-## Critical Issues
-
-⚠️ **Memory Leak Warning**: LitePM stores process information in memory which can cause memory saturation if the application is left running for extended periods. It is recommended to periodically restart the application to prevent excessive memory usage.
-
-**Workaround**: Close and restart LitePM every few hours during extended monitoring sessions.
 
 ## Development Status
 

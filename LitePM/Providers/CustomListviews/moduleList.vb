@@ -361,8 +361,7 @@ Public Class moduleList
 
                         Dim fName As String = _dico.Item(key).Infos.Path
 
-                        If IO.File.Exists(fName) Then
-                            Me.SmallImageList.Images.Add(fName, GetIcon(fName, True))
+                        If IO.File.Exists(fName) AndAlso Common.Misc.AddFileIconToImageList(Me.SmallImageList, fName, fName) Then
                             item.ImageKey = fName
                         Else
                             item.ImageKey = "dllIcon"

@@ -236,4 +236,44 @@ Public MustInherit Class customLV
 
     End Sub
 
+    ' Image lists only grow (an image per new key). When _IMG holds more than
+    ' MAX_IMAGES_BEFORE_COMPACT images, rebuild it with only the images still
+    ' used by an item. Call it after removing items.
+    Protected Const MAX_IMAGES_BEFORE_COMPACT As Integer = 256
+
+    Protected Sub CompactImageListIfNeeded()
+        If _IMG Is Nothing OrElse _IMG.Images.Count <= MAX_IMAGES_BEFORE_COMPACT Then
+            Exit Sub
+        End If
+        Dim used As New HashSet(Of String)(StringComparer.Ordinal)
+        For Each it As ListViewItem In Me.Items
+            If it.ImageKey IsNot Nothing Then
+                used.Add(it.ImageKey)
+            End If
+        Next
+        used.Add("noIcon")
+
+        Dim oldList As ImageList = _IMG
+        Dim newList As New ImageList
+        newList.ImageSize = oldList.ImageSize
+        newList.ColorDepth = oldList.ColorDepth
+        Common.Misc.EnsureImageListHandle(newList)
+        For Each key As String In used
+            If oldList.Images.ContainsKey(key) Then
+                Using img As Image = oldList.Images.Item(key)
+                    newList.Images.Add(key, img)
+                End Using
+            End If
+        Next
+
+        _IMG = newList
+        Me.SmallImageList = newList
+        ' ImageKey is resolved against the new list
+        For Each it As ListViewItem In Me.Items
+            Dim k As String = it.ImageKey
+            it.ImageKey = k
+        Next
+        oldList.Dispose()
+    End Sub
+
 End Class

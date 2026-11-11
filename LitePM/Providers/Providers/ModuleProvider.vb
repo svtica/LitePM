@@ -348,8 +348,14 @@ Public Class ModuleProvider
         Dim _dico As Dictionary(Of String, moduleInfos)
 
         ' If it's a Wow64 process, module enumeration is made using debug functions
-        Dim cProc As cProcess = ProcessProvider.GetProcessById(pObj.pid)
-        If cProc IsNot Nothing AndAlso cProc.IsWow64Process Then
+        Dim isWow64 As Boolean = False
+        ' Temporary cProcess: dispose it to close its native handles
+        Using cProc As cProcess = ProcessProvider.GetProcessById(pObj.pid)
+            If cProc IsNot Nothing Then
+                isWow64 = cProc.IsWow64Process
+            End If
+        End Using
+        If isWow64 Then
             _dico = Native.Objects.Module.EnumerateModulesWow64ByProcessId(pObj.pid, False)
         Else
             ' Normal native enumeration

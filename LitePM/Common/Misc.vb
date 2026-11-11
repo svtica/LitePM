@@ -650,6 +650,63 @@ Namespace Common
             End With
         End Sub
 
+        ' SHGetFileInfo returns an HICON that the caller must destroy.
+        ' Icon.FromHandle does NOT take ownership of it, so returning that
+        ' object leaked one USER object per call (once per process start in
+        ' the process list). Return a clone that owns its own handle (freed by
+        ' Icon.Dispose) and destroy the original HICON here.
+        ' Callers should dispose the returned icon.
+        Private Shared Function IconFromOwnedHandle(ByVal hIcon As IntPtr) As System.Drawing.Icon
+            If hIcon.IsNull Then
+                Return Nothing
+            End If
+            Try
+                Using tmp As System.Drawing.Icon = System.Drawing.Icon.FromHandle(hIcon)
+                    Return CType(tmp.Clone(), System.Drawing.Icon)
+                End Using
+            Catch ex As Exception
+                ' Can't retrieve icon
+                Return Nothing
+            Finally
+                Native.Api.NativeFunctions.DestroyIcon(hIcon)
+            End Try
+        End Function
+
+        ' Add the icon of a file to an image list under 'key', once.
+        ' Returns True if the image list contains 'key' afterwards.
+        Public Shared Function AddFileIconToImageList(ByVal list As ImageList, ByVal key As String, ByVal fName As String) As Boolean
+            If list.Images.ContainsKey(key) Then
+                Return True
+            End If
+            EnsureImageListHandle(list)
+            Using ico As System.Drawing.Icon = GetIcon2(fName, True)
+                If ico Is Nothing Then
+                    Return False
+                End If
+                list.Images.Add(key, ico)
+            End Using
+            Return True
+        End Function
+
+        ' Bitmap of the icon of a file (Nothing if not available).
+        ' The intermediate Icon is disposed.
+        Public Shared Function GetIconBitmap(ByVal fName As String, ByVal small As Boolean) As Bitmap
+            Using ico As System.Drawing.Icon = GetIcon(fName, small)
+                If ico Is Nothing Then
+                    Return Nothing
+                End If
+                Return ico.ToBitmap
+            End Using
+        End Function
+
+        ' Make sure an ImageList has created its native handle, so that
+        ' Images.Add copies the image at once and the source can be disposed.
+        Public Shared Sub EnsureImageListHandle(ByVal list As ImageList)
+            If list IsNot Nothing AndAlso list.HandleCreated = False Then
+                Dim h As IntPtr = list.Handle
+            End If
+        End Sub
+
         Public Shared Function GetIcon(ByVal fName As String, Optional ByVal small As Boolean = True) _
                 As System.Drawing.Icon
 
@@ -670,16 +727,7 @@ Namespace Common
                     Native.Api.NativeConstants.SHGFI_ICON Or Native.Api.NativeConstants.SHGFI_LARGEICON)
             End If
 
-            Dim img As System.Drawing.Icon = Nothing
-            Try
-                If shinfo.hIcon.IsNotNull Then
-                    img = System.Drawing.Icon.FromHandle(shinfo.hIcon)
-                End If
-            Catch ex As Exception
-                ' Can't retrieve icon
-            End Try
-
-            Return img
+            Return IconFromOwnedHandle(shinfo.hIcon)
 
         End Function
 
@@ -701,16 +749,7 @@ Namespace Common
                     Native.Api.NativeConstants.SHGFI_ICON Or Native.Api.NativeConstants.SHGFI_LARGEICON)
             End If
 
-            Dim img As System.Drawing.Icon = Nothing
-            Try
-                If shinfo.hIcon.IsNotNull Then
-                    img = System.Drawing.Icon.FromHandle(shinfo.hIcon)
-                End If
-            Catch ex As Exception
-                ' Can't retrieve icon
-            End Try
-
-            Return img
+            Return IconFromOwnedHandle(shinfo.hIcon)
 
         End Function
 
