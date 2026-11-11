@@ -78,9 +78,12 @@ This project is **Production Ready** but **not actively developed**. Moderate co
 
 ## Releases and code signing
 
-Releases are built by `.github/workflows/build-and-release.yml` when a `v<semver>`
-tag is pushed (`bump-version.ps1 -Version 1.2.3.0` updates the version, tags and
-pushes). The release asset is `LitePM-<version>-win-x64.zip`, with `LitePM.exe` and
+To publish a release, run **Actions > Release > Run workflow** on GitHub and
+choose the increment (patch, minor, major) or type a version. The workflow
+updates the version, commits it on `main`, tags `v<Major.Minor.Build>` and builds
+and publishes the release. From a local clone on `main`, the same is done with
+`.\bump-version.ps1 -Bump patch` (or `-Version 1.2.3.0`): pushing the tag
+triggers `.github/workflows/build-and-release.yml`. The release asset is `LitePM-<version>-win-x64.zip`, with `LitePM.exe` and
 all its DLLs and `.config` at the root of the zip: LiteTask downloads this asset
 (Tools > Process manager) and keeps that layout.
 
