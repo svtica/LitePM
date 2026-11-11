@@ -63,7 +63,6 @@ Partial Class frmPreferences
         Me.chkUserGroup = New System.Windows.Forms.CheckBox
         Me.chkHideClosed = New System.Windows.Forms.CheckBox
         Me.chkHideMinimized = New System.Windows.Forms.CheckBox
-        Me.chkRibbon = New System.Windows.Forms.CheckBox
         Me.GroupBox3 = New System.Windows.Forms.GroupBox
         Me.pctDeletedItems = New System.Windows.Forms.PictureBox
         Me.Label8 = New System.Windows.Forms.Label
@@ -384,8 +383,7 @@ Partial Class frmPreferences
         Me.TabPage3.Controls.Add(Me.chkUserGroup)
         Me.TabPage3.Controls.Add(Me.chkHideClosed)
         Me.TabPage3.Controls.Add(Me.chkHideMinimized)
-        Me.TabPage3.Controls.Add(Me.chkRibbon)
-        Me.TabPage3.Controls.Add(Me.GroupBox3)
+        Me.TabPage3.Controls.Add(        Me.TabPage3.Controls.Add(Me.GroupBox3)
         Me.TabPage3.Controls.Add(Me.chkTrayIcon)
         Me.TabPage3.ImageKey = "(aucun)"
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
@@ -484,15 +482,6 @@ Partial Class frmPreferences
         Me.chkHideMinimized.Text = "Hide when minimized"
         Me.chkHideMinimized.UseVisualStyleBackColor = True
         '
-        'chkRibbon
-        '
-        Me.chkRibbon.AutoSize = True
-        Me.chkRibbon.Location = New System.Drawing.Point(15, 125)
-        Me.chkRibbon.Name = "chkRibbon"
-        Me.chkRibbon.Size = New System.Drawing.Size(127, 17)
-        Me.chkRibbon.TabIndex = 2
-        Me.chkRibbon.Text = "Ribbon style menus"
-        Me.chkRibbon.UseVisualStyleBackColor = True
         '
         'GroupBox3
         '
@@ -991,7 +980,6 @@ Partial Class frmPreferences
     Friend WithEvents pctDeletedItems As System.Windows.Forms.PictureBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents pctNewitems As System.Windows.Forms.PictureBox
-    Friend WithEvents chkRibbon As System.Windows.Forms.CheckBox
     Friend WithEvents colDial As System.Windows.Forms.ColorDialog
     Friend WithEvents chkHideMinimized As System.Windows.Forms.CheckBox
     Friend WithEvents Label9 As System.Windows.Forms.Label

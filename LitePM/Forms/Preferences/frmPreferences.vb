@@ -22,7 +22,6 @@ Public Class frmPreferences
 
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
         ' Save
-        Dim _oldRibbonStyle As Boolean = My.Settings.UseRibbonStyle
         My.Settings.ServiceInterval = CInt(Val(Me.txtServiceIntervall.Text))
         My.Settings.ProcessInterval = CInt(Val(Me.txtProcessIntervall.Text))
         My.Settings.WindowsStartup = Me.chkStart.Checked
@@ -37,7 +36,6 @@ Public Class frmPreferences
         My.Settings.TaskInterval = CInt(Val(Me.txtTaskInterval.Text))
         My.Settings.NetworkInterval = CInt(Val(Me.txtNetworkInterval.Text))
         My.Settings.JobInterval = CInt(Val(Me.txtJobInterval.Text))
-        My.Settings.UseRibbonStyle = Me.chkRibbon.Checked
         My.Settings.SearchEngine = Me.txtSearchEngine.Text
         My.Settings.WarnDangerousActions = Me.chkWarn.Checked
         My.Settings.HideWhenMinimized = Me.chkHideMinimized.Checked
@@ -115,14 +113,6 @@ Public Class frmPreferences
         Program.Preferences.Save()
         Program.Preferences.Apply()
 
-        If Not (_oldRibbonStyle = My.Settings.UseRibbonStyle) Then
-            Dim ret As Integer
-            ret = Misc.ShowMsg("Menu style has changed", "The new menu style will be displayed next time you start LitePM." & " Do you want to exit LitePM now ?", MessageBoxButtons.YesNo)
-            If ret = DialogResult.Yes Then
-                Program.ExitLitePM()
-                Exit Sub
-            End If
-        End If
 
         Misc.ShowMsg("Preferences", "Saved preferences sucessfully.", MessageBoxButtons.OK)
 
@@ -152,7 +142,6 @@ Public Class frmPreferences
         SetToolTip(Me.txtTaskInterval, "Set interval (milliseconds) between two refreshments of task list.")
         SetToolTip(Me.txtNetworkInterval, "Set interval (milliseconds) between two refreshments of network connections list.")
         SetToolTip(Me.txtJobInterval, "Set interval (milliseconds) between two refreshments of job list.")
-        SetToolTip(Me.chkRibbon, "Show ribbon style menu.")
         SetToolTip(Me.txtSearchEngine, "Search engine for 'Internet search'. Use the keyword ITEM to specify the item name to search.")
         SetToolTip(Me.chkWarn, "Warn user for all (potentially) dangerous actions.")
         SetToolTip(Me.chkHideMinimized, "Hide main form when minimized.")
@@ -199,7 +188,6 @@ Public Class frmPreferences
         Me.cbPriority.SelectedIndex = My.Settings.Priority
         Me.txtTaskInterval.Text = My.Settings.TaskInterval.ToString
         Me.txtNetworkInterval.Text = My.Settings.NetworkInterval.ToString
-        Me.chkRibbon.Checked = My.Settings.UseRibbonStyle
         Me.txtSearchEngine.Text = My.Settings.SearchEngine
         Me.chkWarn.Checked = My.Settings.WarnDangerousActions
         Me.chkHideMinimized.Checked = My.Settings.HideWhenMinimized
@@ -319,7 +307,6 @@ Public Class frmPreferences
         Me.txtNetworkInterval.Value = 1000
         Me.txtTrayInterval.Value = 1000
         Me.txtSysInfoInterval.Value = 1000
-        Me.chkRibbon.Checked = True
         Me.txtSearchEngine.Text = "http://www.google.com/search?hl=en&q=ITEM"
         Me.chkWarn.Checked = True
         Me.chkHideClosed.Checked = True

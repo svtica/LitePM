@@ -4,13 +4,11 @@
 
 Option Strict On
 Imports Common.Misc
-Imports System.Windows.Forms.Ribbon
 
 Public Class frmMain
 
     ' Private attributes
 
-    Private _ribbonStyle As Boolean = True
     Private _local As Boolean = True
     Private _notWMI As Boolean = True
     Private _notSnapshotMode As Boolean = True
@@ -193,11 +191,7 @@ Public Class frmMain
         ' Update list
         ServiceProvider.Update(False, Me.lvServices.InstanceId)
 
-        If Me.Ribbon IsNot Nothing AndAlso Me.Ribbon.ActiveTab IsNot Nothing Then
-            If Me.Ribbon.ActiveTab.Text = "Services" Then
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvServices.Items.Count) & " services running"
-            End If
-        End If
+        If _tab.SelectedTab Is Me.pageServices Then Call UpdateTitle()
 
     End Sub
 
@@ -207,11 +201,7 @@ Public Class frmMain
         ' Update list
         JobProvider.Update(False, Me.lvJob.InstanceId)
 
-        If Me.Ribbon IsNot Nothing AndAlso Me.Ribbon.ActiveTab IsNot Nothing Then
-            If Me.Ribbon.ActiveTab.Text = "Jobs" Then
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvJob.Items.Count) & " jobs running"
-            End If
-        End If
+        If _tab.SelectedTab Is Me.pageJobs Then Call UpdateTitle()
 
     End Sub
 
@@ -221,12 +211,7 @@ Public Class frmMain
         ' Update list of processes
         ProcessProvider.Update(False, Me.lvProcess.InstanceId)
 
-        If Me.Ribbon IsNot Nothing AndAlso Me.Ribbon.ActiveTab IsNot Nothing Then
-            Dim ss As String = Me.Ribbon.ActiveTab.Text
-            If ss = "Processes" Or ss = "Monitor" Or ss = "Misc" Or ss = "Help" Or ss = "File" Then
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvProcess.Items.Count) & " processes running"
-            End If
-        End If
+        Call UpdateTitle()
 
     End Sub
 
@@ -301,14 +286,6 @@ Public Class frmMain
             Me.ShowInTaskbar = False
         End If
         If My.Settings.StartHidden Then
-            ' If Ribbon is displayed, there is a problem : Form is automatically shown...
-            ' So we have to remove it from taskbar and move it to the left to hide it
-            ' If Ribbon is not displayed, we can't hide from taskbar else icons won't
-            ' be displayed in MainMenu...
-            If My.Settings.UseRibbonStyle Then
-                Me.Left = Pref.LEFT_POSITION_HIDDEN
-                Me.ShowInTaskbar = False
-            End If
             Me.Hide()
         End If
 
@@ -318,25 +295,13 @@ Public Class frmMain
         AddHandler ServiceProvider.GotNewItems, AddressOf Me.serviceCreated
         AddHandler ServiceProvider.GotDeletedItems, AddressOf Me.serviceDeleted
 
-        ' For now, SBA is removed from menu...
-        Me.Ribbon.OrbDropDown.MenuItems.Remove(Me.orbMenuSBA)
-        ' For now, scripting is removed from menu...
-        Me.Ribbon.QuickAcessToolbar.Items.Remove(Me.butScripting)
+        ' Scripting is not finished: keep it out of the menu
         Me.MenuItemSYSTEMFILE.MenuItems.Remove(Me.MenuItemSystemScripting)
-        ' For now, remove Tracert/WhoIs menus
-        Me.MenuItemNetworkTools.MenuItems.Remove(Me.MenuItemNetworkRoute)
-        Me.MenuItemNetworkTools.MenuItems.Remove(Me.MenuItemNetworkWhoIs)
 
         ' Disable 'start as admin' if we are not on Vista or above
         If cEnvironment.SupportsUac = False _
                 OrElse cEnvironment.GetElevationType <> Native.Api.Enums.ElevationType.Limited Then
-            Me.Ribbon.OrbDropDown.MenuItems.Remove(Me.orbStartElevated)
             Me.MenuItemSYSTEMFILE.MenuItems.Remove(Me.MenuItemRunAsAdmin)
-        Else
-            ' If we display standard menus, we add the icon
-            If My.Settings.UseRibbonStyle = False Then
-                'Me.VistaMenu.SetImage(Me.MenuItemRunAsAdmin, cEnvironment.GetUacShieldImage)
-            End If
         End If
 
         Me.timerProcess.Enabled = False
@@ -417,7 +382,6 @@ Public Class frmMain
         Me.timerProcess.Enabled = True
         Me.timerTask.Enabled = True
         Me.timerNetwork.Enabled = True
-        Me.timerStateBasedActions.Enabled = True
         Me.timerTrayIcon.Enabled = True
         Me.timerServices.Enabled = True
         Me.timerStatus.Enabled = True
@@ -466,21 +430,6 @@ Public Class frmMain
     Private Sub frmMain_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles MyBase.Resize
 
         Try
-            ' If we do not use Ribbon mode, we hide Ribbon. Else, we add tabs
-            If My.Settings.UseRibbonStyle Then
-                With _tab
-                    _tab.Dock = DockStyle.None
-                    _tab.Top = -24
-                    _tab.Left = -2
-                    _tab.Width = Me.Width - 12
-                    _tab.Height = Me.Height - Me.Ribbon.Height - Me.StatusBar.Height - 15
-                    _tab.Region = New Region(New RectangleF(_tab.Left, _tab.SelectedTab.Top, _tab.SelectedTab.Width + 5, _tab.SelectedTab.Height))
-                    _tab.Refresh()
-                End With
-            Else
-                Me._main.Panel1Collapsed = True
-            End If
-
             If My.Settings.HideWhenMinimized AndAlso Me.WindowState = FormWindowState.Minimized Then
                 Me.Hide()
             End If
@@ -500,18 +449,19 @@ Public Class frmMain
     End Sub
 
     Private Sub timerServices_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerServices.Tick
-        Me.refreshServiceList()
+        ' Service notifications need the list to be refreshed even when hidden
+        If IsPageDisplayed(Me.pageServices) OrElse My.Settings.NotifyNewServices _
+                OrElse My.Settings.NotifyDeletedServices OrElse Me.lvServices.Items.Count = 0 Then
+            Me.refreshServiceList()
+        End If
     End Sub
 
     Private Sub Tray_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Tray.MouseDoubleClick
-        ' If ribbon is used, then the main form is to the left of the screen and
-        ' not shown in taskbar
-        If My.Settings.UseRibbonStyle Then
-            If Me.Left = Pref.LEFT_POSITION_HIDDEN Then
-                Me.CenterToScreen()
-            End If
-            Me.ShowInTaskbar = True
+        ' Started hidden: the form may have been moved off screen and out of the taskbar
+        If Me.Left = Pref.LEFT_POSITION_HIDDEN Then
+            Me.CenterToScreen()
         End If
+        Me.ShowInTaskbar = True
         Me.Visible = True
         Me.WindowState = FormWindowState.Normal
         Me.Show()
@@ -524,215 +474,80 @@ Public Class frmMain
         If My.Settings.ShowFixedTab Then
             tabToShow = My.Settings.FixedTab
         End If
-        For Each tab As RibbonTab In Me.Ribbon.Tabs
-            If tab.Text = tabToShow Then
-                Me.Ribbon.ActiveTab = tab
+        For Each page As TabPage In _tab.TabPages
+            If page.Text = tabToShow Then
+                _tab.SelectedTab = page
                 Exit For
             End If
         Next
 
-        Call Ribbon_MouseMove(Nothing, Nothing)
+        Call _tab_SelectedIndexChanged(Nothing, Nothing)
         Call Me.frmMain_Resize(Nothing, Nothing)
     End Sub
 
-    Private Sub butKill_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butKillProcess.Click
-        If WarnDangerousAction("Are you sure you want to kill these processes ?", Me.Handle) <> Windows.Forms.DialogResult.Yes Then
-            Exit Sub
-        End If
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.Kill()
-        Next
-    End Sub
 
-    Private Sub butAbout_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butAbout.Click
+    Private Sub butAbout_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemHelpAbout.Click
         Dim frm As New frmAboutG
         frm.TopMost = _frmMain.TopMost
         frm.ShowDialog()
     End Sub
 
-    Private Sub butProcessRerfresh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butProcessRerfresh.Click
+    Private Sub butProcessRerfresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Me.refreshProcessList()
     End Sub
 
-    Private Sub butServiceRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceRefresh.Click
+    Private Sub butServiceRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Me.refreshServiceList()
     End Sub
 
-    Private Sub butServiceFileProp_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceFileProp.Click
-        Call Me.MenuItemServFileProp_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butServiceOpenDir_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceOpenDir.Click
-        Call Me.MenuItemServOpenDir_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butStopProcess_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butStopProcess.Click
-        If WarnDangerousAction("Are you sure you want to suspend these processes ?", Me.Handle) <> Windows.Forms.DialogResult.Yes Then
-            Exit Sub
-        End If
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SuspendProcess()
-        Next
-    End Sub
 
-    Private Sub butProcessAffinity_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butProcessAffinity.Click
-        Call Me.MenuItemProcAff_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butResumeProcess_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butResumeProcess.Click
-        ' Resume selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.ResumeProcess()
-        Next
-    End Sub
 
-    Private Sub butIdle_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butIdle.Click
-        ' Set priority to selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SetPriority(ProcessPriorityClass.Idle)
-        Next
-    End Sub
 
-    Private Sub butHigh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butHigh.Click
-        ' Set priority to selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SetPriority(ProcessPriorityClass.High)
-        Next
-    End Sub
 
-    Private Sub butNormal_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butNormal.Click
-        ' Set priority to selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SetPriority(ProcessPriorityClass.Normal)
-        Next
-    End Sub
 
-    Private Sub butRealTime_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butRealTime.Click
-        ' Set priority to selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SetPriority(ProcessPriorityClass.RealTime)
-        Next
-    End Sub
 
-    Private Sub butBelowNormal_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butBelowNormal.Click
-        ' Set priority to selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SetPriority(ProcessPriorityClass.BelowNormal)
-        Next
-    End Sub
 
-    Private Sub butAboveNormal_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butAboveNormal.Click
-        ' Set priority to selected processes
-        For Each it As cProcess In Me.lvProcess.GetSelectedItems
-            it.SetPriority(ProcessPriorityClass.AboveNormal)
-        Next
-    End Sub
 
-    Private Sub butStopService_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butStopService.Click
-        If WarnDangerousAction("Are you sure you want to stop these services ?", Me.Handle) <> Windows.Forms.DialogResult.Yes Then
-            Exit Sub
-        End If
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.StopService()
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub butStartService_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butStartService.Click
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.StartService()
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub butPauseService_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butPauseService.Click
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.PauseService()
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub butAutomaticStart_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butAutomaticStart.Click
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.SetServiceStartType(Native.Api.NativeEnums.ServiceStartType.AutoStart)
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub butDisabledStart_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butDisabledStart.Click
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.SetServiceStartType(Native.Api.NativeEnums.ServiceStartType.StartDisabled)
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub butOnDemandStart_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butOnDemandStart.Click
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.SetServiceStartType(Native.Api.NativeEnums.ServiceStartType.DemandStart)
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub butResumeService_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butResumeService.Click
-        For Each it As cService In Me.lvServices.GetSelectedItems
-            it.ResumeService()
-        Next
-        Call Me.lvServices_SelectedIndexChanged(Nothing, Nothing)
-    End Sub
 
-    Private Sub Ribbon_MouseClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Ribbon.MouseClick
-        If Me.lvServices.Items.Count = 0 Then
-            If Me.Ribbon.ActiveTab.Text = "Services" Then
-                ' First display of service tab
-                Call refreshServiceList()
-            End If
-        ElseIf Me.lvProcess.Items.Count = 0 Then
-            If Me.Ribbon.ActiveTab.Text = "Processes" Then
-                ' First display of process tab
-                Call refreshProcessList()
-            End If
+    ' Select a page of the main tab control
+    Public Sub SelectPage(ByVal page As TabPage)
+        If _tab.SelectedTab IsNot page Then
+            _tab.SelectedTab = page     ' -> _tab_SelectedIndexChanged
+        Else
+            Call UpdateTitle()
         End If
     End Sub
 
-    Public Sub Ribbon_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Ribbon.MouseMove
-        ' Static currentText As String = vbNullString
-        Static bHelpShown As Boolean = False
-
-
-        Select Case Ribbon.ActiveTab.Text
-            Case "Jobs"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvJob.Items.Count) & " jobs running"
-                _tab.SelectedTab = Me.pageJobs
-            Case "Services"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvServices.Items.Count) & " services running"
-                _tab.SelectedTab = Me.pageServices
-            Case "Processes"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvProcess.Items.Count) & " processes running"
-                _tab.SelectedTab = Me.pageProcesses
-            Case "Help"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvProcess.Items.Count) & " processes running"
-                _tab.SelectedTab = Me.pageHelp
-            Case "File"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvProcess.Items.Count) & " processes running"
-                _tab.SelectedTab = Me.pageFile
-            Case "Search"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvSearchResults.Items.Count) & " search results"
-                _tab.SelectedTab = Me.pageSearch
-            Case "Monitor"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvProcess.Items.Count) & " processes running"
-                _tab.SelectedTab = Me.pageMonitor
-            Case "Tasks"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvTask.Items.Count) & " tasks running"
-                _tab.SelectedTab = Me.pageTasks
-            Case "Network"
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvNetwork.Items.Count) & " connections opened"
-                _tab.SelectedTab = Me.pageNetwork
-        End Select
-        'End If
-
+    ' Window title: number of items of the displayed list
+    Public Sub UpdateTitle()
+        Dim page As TabPage = _tab.SelectedTab
+        Dim s As String
+        If page Is Me.pageJobs Then
+            s = CStr(Me.lvJob.Items.Count) & " jobs running"
+        ElseIf page Is Me.pageServices Then
+            s = CStr(Me.lvServices.Items.Count) & " services running"
+        ElseIf page Is Me.pageSearch Then
+            s = CStr(Me.lvSearchResults.Items.Count) & " search results"
+        ElseIf page Is Me.pageTasks Then
+            s = CStr(Me.lvTask.Items.Count) & " tasks running"
+        ElseIf page Is Me.pageNetwork Then
+            s = CStr(Me.lvNetwork.Items.Count) & " connections opened"
+        Else
+            s = CStr(Me.lvProcess.Items.Count) & " processes running"
+        End If
+        Me.Text = "Lite Process Monitor -- " & s
     End Sub
 
-    Private Sub butDownload_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butDownload.Click
+    Private Sub butDownload_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         cFile.ShellOpenFile("https://", Me.Handle)
     End Sub
 
@@ -740,14 +555,14 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub butProcessGoogle_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butProcessGoogle.Click
+    Private Sub butProcessGoogle_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         For Each cp As cProcess In Me.lvProcess.GetSelectedItems
             Application.DoEvents()
             Call SearchInternet(cp.Infos.Name, Me.Handle)
         Next
     End Sub
 
-    Private Sub butServiceGoogle_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceGoogle.Click
+    Private Sub butServiceGoogle_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim it As ListViewItem
         For Each it In Me.lvServices.SelectedItems
             Application.DoEvents()
@@ -755,7 +570,7 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub butServiceFileDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceFileDetails.Click
+    Private Sub butServiceFileDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If Me.lvServices.SelectedItems.Count > 0 Then
             Dim s As String = Me.lvServices.GetSelectedItem.GetInformation("ImagePath")
             If IO.File.Exists(s) = False Then
@@ -767,25 +582,15 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub butUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butUpdate.Click
+    Private Sub butUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         ' Check for updates manually
         ' No silent mode, so it will cause a messagebox to be displayed
         Program.Updater.CheckUpdates(False)
     End Sub
 
-    Private Sub butSearchGo_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butSearchGo.Click
-        Call goSearch(Me.txtSearchString.TextBoxText)
-    End Sub
 
-    Private Sub txtSearchString_TextBoxTextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtSearchString.TextBoxTextChanged
-        Dim b As Boolean = (txtSearchString.TextBoxText IsNot Nothing)
-        If b Then
-            b = b And txtSearchString.TextBoxText.Length > 0
-        End If
-        Me.butSearchGo.Enabled = b
-    End Sub
 
-    Private Sub butSearchSaveReport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butSearchSaveReport.Click
+    Private Sub butSearchSaveReport_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmSaveReport
         With frm
             .TopMost = _frmMain.TopMost
@@ -794,19 +599,19 @@ Public Class frmMain
         End With
     End Sub
 
-    Private Sub butFileProperties_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileProperties.Click
+    Private Sub butFileProperties_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemFileProperties.Click
         Call cFile.ShowFileProperty(Me.txtFile.Text, Me.Handle)
     End Sub
 
-    Private Sub butFileShowFolderProperties_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileShowFolderProperties.Click
+    Private Sub butFileShowFolderProperties_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemFileDirProperties.Click
         Call cFile.ShowFileProperty(IO.Directory.GetParent(Me.txtFile.Text).FullName, Me.Handle)
     End Sub
 
-    Private Sub butFileOpenDir_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileOpenDir.Click
+    Private Sub butFileOpenDir_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemFileOpenDir.Click
         Call cFile.OpenDirectory(Me.txtFile.Text)
     End Sub
 
-    Private Sub butOpenFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butOpenFile.Click
+    Private Sub butOpenFile_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         ' Open a file
         openDial.Filter = "All files (*.*)|*.*"
         openDial.Title = "Open a file to retrieve details"
@@ -817,7 +622,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub butFileRelease_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileRelease.Click
+    Private Sub butFileRelease_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmFileRelease
         With frm
             .file = Me.txtFile.Text
@@ -826,12 +631,12 @@ Public Class frmMain
         End With
     End Sub
 
-    Private Sub butFileGoogleSearch_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileGoogleSearch.Click
+    Private Sub butFileGoogleSearch_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemFileSearchInternet.Click
         Application.DoEvents()
         Call SearchInternet(cFile.GetFileName(Me.txtFile.Text), Me.Handle)
     End Sub
 
-    Private Sub butFileEncrypt_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileEncrypt.Click
+    Private Sub butFileEncrypt_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Try
             cSelFile.Encrypt()
             Misc.ShowMsg("File encryption", "Encryption done.", MessageBoxButtons.OK)
@@ -840,7 +645,7 @@ Public Class frmMain
         End Try
     End Sub
 
-    Private Sub butFileDecrypt_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileDecrypt.Click
+    Private Sub butFileDecrypt_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Try
             cSelFile.Decrypt()
             Misc.ShowMsg("File decryption", "Decryption done.", MessageBoxButtons.OK)
@@ -849,15 +654,15 @@ Public Class frmMain
         End Try
     End Sub
 
-    Private Sub butFileRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileRefresh.Click
+    Private Sub butFileRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Call DisplayDetailsFile(Me.txtFile.Text)
     End Sub
 
-    Private Sub butMoveFileToTrash_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butMoveFileToTrash.Click
+    Private Sub butMoveFileToTrash_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         cSelFile.MoveToTrash()
     End Sub
 
-    Private Sub butFileSeeStrings_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileSeeStrings.Click
+    Private Sub butFileSeeStrings_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Call DisplayFileStrings(Me.lvFileString, Me.txtFile.Text)
     End Sub
 
@@ -870,7 +675,7 @@ Public Class frmMain
         Return attributes Or attributesToAdd
     End Function
 
-    Private Sub butFileOpen_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileOpen.Click
+    Private Sub butFileOpen_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Call cFile.ShellOpenFile(Me.txtFile.Text, Me.Handle)
     End Sub
 
@@ -944,7 +749,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub butMonitoringAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butMonitoringAdd.Click
+    Private Sub butMonitoringAdd_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmAddProcessMonitor(Program.Connection)
         frm.TopMost = _frmMain.TopMost
         frm.ShowDialog()
@@ -999,7 +804,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub butMonitorStart_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butMonitorStart.Click
+    Private Sub butMonitorStart_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If tvMonitor.SelectedNode IsNot Nothing Then
             If tvMonitor.SelectedNode.Parent IsNot Nothing Then
                 If tvMonitor.SelectedNode.Parent.Parent IsNot Nothing Then
@@ -1030,7 +835,7 @@ Public Class frmMain
         Call UpdateMonitoringLog()
     End Sub
 
-    Private Sub butMonitorStop_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butMonitorStop.Click
+    Private Sub butMonitorStop_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If tvMonitor.SelectedNode IsNot Nothing Then
             If tvMonitor.SelectedNode.Parent IsNot Nothing Then
                 If tvMonitor.SelectedNode.Parent.Parent IsNot Nothing Then
@@ -1075,7 +880,7 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub butMonitoringRemove_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butMonitoringRemove.Click
+    Private Sub butMonitoringRemove_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If tvMonitor.SelectedNode IsNot Nothing Then
             RemoveSubNode(tvMonitor.SelectedNode, tvMonitor.SelectedNode.Nodes)
             Dim nn As TreeNodeCollection = tvMonitor.SelectedNode.Nodes
@@ -1172,6 +977,8 @@ Public Class frmMain
     End Sub
 
     Private Sub timerMonitoring_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerMonitoring.Tick
+        ' Redraw the graph only when it is displayed (counters keep collecting)
+        If IsPageDisplayed(Me.pageMonitor) = False Then Exit Sub
         Call tvMonitor_AfterSelect(Nothing, Nothing)
     End Sub
 
@@ -1204,11 +1011,11 @@ Public Class frmMain
         Return Math.Max(0, max - lMax)
     End Function
 
-    Private Sub butDeleteFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butDeleteFile.Click
+    Private Sub butDeleteFile_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         cSelFile.WindowsKill()
     End Sub
 
-    Private Sub butFileMove_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileMove.Click
+    Private Sub butFileMove_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         With Me.FolderChooser
             .Description = "Select new location"
             .SelectedPath = cFile.GetParentDir(cSelFile.Path)
@@ -1220,7 +1027,7 @@ Public Class frmMain
         End With
     End Sub
 
-    Private Sub butFileCopy_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileCopy.Click
+    Private Sub butFileCopy_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         With Me.saveDial
             .AddExtension = True
             .FileName = cSelFile.Name
@@ -1232,14 +1039,14 @@ Public Class frmMain
         End With
     End Sub
 
-    Private Sub butFileRename_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFileRename.Click
+    Private Sub butFileRename_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim s As String = CInputBox("New name (name+extension) ?", "Select a new file name", cFile.GetFileName(cSelFile.Path))
         If s Is Nothing OrElse s.Equals(String.Empty) Then Exit Sub
         Me.txtFile.Text = cSelFile.WindowsRename(s)
         Call Me.refreshFileInfos(cSelFile.Path)
     End Sub
 
-    Private Sub butServiceReport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceReport.Click
+    Private Sub butServiceReport_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmSaveReport
         With frm
             .TopMost = _frmMain.TopMost
@@ -1248,17 +1055,14 @@ Public Class frmMain
         End With
     End Sub
 
-    Private Sub butAlwaysDisplay_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butAlwaysDisplay.Click
-        Call changeTopMost()
-    End Sub
 
-    Private Sub butPreferences_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butPreferences.Click
+    Private Sub butPreferences_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmPreferences
         frm.TopMost = _frmMain.TopMost
         frm.ShowDialog()
     End Sub
 
-    Private Sub butProcessDisplayDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butProcessDisplayDetails.Click
+    Private Sub butProcessDisplayDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         For Each it As cProcess In Me.lvProcess.GetSelectedItems
             Dim frm As New frmProcessInfo
             frm.SetProcess(it)
@@ -1279,30 +1083,26 @@ Public Class frmMain
         WindowProvider.Update(True, Me.lvTask.InstanceId)
         Me.lvTask.UpdateTheItems()
 
-        If Me.Ribbon IsNot Nothing AndAlso Me.Ribbon.ActiveTab IsNot Nothing Then
-            Dim ss As String = Me.Ribbon.ActiveTab.Text
-            If ss = "Tasks" Then
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvTask.Items.Count) & " tasks running"
-            End If
-        End If
+        If _tab.SelectedTab Is Me.pageTasks Then Call UpdateTitle()
 
     End Sub
 
     Private Sub timerTask_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles timerTask.Tick
+        If IsPageDisplayed(Me.pageTasks) = False Then Exit Sub
         Call refreshTaskList()
     End Sub
 
-    Private Sub butTaskRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butTaskRefresh.Click
+    Private Sub butTaskRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Call refreshTaskList()
     End Sub
 
-    Private Sub butTaskShow_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butTaskShow.Click
+    Private Sub butTaskShow_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         For Each it As cTask In Me.lvTask.GetSelectedItems
             it.SetAsForegroundWindow()
         Next
     End Sub
 
-    Private Sub butTaskEndTask_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butTaskEndTask.Click
+    Private Sub butTaskEndTask_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         ' Close task
         If WarnDangerousAction("Are you sure you want to terminate these tasks ?", Me.Handle) <> Windows.Forms.DialogResult.Yes Then
             Exit Sub
@@ -1317,22 +1117,16 @@ Public Class frmMain
         ' Update current connections list
         NetworkConnectionsProvider.Update(Me.lvNetwork.InstanceId)
 
-        If Me.Ribbon IsNot Nothing AndAlso Me.Ribbon.ActiveTab IsNot Nothing Then
-            Dim ss As String = Me.Ribbon.ActiveTab.Text
-            If ss = "Network" Then
-                Me.Text = "Lite Process Monitor -- " & CStr(Me.lvNetwork.Items.Count) & " connections opened"
-            End If
-        End If
+        If _tab.SelectedTab Is Me.pageNetwork Then Call UpdateTitle()
     End Sub
 
-    Private Sub butNetworkRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butNetworkRefresh.Click
+    Private Sub butNetworkRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Call refreshNetworkList()
     End Sub
 
     Private Sub timerTrayIcon_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerTrayIcon.Tick
-        ' Refresh infos
-        Call Program.SystemInfo.RefreshInfo()
-
+        ' System infos are refreshed by timerStatus (calling RefreshInfo twice per
+        ' second also halved the sampling interval of the CPU usage)
         Dim _cpuUsage As Double = Program.SystemInfo.CpuUsage
         Dim _physMemUsage As Double = Program.SystemInfo.PhysicalMemoryPercentageUsage
         Dim d As New Decimal(Decimal.Multiply(Program.SystemInfo.TotalPhysicalMemory, New Decimal(_physMemUsage)))
@@ -1399,7 +1193,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub butSaveProcessReport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butSaveProcessReport.Click
+    Private Sub butSaveProcessReport_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmSaveReport
         With frm
             .TopMost = _frmMain.TopMost
@@ -1408,22 +1202,6 @@ Public Class frmMain
         End With
     End Sub
 
-    ' Permute style of menus
-    Public Sub permuteMenuStyle(ByVal ribbonStyle As Boolean)
-
-        ' Change selected tab of tabStrip
-        _ribbonStyle = ribbonStyle
-
-        _main.Panel1Collapsed = Not (_ribbonStyle)
-
-        Me.MenuItemSYSTEMFILE.Visible = Not (_ribbonStyle)
-        Me.MenuItemSYSTEMOPT.Visible = Not (_ribbonStyle)
-        Me.MenuItemSYSTEMTOOLS.Visible = Not (_ribbonStyle)
-        Me.MenuItemSYSTEMSYSTEM.Visible = Not (_ribbonStyle)
-        Me.MenuItemSYSTEMHEL.Visible = Not (_ribbonStyle)
-
-        Call Me.frmMain_Resize(Nothing, Nothing)
-    End Sub
 
     Private Sub txtServiceSearch_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtServiceSearch.Click
         Call txtServiceSearch_TextChanged(Nothing, Nothing)
@@ -1481,11 +1259,11 @@ Public Class frmMain
 
     Private Sub txtFile_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtFile.TextChanged
         Dim b As Boolean = IO.File.Exists(Me.txtFile.Text)
-        Me.RBFileDelete.Enabled = b
-        Me.RBFileKillProcess.Enabled = False 'TOCHANGE
-        Me.RBFileOnline.Enabled = b
-        Me.RBFileOther.Enabled = b
-        Me.RBFileOthers.Enabled = b
+        For Each it As System.Windows.Forms.MenuItem In Me.MenuItemFiles.MenuItems
+            If it IsNot Me.MenuItemFileOpen AndAlso it.Text <> "-" Then
+                it.Enabled = b
+            End If
+        Next
     End Sub
 
     Private Sub tvMonitor_AfterSelect(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvMonitor.AfterSelect
@@ -1497,8 +1275,8 @@ Public Class frmMain
         If tvMonitor.SelectedNode.Parent IsNot Nothing Then
             If tvMonitor.SelectedNode.Parent.Name = tvMonitor.Nodes.Item(0).Name Then
                 ' Then we have selected a process
-                Me.butMonitorStart.Enabled = True
-                Me.butMonitorStop.Enabled = True
+                Me.MenuItemMonitorStart.Enabled = True
+                Me.MenuItemMonitorStop.Enabled = True
                 Dim g As Graphics = Me.graphMonitor.CreateGraphics
                 With g
                     .Clear(Color.Black)
@@ -1507,8 +1285,8 @@ Public Class frmMain
                 End With
             Else
                 Dim it As cMonitor = CType(tvMonitor.SelectedNode.Tag, cMonitor)
-                Me.butMonitorStart.Enabled = Not (it.Enabled)
-                Me.butMonitorStop.Enabled = it.Enabled
+                Me.MenuItemMonitorStart.Enabled = Not (it.Enabled)
+                Me.MenuItemMonitorStop.Enabled = it.Enabled
 
                 ' We have selected a sub item -> display values in graph
                 Dim sKey As String = tvMonitor.SelectedNode.Text
@@ -1516,8 +1294,8 @@ Public Class frmMain
             End If
         Else
             ' The we can start/stop all items
-            Me.butMonitorStart.Enabled = True
-            Me.butMonitorStop.Enabled = True
+            Me.MenuItemMonitorStart.Enabled = True
+            Me.MenuItemMonitorStop.Enabled = True
             Dim g As Graphics = Me.graphMonitor.CreateGraphics
             With g
                 .Clear(Color.Black)
@@ -1526,8 +1304,6 @@ Public Class frmMain
             End With
         End If
 
-        Me.MenuItemMonitorStart.Enabled = Me.butMonitorStart.Enabled
-        Me.MenuItemMonitorStop.Enabled = Me.butMonitorStop.Enabled
     End Sub
 
     Private Sub tvProc_AfterCollapse(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvProc.AfterCollapse
@@ -1733,12 +1509,10 @@ Public Class frmMain
     End Sub
 
     Private Sub lvSearchResults_HasRefreshed() Handles lvSearchResults.HasRefreshed
-        Me.butSearchGo.Enabled = True
-        Me.butSearchSaveReport.Enabled = True
         Me.MenuItemSearchNew.Enabled = True
-        If Ribbon.ActiveTab.Text = "Search" Then
-            Me.Text = "Lite Process Monitor -- " & CStr(Me.lvSearchResults.Items.Count) & " search results"
-        End If
+        Me.MenuItemNewSearch.Enabled = True
+        Me.MenuItemReportSearch.Enabled = True
+        If _tab.SelectedTab Is Me.pageSearch Then Call UpdateTitle()
     End Sub
 
     Private Sub lvSearchResults_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lvSearchResults.MouseDown
@@ -2259,72 +2033,43 @@ Public Class frmMain
     End Sub
 
     Private Sub _tab_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles _tab.SelectedIndexChanged
-        Static bHelpShown As Boolean = False
+        Dim page As TabPage = _tab.SelectedTab
+        If page Is Nothing Then Exit Sub
+        My.Settings.SelectedTab = page.Text
 
-        ' Hide specific menus
-        If My.Settings.UseRibbonStyle = False Then
-            Me.MenuItemProcesses.Visible = False
-            Me.MenuItemMonitor.Visible = False
-            Me.MenuItemServices.Visible = False
-            Me.MenuItemFiles.Visible = False
-            Me.MenuItemSearch.Visible = False
-            Me.MenuItemJobs.Visible = False
+        ' Menu of the displayed page only
+        Me.MenuItemProcesses.Visible = (page Is Me.pageProcesses)
+        Me.MenuItemJobs.Visible = (page Is Me.pageJobs)
+        Me.MenuItemMonitor.Visible = (page Is Me.pageMonitor)
+        Me.MenuItemServices.Visible = (page Is Me.pageServices)
+        Me.MenuItemFiles.Visible = (page Is Me.pageFile)
+        Me.MenuItemSearch.Visible = (page Is Me.pageSearch)
+
+        ' Lists other than processes are only refreshed while displayed:
+        ' refresh the one that is now shown
+        Call RefreshDisplayedPage(True)
+        Call UpdateTitle()
+    End Sub
+
+    ' Is the list of this page displayed (form visible and page selected) ?
+    Private Function IsPageDisplayed(ByVal page As TabPage) As Boolean
+        Return Me.Visible AndAlso Me.WindowState <> FormWindowState.Minimized _
+            AndAlso _tab.SelectedTab Is page
+    End Function
+
+    ' Refresh the list of the displayed page (tasks, jobs, network, services)
+    Private Sub RefreshDisplayedPage(ByVal pageChanged As Boolean)
+        If Program.Connection Is Nothing OrElse Program.Connection.IsConnected = False Then Exit Sub
+        Dim page As TabPage = _tab.SelectedTab
+        If page Is Me.pageTasks AndAlso Me.timerTask.Enabled Then
+            Call refreshTaskList()
+        ElseIf page Is Me.pageJobs AndAlso Me.timerJobs.Enabled Then
+            Call refreshJobList()
+        ElseIf page Is Me.pageNetwork AndAlso Me.timerNetwork.Enabled Then
+            Call refreshNetworkList()
+        ElseIf page Is Me.pageServices AndAlso Me.timerServices.Enabled AndAlso pageChanged Then
+            Call refreshServiceList()
         End If
-
-        ' Change current tab of ribbon
-        Dim theTab As RibbonTab = Me.TaskTab
-        My.Settings.SelectedTab = _tab.TabPages(_tab.SelectedIndex).Text
-        Select Case My.Settings.SelectedTab
-            Case "Tasks"
-                theTab = Me.TaskTab
-            Case "Processes"
-                theTab = Me.ProcessTab
-                If My.Settings.UseRibbonStyle = False Then
-                    Me.MenuItemProcesses.Visible = True
-                End If
-            Case "Jobs"
-                theTab = Me.JobTab
-                If My.Settings.UseRibbonStyle = False Then
-                    Me.MenuItemJobs.Visible = True
-                End If
-            Case "Monitor"
-                theTab = Me.MonitorTab
-                If My.Settings.UseRibbonStyle = False Then
-                    Me.MenuItemMonitor.Visible = True
-                End If
-            Case "Services"
-                theTab = Me.ServiceTab
-                If My.Settings.UseRibbonStyle = False Then
-                    Me.MenuItemServices.Visible = True
-                End If
-            Case "Network"
-                theTab = Me.NetworkTab
-            Case "File"
-                theTab = Me.FileTab
-                If My.Settings.UseRibbonStyle = False Then
-                    Me.MenuItemFiles.Visible = True
-                End If
-            Case "Search"
-                theTab = Me.SearchTab
-                If My.Settings.UseRibbonStyle = False Then
-                    Me.MenuItemSearch.Visible = True
-                End If
-                'Case "Help"
-                '    theTab = Me.HelpTab
-                '    Me.Text = "Lite Process Monitor -- " & CStr(Me.lvProcess.Items.Count) & " processes running"
-                '    If Not (bHelpShown) Then
-                '        bHelpShown = True
-                '        ' Load help file
-                '        If IO.File.Exists(My.Application.Info.DirectoryPath & HELP_PATH_DD) Then
-                '            'WBHelp.Document.Write("<body link=blue vlink=purple><span>Help file cannot be found. <p></span><span>Please download help file at <a href=" & Chr(34) & "https://" & Chr(34) & ">https://</a> and save it in the Help directory.</span></body>")
-                '            WBHelp.Navigate(My.Application.Info.DirectoryPath & HELP_PATH_DD)
-                '        Else
-                '            WBHelp.Navigate(HELP_PATH_INTERNET)
-                '        End If
-                '    End If
-                '    _tab.SelectedTab = Me.pageHelp
-        End Select
-        Me.Ribbon.ActiveTab = theTab
     End Sub
 
     Private Sub goSearch(ByVal ssearch As String)
@@ -2352,23 +2097,20 @@ Public Class frmMain
                     t = t Or Native.Api.Enums.GeneralObjectType.Window
                 End If
                 .Includes = t
-                Me.butSearchGo.Enabled = False
                 Me.MenuItemSearchNew.Enabled = False
-                Me.butSearchSaveReport.Enabled = False
+                Me.MenuItemNewSearch.Enabled = False
+                Me.MenuItemReportSearch.Enabled = False
                 .UpdateItems()
             End With
         End If
     End Sub
 
     Private Sub timerNetwork_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerNetwork.Tick
+        If IsPageDisplayed(Me.pageNetwork) = False Then Exit Sub
         Call refreshNetworkList()
     End Sub
 
-    Private Sub timerStateBasedActions_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerStateBasedActions.Tick
-        ' State-based actions not yet integrated
-    End Sub
-
-    Private Sub butNewProcess_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butNewProcess.Click
+    Private Sub butNewProcess_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemSystemNewProcess.Click, MenuItemProcNewProcess.Click
         If Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection Then
             cFile.ShowRunBox(Me.Handle, "Start a new process", "Enter the path of the process you want to start.")
         Else
@@ -2378,43 +2120,16 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub butLog_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butLog.Click
-        Call Me.MenuItemMainLog_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butWindows_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butWindows.Click
-        Call Me.MenuItemSystemOpenedWindows_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butSystemInfo_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butSystemInfo.Click
-        Call Me.MenuItemMainSysInfo_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butFindWindow_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFindWindow.Click
-        Call Me.MenuItemMainFindWindow_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub orbMenuAbout_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles orbMenuAbout.Click
-        Call Me.MenuItemMainAbout_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub orbMenuEmergency_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles orbMenuEmergency.Click
-        Call Me.MenuItemMainEmergencyH_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub orbMenuSaveReport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles orbMenuSaveReport.Click
-        Call Me.MenuItemMainReport_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub orbMenuSBA_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles orbMenuSBA.Click
-        Call Me.MenuItemMainSBA_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butNetwork_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butNetwork.Click
-        Call orbMenuNetwork_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub orbMenuNetwork_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles orbMenuNetwork.Click
+    Private Sub orbMenuNetwork_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If ConnectionForm.Visible Then
             ConnectionForm.Hide()
         Else
@@ -2460,36 +2175,10 @@ Public Class frmMain
             Exit Sub
         End Try
 
-        Me.butServiceFileDetails.Enabled = _local
-        Me.butServiceFileProp.Enabled = _local
-        Me.butServiceOpenDir.Enabled = _local
-        Me.butDeleteService.Enabled = Me._notWMI AndAlso _notSnapshotMode
-        Me.butResumeProcess.Enabled = Me._notWMI AndAlso _notSnapshotMode
-        Me.butStopProcess.Enabled = Me._notWMI AndAlso _notSnapshotMode
-        Me.butProcessAffinity.Enabled = Me._notWMI AndAlso _notSnapshotMode
-        Me.butProcessAffinity.Enabled = Me._notWMI AndAlso _notSnapshotMode
-        Me.butStopProcess.Enabled = Me._notWMI AndAlso _notSnapshotMode
-        Me.butResumeProcess.Enabled = Me._notWMI AndAlso _notSnapshotMode
         Me.pageJobs.Enabled = (_local And (cEnvironment.HasLitePMDebugPrivilege)) OrElse Not (_local)
-        Me.RBJobActions.Enabled = Me.pageJobs.Enabled AndAlso _notSnapshotMode
-        Me.RBJobDisplay.Enabled = Me.pageJobs.Enabled
-        Me.RBJobPrivileges.Enabled = _local AndAlso Not (cEnvironment.HasLitePMDebugPrivilege)
         Me.pageNetwork.Enabled = _notWMI
         Me.pageTasks.Enabled = _notWMI
         Me.pageSearch.Enabled = _notWMI
-        Me.RBNetworkRefresh.Enabled = _notWMI
-        Me.RBSearchMain.Enabled = _notWMI
-        Me.RBTaskActions.Enabled = _notWMI AndAlso _notSnapshotMode
-        Me.RBTaskDisplay.Enabled = _notWMI
-        Me.RBServiceFile.Enabled = _notWMI
-        Me.butDeleteService.Enabled = _notWMI
-        Me.butProcessOtherActions.Enabled = _notWMI AndAlso _notSnapshotMode
-        Me.RBProcessActions.Enabled = _notSnapshotMode
-        Me.RBProcessPriority.Enabled = _notSnapshotMode
-        Me.RBServiceAction.Enabled = _notSnapshotMode
-        Me.RBServiceStartType.Enabled = _notSnapshotMode
-        Me.RBServiceFile.Enabled = _notSnapshotMode
-        Me.butCheckSignatures.Enabled = _local
 
         Me.lvProcess.CatchErrors = Not (_local)
         Me.lvServices.CatchErrors = Not (_local)
@@ -2554,12 +2243,12 @@ Public Class frmMain
     End Sub
 
 
-    Private Sub butHiddenProcesses_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butHiddenProcesses.Click
+    Private Sub butHiddenProcesses_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         frmHiddenProcesses.TopMost = _frmMain.TopMost
         frmHiddenProcesses.Show()
     End Sub
 
-    Private Sub butServiceDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butServiceDetails.Click
+    Private Sub butServiceDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         For Each it As cService In Me.lvServices.GetSelectedItems
             Dim frm As New frmServiceInfo
             frm.SetService(it)
@@ -2568,15 +2257,7 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub butShowPreferences_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butShowPreferences.Click
-        Dim frm As New frmPreferences
-        frm.TopMost = _frmMain.TopMost
-        frm.ShowDialog()
-    End Sub
 
-    Private Sub butExit_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butExit.Click
-        Call Me.MenuItemMainExit_Click(Nothing, Nothing)
-    End Sub
 
     Private Sub rtb3_DragDrop(ByVal sender As Object, ByVal e As System.Windows.Forms.DragEventArgs) Handles rtb3.DragDrop
         Dim strFile As String = Nothing
@@ -2602,7 +2283,7 @@ Public Class frmMain
         Me.cmdFileClipboard.Enabled = (rtb3.Rtf.Length > 0)
     End Sub
 
-    Private Sub butShowDepViewer_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butShowDepViewer.Click
+    Private Sub butShowDepViewer_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim _depFrm As New frmDepViewerMain
         _depFrm.TopMost = _frmMain.TopMost
         _depFrm.Show()
@@ -2642,8 +2323,7 @@ Public Class frmMain
                 End If
             Next
         Next
-        Me.Ribbon.ActiveTab = Me.ProcessTab
-        Call Me.Ribbon_MouseMove(Nothing, Nothing)
+        Call Me.SelectPage(Me.pageProcesses)
         Me.lvProcess.Focus()
     End Sub
 
@@ -2710,14 +2390,11 @@ Public Class frmMain
     End Sub
 
     Private Sub MenuItemMainShow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemMainShow.Click
-        ' If ribbon is used, then the main form is to the left of the screen and
-        ' not shown in taskbar
-        If My.Settings.UseRibbonStyle Then
-            If Me.Left = Pref.LEFT_POSITION_HIDDEN Then
-                Me.CenterToScreen()
-            End If
-            Me.ShowInTaskbar = True
+        ' Started hidden: the form may have been moved off screen and out of the taskbar
+        If Me.Left = Pref.LEFT_POSITION_HIDDEN Then
+            Me.CenterToScreen()
         End If
+        Me.ShowInTaskbar = True
         Me.Visible = True
         Me.WindowState = FormWindowState.Normal
         Me.Show()
@@ -2774,6 +2451,9 @@ Public Class frmMain
     End Sub
 
     Private Sub MenuItemMainSysInfo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemMainSysInfo.Click
+        If Program._frmSystemInfo Is Nothing OrElse Program._frmSystemInfo.IsDisposed Then
+            Program._frmSystemInfo = New frmSystemInfo
+        End If
         Program._frmSystemInfo.Show()
     End Sub
 
@@ -2796,12 +2476,6 @@ Public Class frmMain
         frmFindWindow.Show()
     End Sub
 
-    Private Sub MenuItemMainSBA_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemMainSBA.Click
-        frmBasedStateAction.BringToFront()
-        frmBasedStateAction.WindowState = FormWindowState.Normal
-        frmBasedStateAction.TopMost = _frmMain.TopMost
-        frmBasedStateAction.Show()
-    End Sub
 
     Private Sub MenuItemRefProc_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemRefProc.Click
         Me.MenuItemRefProc.Checked = Not (Me.MenuItemRefProc.Checked)
@@ -2840,8 +2514,7 @@ Public Class frmMain
             End If
         Next
         If bOne Then
-            Me.Ribbon.ActiveTab = Me.ProcessTab
-            Call Me.Ribbon_MouseMove(Nothing, Nothing)
+            Call Me.SelectPage(Me.pageProcesses)
         End If
     End Sub
 
@@ -3008,8 +2681,7 @@ Public Class frmMain
                 Next
             End If
         Next
-        Me.Ribbon.ActiveTab = Me.ProcessTab
-        Call Me.Ribbon_MouseMove(Nothing, Nothing)
+        Call Me.SelectPage(Me.pageProcesses)
     End Sub
 
     Private Sub menuCloseTCP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemNetworkClose.Click
@@ -3079,7 +2751,7 @@ Public Class frmMain
                             it2.EnsureVisible()
                         End If
                     Next
-                    Me.Ribbon.ActiveTab = Me.ServiceTab
+                    Call Me.SelectPage(Me.pageServices)
                 Else
                     ' Select process
                     Dim i As Integer = it.Infos.OwnedProcessId
@@ -3093,14 +2765,14 @@ Public Class frmMain
                             End If
                         Next
                     End If
-                    Me.Ribbon.ActiveTab = Me.ProcessTab
+                    Call Me.SelectPage(Me.pageProcesses)
                 End If
             Catch ex As Exception
                 Misc.ShowDebugError(ex)
             End Try
         Next
 
-        Call Me.Ribbon_MouseMove(Nothing, Nothing)
+        Call Me.UpdateTitle()
     End Sub
 
     Private Sub MenuItemSearchClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemSearchClose.Click
@@ -3265,8 +2937,7 @@ Public Class frmMain
         Me.timerServices.Enabled = bServRef
 
         If bAddedOneService Then
-            Me.Ribbon.ActiveTab = Me.ServiceTab
-            Call Me.Ribbon_MouseMove(Nothing, Nothing)
+            Call Me.SelectPage(Me.pageServices)
         End If
     End Sub
 
@@ -3361,9 +3032,6 @@ Public Class frmMain
         Call Me.MenuItemMainEmergencyH_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub MenuItemSystemSBA_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemSystemSBA.Click
-        Call Me.MenuItemMainSBA_Click(Nothing, Nothing)
-    End Sub
 
     Private Sub MenuItemSystemToTray_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemSystemToTray.Click
         Call Me.MenuItemMainToTray_Click(Nothing, Nothing)
@@ -3536,10 +3204,6 @@ Public Class frmMain
 
 #End Region
 
-    Private Sub orbStartElevated_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles orbStartElevated.Click
-        ' Restart elevated
-        Call cEnvironment.RestartElevated()
-    End Sub
 
     Private Sub MenuItemRunAsAdmin_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemRunAsAdmin.Click
         ' Restart elevated
@@ -3560,7 +3224,6 @@ Public Class frmMain
             Me.sbPanelServices.Text = Me.lvServices.Items.Count & " services"
 
             ' We disable some buttons on the main form
-            Me.butSaveSystemSnaphotFile.Enabled = Program.Connection.Type <> cConnection.TypeOfConnection.SnapshotFile
             Me.MenuItemSystemSaveSSFile.Enabled = Program.Connection.Type <> cConnection.TypeOfConnection.SnapshotFile
 
         Catch ex As Exception
@@ -3569,16 +3232,16 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub butShowAllPendingTasks_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butShowAllPendingTasks.Click
+    Private Sub butShowAllPendingTasks_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmPendingTasks
         frm.TopMost = _frmMain.TopMost
         frm.Show()
     End Sub
 
     Private Sub changeTopMost()
-        Me.butAlwaysDisplay.Checked = Not (Me.butAlwaysDisplay.Checked)
-        Me.MenuItemMainAlwaysVisible.Checked = Me.butAlwaysDisplay.Checked
-        Me.TopMost = Me.butAlwaysDisplay.Checked
+        Me.TopMost = Not (Me.TopMost)
+        Me.MenuItemMainAlwaysVisible.Checked = Me.TopMost
+        Me.MenuItemSystemAlwaysVisible.Checked = Me.TopMost
 
         For Each frm As Form In Application.OpenForms
             frm.TopMost = Me.TopMost
@@ -3653,17 +3316,11 @@ Public Class frmMain
         Call Me.butFileSeeStrings_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub butMonitorSaveReport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butMonitorSaveReport.Click
+    Private Sub butMonitorSaveReport_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Call Me.saveMonitorReport()
     End Sub
 
-    Private Sub butProcessReduceWS_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butProcessReduceWS.Click
-        Call Me.MenuItemProcWorkingSS_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butProcessDumpF_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butProcessDumpF.Click
-        Call Me.MenuItemProcDump_Click(Nothing, Nothing)
-    End Sub
 
     Private Sub MenuItemNotifAll_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemNotifAll.Click
         Me.MenuItemNotifDS.Checked = True
@@ -3714,6 +3371,7 @@ Public Class frmMain
     End Sub
 
     Private Sub timerJobs_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles timerJobs.Tick
+        If IsPageDisplayed(Me.pageJobs) = False Then Exit Sub
         Call refreshJobList()
     End Sub
 
@@ -3748,15 +3406,12 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub butJobRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butJobRefresh.Click
+    Private Sub butJobRefresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Me.refreshJobList()
     End Sub
 
-    Private Sub butJobTerminate_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butJobTerminate.Click
-        Call MenuItemJobTerminate_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butJobDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butJobDetails.Click
+    Private Sub butJobDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         For Each it As cJob In Me.lvJob.GetSelectedItems
             Dim frm As New frmJobInfo
             frm.SetJob(it)
@@ -3800,10 +3455,6 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub butJobElevate_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butJobElevate.Click
-        ' Restart elevated
-        Call cEnvironment.RestartElevated()
-    End Sub
 
     Private Sub lblTaskCountResult_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblTaskCountResult.Click
         If Me.lvTask.Groups(1).Items.Count > 0 Then
@@ -3820,11 +3471,8 @@ Public Class frmMain
         frm.Show()
     End Sub
 
-    Private Sub butCreateService_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butCreateService.Click
-        Call MenuItemCreateService_Click(Nothing, Nothing)
-    End Sub
 
-    Private Sub butDeleteService_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butDeleteService.Click
+    Private Sub butDeleteService_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         If WarnDangerousAction("Are you sure you want to delete these services ?", Me.Handle) <> Windows.Forms.DialogResult.Yes Then
             Exit Sub
         End If
@@ -3901,21 +3549,7 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Sub MenuItemNetworkRoute_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemNetworkRoute.Click
-        For Each it As cNetwork In Me.lvNetwork.GetSelectedItems
-            Dim frm As New frmNetworkTool(it, Native.Api.Enums.ToolType.TraceRoute)
-            frm.TopMost = _frmMain.TopMost
-            frm.Show()
-        Next
-    End Sub
 
-    Private Sub MenuItemNetworkWhoIs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemNetworkWhoIs.Click
-        For Each it As cNetwork In Me.lvNetwork.GetSelectedItems
-            Dim frm As New frmNetworkTool(it, Native.Api.Enums.ToolType.WhoIs)
-            frm.TopMost = _frmMain.TopMost
-            frm.Show()
-        Next
-    End Sub
 
     Private Sub MenuItemSystemNetworkInfos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemSystemNetworkInfos.Click
         Call Me.butNetworkInfos_Click(Nothing, Nothing)
@@ -3925,7 +3559,10 @@ Public Class frmMain
         Call Me.butNetworkInfos_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub butNetworkInfos_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butNetworkInfos.Click
+    Private Sub butNetworkInfos_Click(ByVal sender As Object, ByVal e As System.EventArgs)
+        If Program._frmNetworkInfo Is Nothing OrElse Program._frmNetworkInfo.IsDisposed Then
+            Program._frmNetworkInfo = New frmNetworkInfo
+        End If
         Program._frmNetworkInfo.Show()
     End Sub
 
@@ -3933,7 +3570,7 @@ Public Class frmMain
         Call Me.butScripting_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub butScripting_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butScripting.Click
+    Private Sub butScripting_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmScripting
         frm.TopMost = _frmMain.TopMost
         frm.Show()
@@ -3943,7 +3580,7 @@ Public Class frmMain
         Call Me.butSaveSystemSnaphotFile_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub butSaveSystemSnaphotFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butSaveSystemSnaphotFile.Click
+    Private Sub butSaveSystemSnaphotFile_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         ' Save System Snapshot File
         Dim frm As New frmSaveSystemSnapshot
         frm.ShowDialog()
@@ -3953,7 +3590,7 @@ Public Class frmMain
         Call Me.butExploreSSFile_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub butExploreSSFile_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butExploreSSFile.Click
+    Private Sub butExploreSSFile_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmSnapshotInfos
         frm.TopMost = _frmMain.TopMost
         frm.Show()
@@ -3963,16 +3600,12 @@ Public Class frmMain
         Call Me.butCheckSignatures_Click(Nothing, Nothing)
     End Sub
 
-    Private Sub butCheckSignatures_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butCheckSignatures.Click
+    Private Sub butCheckSignatures_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmCheckSignatures
         frm.TopMost = _frmMain.TopMost
         frm.Show()
     End Sub
 
-    Private Sub butFreeMemory_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles butFreeMemory.Click
-        ' Calls the garbage collector
-        Program.CollectGarbage()
-    End Sub
 
     Private Sub lvMonitorReport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvMonitorReport.Click
         ' Select associated item in tvMonitor

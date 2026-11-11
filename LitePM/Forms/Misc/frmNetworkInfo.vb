@@ -219,4 +219,9 @@ Public Class frmNetworkInfo
 
 #End Region
 
+    ' Refresh (and feed the graphs) only while the window is displayed
+    Private Sub frmNetworkInfo_VisibleChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.VisibleChanged
+        Me.timerRefresh.Enabled = Me.Visible
+    End Sub
+
 End Class

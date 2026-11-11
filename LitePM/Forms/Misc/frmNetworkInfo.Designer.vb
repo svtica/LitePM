@@ -86,7 +86,7 @@ Partial Class frmNetworkInfo
         '
         'timerRefresh
         '
-        Me.timerRefresh.Enabled = True
+        Me.timerRefresh.Enabled = False
         Me.timerRefresh.Interval = 1000
         '
         'GroupBox7

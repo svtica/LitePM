@@ -296,8 +296,7 @@ Public Class frmFindWindow
         Next
 
         ' Select 'process' tab in main form
-        _frmMain.Ribbon.ActiveTab = _frmMain.ProcessTab
-        Call _frmMain.Ribbon_MouseMove(Nothing, Nothing)
+        Call _frmMain.SelectPage(_frmMain.pageProcesses)
         _frmMain.Show()
         _frmMain.lvProcess.Focus()
 

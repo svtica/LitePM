@@ -521,8 +521,7 @@ Public Module Program
                 _log.LogFilePath = LogPath
                 _trayIcon = New cTrayIcon(2)            ' Tray icons
                 _updater = New cUpdate                  ' Updater class
-                _frmNetworkInfo = New frmNetworkInfo    ' Network info
-                _frmSystemInfo = New frmSystemInfo      ' System info
+                ' frmNetworkInfo and frmSystemInfo are created when first shown
             Else
                 _frmServer = New frmServer          ' Server form (server mode)
             End If
