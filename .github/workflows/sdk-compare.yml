@@ -1,0 +1,58 @@
+# TEMPORARY - removed before merge. Builds main (non-SDK projects) and this
+# branch (SDK-style projects) and diffs compiler arguments and the built
+# assemblies (types, resources, references, PE kind, output files).
+name: SDK-style migration check
+on:
+  pull_request:
+    branches: [ main ]
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v4
+      with: { path: new }
+    - uses: actions/checkout@v4
+      with: { path: old, ref: main }
+    - uses: microsoft/setup-msbuild@v2
+    - name: Build both
+      shell: powershell
+      run: |
+        foreach ($v in 'old', 'new') {
+          Push-Location $v
+          Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+          New-Item -ItemType Directory -Force -Path "SecureChannel\bin\Release" | Out-Null
+          Copy-Item "res\SecureChannel.dll" -Destination "SecureChannel\bin\Release\"
+          msbuild LitePM.sln -restore /p:Configuration=Release "/p:Platform=Any CPU" -v:detailed -nologo > "..\build-$v.log"
+          $code = $LASTEXITCODE
+          Pop-Location
+          Get-Content "build-$v.log" | Select-String -Pattern 'warning|error' -SimpleMatch | Select-Object -Last 30
+          if ($code -ne 0) { Write-Error "$v build failed"; exit 1 }
+        }
+    - name: Compare
+      shell: powershell
+      run: |
+        $ws = (Get-Location).Path
+        foreach ($v in 'old', 'new') {
+          & new\tools\sdk-compare\Get-CompilerArgs.ps1 -Log "build-$v.log" -Root "$ws\$v" -Out "args-$v.txt"
+          powershell -NoProfile -File new\tools\sdk-compare\Dump-Assemblies.ps1 -Dir "$v\LitePM\bin\Release" -Out "asm-$v.txt"
+        }
+        $report = New-Object System.Text.StringBuilder
+        foreach ($kind in 'args', 'asm') {
+          $d = Compare-Object (Get-Content "$kind-old.txt") (Get-Content "$kind-new.txt")
+          [void]$report.AppendLine("## $kind : $(@($d).Count) differences")
+          [void]$report.AppendLine('```')
+          foreach ($x in $d) { [void]$report.AppendLine("$($x.SideIndicator) $($x.InputObject)") }
+          [void]$report.AppendLine('```')
+        }
+        $report.ToString() | Tee-Object -FilePath compare.md
+        Add-Content -Path $env:GITHUB_STEP_SUMMARY -Value $report.ToString()
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: sdk-compare
+        path: |
+          *.txt
+          *.log
+          compare.md
