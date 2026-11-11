@@ -72,6 +72,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `softprops/action-gh-release` v1 -> v2.
 
 ### Removed
+- `LitePM/LitePM_TemporaryKey.pfx` (unused ClickOnce temporary key); `*.pfx`
+  files are now ignored by git.
 - Ribbon option in Preferences (`UseRibbonStyle` setting).
 - Entries for features that were not implemented: State based actions (and
   its 1-second timer that did nothing), TraceRoute and WhoIs network tools.
