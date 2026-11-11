@@ -63,7 +63,7 @@ jobs:
       working-directory: src
       shell: powershell
       run: |
-        msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU" /v:minimal
+        msbuild LitePM.sln --% -restore /p:Configuration=Release /p:Platform="Any CPU" /v:minimal
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
         foreach ($dll in 'Aga.Controls.dll','SecureChannel.dll','SecurePasswordTextBox.dll','System.Windows.Forms.Ribbon.dll','TaskDialog.dll') {
           if (!(Test-Path "LitePM\bin\Release\$dll")) { Copy-Item "res\$dll" -Destination "LitePM\bin\Release\" }
