@@ -383,7 +383,7 @@ Partial Class frmPreferences
         Me.TabPage3.Controls.Add(Me.chkUserGroup)
         Me.TabPage3.Controls.Add(Me.chkHideClosed)
         Me.TabPage3.Controls.Add(Me.chkHideMinimized)
-        Me.TabPage3.Controls.Add(        Me.TabPage3.Controls.Add(Me.GroupBox3)
+        Me.TabPage3.Controls.Add(Me.GroupBox3)
         Me.TabPage3.Controls.Add(Me.chkTrayIcon)
         Me.TabPage3.ImageKey = "(aucun)"
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
