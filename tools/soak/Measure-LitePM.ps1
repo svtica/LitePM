@@ -145,9 +145,9 @@ $short = $steady | Select-Object -First 1
 $last = $rows | Select-Object -Last 1
 
 $md = New-Object System.Text.StringBuilder
-[void]$md.AppendLine("### LitePM soak — $Label")
+[void]$md.AppendLine("### LitePM soak - $Label")
 [void]$md.AppendLine()
-[void]$md.AppendLine("Duration: $([math]::Round($last.ElapsedMin,1)) min, churn processes started: $churnStarted" + $(if ($crashed) { ' — **LitePM exited before the end**' } else { '' }))
+[void]$md.AppendLine("Duration: $([math]::Round($last.ElapsedMin,1)) min, churn processes started: $churnStarted" + $(if ($crashed) { ' - **LitePM exited before the end**' } else { '' }))
 [void]$md.AppendLine()
 [void]$md.AppendLine("| Counter | At $WarmupMinutes min (short run) | At end | Growth per hour (after warm-up) |")
 [void]$md.AppendLine("|---|---:|---:|---:|")
