@@ -50,3 +50,6 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Certificates and private keys must never be committed (code signing uses CI secrets)
+*.pfx
