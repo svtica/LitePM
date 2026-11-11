@@ -83,7 +83,8 @@ choose the increment (patch, minor, major) or type a version. The workflow
 updates the version, commits it on `main`, tags `v<Major.Minor.Build>` and builds
 and publishes the release. From a local clone on `main`, the same is done with
 `.\bump-version.ps1 -Bump patch` (or `-Version 1.2.3.0`): pushing the tag
-triggers `.github/workflows/build-and-release.yml`. The release asset is `LitePM-<version>-win-x64.zip`, with `LitePM.exe` and
+triggers `.github/workflows/build-and-release.yml`. The release asset is always named `LitePM.zip`
+(latest: https://github.com/svtica/LitePM/releases/latest/download/LitePM.zip), with `LitePM.exe` and
 all its DLLs and `.config` at the root of the zip: LiteTask downloads this asset
 (Tools > Process manager) and keeps that layout.
 
