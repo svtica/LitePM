@@ -13,7 +13,9 @@ work below, not a project-system rewrite.
 | .NET Remoting (`System.Runtime.Remoting`, TCP channels, `SecureChannel` sinks, `MarshalByRefObject` server) | `Classes/Socket/*`, `SecureChannel` project | Not available on .NET Core / .NET 5+ | Rewrite the remote / server mode on another transport (named pipes, gRPC) or drop the feature |
 | `BinaryFormatter` | `Classes/Socket/cSerialization.vb` (remote protocol and snapshot files `cSnapshot*`) | Removed in .NET 9 (always throws) | New serializer; existing snapshot files would no longer open without a converter |
 | `Thread.Abort` | `frmProcessInfo`, `frmServiceInfo`, `Aga.Controls/Threading/AbortableThreadPool` | Throws `PlatformNotSupportedException` | Cooperative cancellation (small) |
-| `System.Windows.Forms.Ribbon.dll` (precompiled, `res/`) | main window | .NET Framework 1.0.0.0 build, untested on .NET | Probably loads through the compatibility shims; otherwise the RibbonWinForms package for `net8.0-windows`+ (API to check) |
+
+No longer a blocker: the precompiled `System.Windows.Forms.Ribbon.dll` was
+removed with the ribbon.
 
 Not blocking: P/Invoke declarations (~410, plain Win32/NT calls), WMI
 (`System.Management` package), `ServiceBase` in `InteractiveProcessFromService`
