@@ -26,6 +26,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     and `NtGetNextProcess` handles leaked in the fallback handle lookup.
 
 ### Added
+- `docs/dotnet-migration.md`: assessment of a migration to .NET 10
+  (blockers, effort, recommendation to stay on .NET Framework 4.8).
 - `tools/soak/Measure-LitePM.ps1` and the **Memory soak** workflow: a
   multi-hour run under process churn that compares Private Bytes, handles,
   GDI and USER objects between `main` and a pull request.
@@ -40,6 +42,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `LitePM.exe` and its dependencies at the zip root).
 
 ### Changed
+- All projects of the solution use the SDK-style project format, still
+  targeting .NET Framework 4.8 (built assemblies unchanged). CI builds with
+  `msbuild -restore`. ClickOnce/bootstrapper leftovers removed from
+  `LitePM.vbproj`.
 - Lighter user interface: the ribbon (and `System.Windows.Forms.Ribbon.dll`)
   is removed; LitePM always uses the menus and tabs. The ribbon control was
   built at every start even in menu mode, where the window title and some

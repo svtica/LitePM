@@ -61,7 +61,7 @@ LitePM is a comprehensive process management application that provides detailed 
 
 ## Technology Stack
 
-- **Platform**: .NET Framework 4.8
+- **Platform**: .NET Framework 4.8 (SDK-style projects; see [docs/dotnet-migration.md](docs/dotnet-migration.md) for .NET 10)
 - **Language**: VB.NET
 - **UI**: Windows Forms
 - **System APIs**: WMI, Windows APIs for process management
