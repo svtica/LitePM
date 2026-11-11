@@ -9,7 +9,7 @@ foreach ($f in $files | Where-Object { $_.Extension -in '.exe', '.dll' }) {
     try { $asm = [Reflection.Assembly]::LoadFrom($f.FullName) } catch { $lines.Add("NOTNET $($f.Name)"); continue }
     $n = $f.Name
     $lines.Add("$n NAME $($asm.GetName().FullName)")
-    $pek = [Reflection.PortableExecutableKinds]0; $mach = [Reflection.ImageFileMachine]0
+    $pek = [Reflection.PortableExecutableKinds]0; $mach = [Reflection.ImageFileMachine]::I386
     $asm.ManifestModule.GetPEKind([ref]$pek, [ref]$mach)
     $lines.Add("$n PE $pek $mach")
     foreach ($r in $asm.GetReferencedAssemblies() | Sort-Object FullName) { $lines.Add("$n REF $($r.FullName)") }
