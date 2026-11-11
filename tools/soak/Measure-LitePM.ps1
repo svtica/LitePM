@@ -58,6 +58,15 @@ $churnExes = for ($i = 1; $i -le $ChurnBatch; $i++) {
 
 Write-Host "Starting $exe -filter Lite (cwd $exeDir)"
 $proc = Start-Process -FilePath $exe -ArgumentList '-filter', 'Lite' -WorkingDirectory $exeDir -PassThru
+# Startup time: until the main window exists
+$startWatch = [Diagnostics.Stopwatch]::StartNew()
+while ($startWatch.Elapsed.TotalSeconds -lt 60) {
+    $proc.Refresh()
+    if ($proc.HasExited -or $proc.MainWindowHandle -ne [IntPtr]::Zero) { break }
+    Start-Sleep -Milliseconds 100
+}
+$startupSeconds = [math]::Round($startWatch.Elapsed.TotalSeconds, 1)
+Write-Host "Main window after $startupSeconds s"
 Start-Sleep -Seconds 15
 if ($proc.HasExited) { throw "LitePM exited right after start (exit code $($proc.ExitCode))" }
 
@@ -77,6 +86,8 @@ $nextSample = 0
 $nextChurn = 0
 $churnStarted = 0
 $crashed = $false
+$lastCpu = $proc.TotalProcessorTime.TotalSeconds
+$lastCpuAt = $sw.Elapsed.TotalSeconds
 
 while ($sw.Elapsed.TotalMinutes -lt $DurationMinutes) {
     $t = $sw.Elapsed.TotalSeconds
@@ -97,6 +108,10 @@ while ($sw.Elapsed.TotalMinutes -lt $DurationMinutes) {
             $crashed = $true
             break
         }
+        # Average CPU of LitePM since the previous sample, in % of one core
+        $cpuNow = $proc.TotalProcessorTime.TotalSeconds
+        $cpuPercent = [math]::Round(100 * ($cpuNow - $lastCpu) / [math]::Max(0.001, $t - $lastCpuAt), 2)
+        $lastCpu = $cpuNow; $lastCpuAt = $t
         $gc = $null
         if ($gcCounter) {
             try { $gc = (Get-Counter -Counter $gcCounter -ErrorAction Stop).CounterSamples[0].CookedValue } catch { $gc = $null }
@@ -109,12 +124,13 @@ while ($sw.Elapsed.TotalMinutes -lt $DurationMinutes) {
             GdiObjects   = [SoakNative]::GetGuiResources($proc.Handle, 0)
             UserObjects  = [SoakNative]::GetGuiResources($proc.Handle, 1)
             Threads      = $proc.Threads.Count
+            CpuPercent   = $cpuPercent
             GcHeapMB     = if ($null -ne $gc) { [math]::Round($gc / 1MB, 1) } else { '' }
             ChurnStarted = $churnStarted
         }
         $rows.Add($row)
-        Write-Host ("{0,7:N1} min  priv {1,7:N1} MB  ws {2,7:N1} MB  handles {3,6}  gdi {4,5}  user {5,5}  thr {6,4}  gc {7}" -f `
-            $row.ElapsedMin, $row.PrivateMB, $row.WorkingSetMB, $row.Handles, $row.GdiObjects, $row.UserObjects, $row.Threads, $row.GcHeapMB)
+        Write-Host ("{0,7:N1} min  priv {1,7:N1} MB  ws {2,7:N1} MB  handles {3,6}  gdi {4,5}  user {5,5}  thr {6,4}  cpu {8,6:N2} %  gc {7}" -f `
+            $row.ElapsedMin, $row.PrivateMB, $row.WorkingSetMB, $row.Handles, $row.GdiObjects, $row.UserObjects, $row.Threads, $row.GcHeapMB, $row.CpuPercent)
         $nextSample = $t + $SampleSeconds
     }
 
@@ -139,7 +155,7 @@ function Get-Slope($xs, $ys) {
     return $num / $den
 }
 
-$metrics = 'PrivateMB', 'WorkingSetMB', 'Handles', 'GdiObjects', 'UserObjects', 'Threads', 'GcHeapMB'
+$metrics = 'PrivateMB', 'WorkingSetMB', 'Handles', 'GdiObjects', 'UserObjects', 'Threads', 'GcHeapMB', 'CpuPercent'
 $steady = @($rows | Where-Object { $_.ElapsedMin -ge $WarmupMinutes })
 $short = $steady | Select-Object -First 1
 $last = $rows | Select-Object -Last 1
@@ -148,6 +164,7 @@ $md = New-Object System.Text.StringBuilder
 [void]$md.AppendLine("### LitePM soak - $Label")
 [void]$md.AppendLine()
 [void]$md.AppendLine("Duration: $([math]::Round($last.ElapsedMin,1)) min, churn processes started: $churnStarted" + $(if ($crashed) { ' - **LitePM exited before the end**' } else { '' }))
+[void]$md.AppendLine("Main window shown after $startupSeconds s. Average CPU after warm-up: $([math]::Round((@($steady | Measure-Object CpuPercent -Average).Average), 2)) % of one core.")
 [void]$md.AppendLine()
 [void]$md.AppendLine("| Counter | At $WarmupMinutes min (short run) | At end | Growth per hour (after warm-up) |")
 [void]$md.AppendLine("|---|---:|---:|---:|")
