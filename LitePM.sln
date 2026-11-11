@@ -3,22 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "LitePM", "LitePM\LitePM.vbproj", "{A82E9888-6B2A-44A7-B79A-27C93079ACDD}"
+Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "LitePM", "LitePM\LitePM.vbproj", "{A82E9888-6B2A-44A7-B79A-27C93079ACDD}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5BF15AF5-DEB8-46A8-99C7-21993617D0C8} = {5BF15AF5-DEB8-46A8-99C7-21993617D0C8}
 		{6C8A134F-E0E8-4F5D-8DC5-57313CEC1E3A} = {6C8A134F-E0E8-4F5D-8DC5-57313CEC1E3A}
 		{E73BB233-D88B-44A7-A98F-D71EE158381D} = {E73BB233-D88B-44A7-A98F-D71EE158381D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskDialog", "TaskDialog\TaskDialog.csproj", "{5BF15AF5-DEB8-46A8-99C7-21993617D0C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TaskDialog", "TaskDialog\TaskDialog.csproj", "{5BF15AF5-DEB8-46A8-99C7-21993617D0C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecurePasswordTextBox", "SecurePasswordTextBox\SecurePasswordTextBox.csproj", "{12EE0447-8AC7-4E1C-87B3-428A1A414CDF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecurePasswordTextBox", "SecurePasswordTextBox\SecurePasswordTextBox.csproj", "{12EE0447-8AC7-4E1C-87B3-428A1A414CDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureChannel", "SecureChannel\SecureChannel.csproj", "{602F813A-2157-4050-8ADA-10217636F33E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SecureChannel", "SecureChannel\SecureChannel.csproj", "{602F813A-2157-4050-8ADA-10217636F33E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractiveProcessFromService", "InteractiveProcessFromService\InteractiveProcessFromService.csproj", "{6C8A134F-E0E8-4F5D-8DC5-57313CEC1E3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InteractiveProcessFromService", "InteractiveProcessFromService\InteractiveProcessFromService.csproj", "{6C8A134F-E0E8-4F5D-8DC5-57313CEC1E3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aga.Controls", "Aga.Controls\Aga.Controls.csproj", "{E73BB233-D88B-44A7-A98F-D71EE158381D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aga.Controls", "Aga.Controls\Aga.Controls.csproj", "{E73BB233-D88B-44A7-A98F-D71EE158381D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
