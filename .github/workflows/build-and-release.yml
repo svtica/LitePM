@@ -197,11 +197,14 @@ jobs:
         Write-Host "Package OK: $($names.Count) entries, LitePM.exe and its dependencies at the zip root."
       shell: powershell
 
+    # GitHub always serves an artifact as <name>.zip: upload the package
+    # content (not the zip itself) so the download is LitePM.zip with
+    # LitePM.exe and its DLLs inside, like the release asset.
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: LitePM-${{ env.PACKAGE_VERSION }}-x64
-        path: ${{ env.PACKAGE_NAME }}
+        name: LitePM
+        path: publish/
 
     - name: Upload to release (if tag)
       if: startsWith(env.RELEASE_REF, 'refs/tags/')
