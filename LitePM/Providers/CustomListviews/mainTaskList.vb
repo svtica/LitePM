@@ -199,6 +199,10 @@ Public Class mainTaskList
                 Me.Items.RemoveByKey(z)
                 _dico.Remove(z)
             Next
+            If _dicoDel.Count > 0 Then
+                ' One icon per window: drop the icons of closed windows
+                Me.CompactImageListIfNeeded()
+            End If
             If _dicoDel.Count > EMPIRIC_MINIMAL_NUMBER_OF_DELETED_ITEMS_TO_BEGIN_UPDATE Then
                 Me.EndUpdate()
             End If

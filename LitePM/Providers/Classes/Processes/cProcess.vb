@@ -147,17 +147,41 @@ Public Class cProcess
             _tokenHandle = Native.Objects.Token.GetProcessTokenHandleByProcessHandle(_handleQueryInfo, Native.Security.TokenAccess.Query)
         End If
     End Sub
+    ' Release the native process and token handles opened by the constructor.
+    ' Previously Dispose did nothing (it called Object.Finalize) and the
+    ' finalizer only closed the process handle: the token handle of every
+    ' cProcess ever created was leaked.
+    Private _disposed As Boolean = False
+
     Public Sub Dispose() Implements IDisposable.Dispose
-        MyBase.Finalize()
+        Me.ReleaseHandles()
+        GC.SuppressFinalize(Me)
     End Sub
 
     Protected Overrides Sub Finalize()
-        ' Close a handle if local
-        If Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection Then
-            If _handleQueryInfo.IsNotNull Then
-                Native.Objects.General.CloseHandle(_handleQueryInfo)
-            End If
+        Try
+            Me.ReleaseHandles()
+        Finally
+            MyBase.Finalize()
+        End Try
+    End Sub
+
+    Private Sub ReleaseHandles()
+        If _disposed Then
+            Exit Sub
         End If
+        _disposed = True
+        ' Handles are only opened for a local connection; close them whatever
+        ' the current connection type is.
+        If _tokenHandle.IsNotNull Then
+            Native.Objects.General.CloseHandle(_tokenHandle)
+            _tokenHandle = IntPtr.Zero
+        End If
+        If _handleQueryInfo.IsNotNull Then
+            Native.Objects.General.CloseHandle(_handleQueryInfo)
+            _handleQueryInfo = IntPtr.Zero
+        End If
+        asyncNonFixed = Nothing
     End Sub
 
 #End Region
@@ -335,6 +359,9 @@ Public Class cProcess
 
             Case Else
                 ' Local
+                If _disposed Then
+                    Exit Sub
+                End If
                 If asyncNonFixed Is Nothing Then
                     asyncNonFixed = New asyncCallbackProcGetNonFixedInfos(Me.Infos.ProcessId, _handleQueryInfo)
                 End If
@@ -1335,10 +1362,12 @@ Public Class cProcess
 #Region "Shared function"
 
     ' Return Process name
+    ' Called on every refresh for each network connection, service and window:
+    ' it must not create a cProcess (which opens native handles).
     Public Shared Function GetProcessName(ByVal pid As Integer) As String
-        Dim cp As cProcess = ProcessProvider.GetProcessById(pid)
-        If cp IsNot Nothing Then
-            Return cp.Infos.Name
+        Dim name As String = ProcessProvider.GetProcessNameById(pid)
+        If name IsNot Nothing Then
+            Return name
         Else
             Return NO_INFO_RETRIEVED
         End If

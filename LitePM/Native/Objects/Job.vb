@@ -535,14 +535,15 @@ Namespace Native.Objects
                         Debug.WriteLine(list.ProcessIdsCount.ToString)
                         For i As Integer = 0 To list.ProcessIdsCount - 1
                             Dim pid As Integer = memAlloc.ReadInt32(&H8, i)      ' &h8 cause of two first Int32
-                            Dim proc As cProcess = ProcessProvider.GetProcessById(pid)
-                            ' /!\ We HAVE to check that the cProcess we retrieve
+                            ' /!\ We HAVE to check that the process we retrieve
                             ' is NOT null, as it may has just been created and is not
-                            ' yet available in list of cProcesses
-                            If proc IsNot Nothing AndAlso pid > 0 Then
-                                ' PERFISSUE ?
+                            ' yet available in list of processes.
+                            ' Only the cached infos are needed: do not create a
+                            ' cProcess (it opens native handles).
+                            Dim procInfos As processInfos = ProcessProvider.GetProcessInfosById(pid)
+                            If procInfos IsNot Nothing AndAlso pid > 0 Then
                                 If procs.ContainsKey(pid) = False Then
-                                    procs.Add(pid, proc.Infos)
+                                    procs.Add(pid, procInfos)
                                 End If
                             End If
                         Next

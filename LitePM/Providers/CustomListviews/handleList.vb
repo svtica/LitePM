@@ -402,9 +402,7 @@ Public Class handleList
                     ' Have to retrieve the icon of file/directory
                     Dim fName As String = _dico.Item(key).Infos.Name
                     If IO.File.Exists(fName) Or IO.Directory.Exists(fName) Then
-                        Dim img As System.Drawing.Icon = Common.Misc.GetIcon2(fName, True)
-                        If img IsNot Nothing Then
-                            Me.SmallImageList.Images.Add(fName, img)
+                        If Common.Misc.AddFileIconToImageList(Me.SmallImageList, fName, fName) Then
                             item.ImageKey = fName
                         Else
                             item.ImageKey = "noicon"
