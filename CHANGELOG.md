@@ -26,6 +26,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     and `NtGetNextProcess` handles leaked in the fallback handle lookup.
 
 ### Added
+- **Release** workflow (Actions > Release > Run workflow): bumps the version
+  (patch / minor / major or an explicit version), commits and tags it on
+  `main`, then builds and publishes the release. `bump-version.ps1` gains
+  `-Bump`, refuses a dirty tree, a branch other than `main`, a version that is
+  not greater than the current one or an existing tag.
 - `docs/dotnet-migration.md`: assessment of a migration to .NET 10
   (blockers, effort, recommendation to stay on .NET Framework 4.8).
 - `tools/soak/Measure-LitePM.ps1` and the **Memory soak** workflow: a
