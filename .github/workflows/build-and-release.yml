@@ -1,19 +1,44 @@
 # .github/workflows/build-and-release.yml
 # GitHub Actions workflow for LitePM (.NET Framework 4.8 VB.NET)
+#
+# Release package contract (used by LiteTask, Tools > Process manager):
+#   - asset name LitePM-<version>-win-x64.zip on a v<semver> tag release;
+#   - LitePM.exe and all its dependencies (DLLs, .config) in the same folder;
+#   - LitePM.exe signed with Authenticode when the SIGNING_CERTIFICATE secret
+#     exists (LiteTask refuses a signature that does not match the file and
+#     installs an unsigned exe with a warning).
+#
+# Signing secrets (repository settings > Secrets and variables > Actions):
+#   SIGNING_CERTIFICATE   the .pfx file, base64-encoded
+#   CERTIFICATE_PASSWORD  its password
+# Without them the build still runs and produces an unsigned package.
 
 name: Build and Release
 
 on:
   push:
     branches: [ main, develop ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ main ]
   release:
     types: [ published ]
 
+# A tag push and the matching release event build the same ref: run them one
+# after the other so the release asset is not uploaded twice at once.
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CERTIFICATE_BASE64: ${{ secrets.SIGNING_CERTIFICATE }}
+  CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout code
@@ -35,6 +60,7 @@ jobs:
     - name: Build solution
       run: |
         msbuild LitePM.sln --% /p:Configuration=Release /p:Platform="Any CPU"
+        if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       shell: powershell
 
     - name: Copy fallback DLLs from res/ if missing
@@ -67,11 +93,73 @@ jobs:
 
         Copy-Item "README.md" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "LICENSE" -Destination $publishPath -ErrorAction SilentlyContinue
+        Copy-Item "CHANGELOG.md" -Destination $publishPath -ErrorAction SilentlyContinue
 
         if (Test-Path "Resources") {
           Copy-Item "Resources" -Destination $publishPath -Recurse -ErrorAction SilentlyContinue
         }
       shell: powershell
+
+    - name: Decode certificate
+      if: ${{ env.CERTIFICATE_BASE64 != '' }}
+      run: |
+        $certBytes = [System.Convert]::FromBase64String($env:CERTIFICATE_BASE64)
+        $certPath = Join-Path -Path $env:RUNNER_TEMP -ChildPath "signing-cert.pfx"
+        [IO.File]::WriteAllBytes($certPath, $certBytes)
+        echo "CERTIFICATE_PATH=$certPath" | Out-File -FilePath $env:GITHUB_ENV -Append
+      shell: pwsh
+
+    - name: Sign executables and DLLs
+      if: ${{ env.CERTIFICATE_BASE64 != '' }}
+      run: |
+        # Find signtool.exe dynamically (latest Windows SDK)
+        $signtool = Get-ChildItem -Path "C:\Program Files (x86)\Windows Kits\10\bin\*\x64\signtool.exe" -ErrorAction SilentlyContinue |
+                    Sort-Object FullName -Descending |
+                    Select-Object -First 1
+        if (-not $signtool) {
+          Write-Error "signtool.exe not found in Windows SDK"
+          exit 1
+        }
+        Write-Host "Using signtool: $($signtool.FullName)"
+
+        # Binaries built by this solution.
+        # third-party precompiled DLL (res/) and keeps its own (lack of) signature.
+        $files = @(
+          "LitePM.exe",
+          "LitePMService.exe",
+          "Aga.Controls.dll",
+          "TaskDialog.dll",
+          "SecurePasswordTextBox.dll",
+          "SecureChannel.dll"
+        ) | ForEach-Object { Join-Path "publish" $_ } | Where-Object { Test-Path $_ }
+
+        foreach ($file in $files) {
+          Write-Host "Signing: $file"
+          & $signtool.FullName sign /f "$env:CERTIFICATE_PATH" /p "$env:CERTIFICATE_PASSWORD" /tr http://timestamp.digicert.com /td sha256 /fd sha256 "$file"
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to sign $file"
+            exit 1
+          }
+          & $signtool.FullName verify /pa "$file"
+          if ($LASTEXITCODE -ne 0) {
+            Write-Error "Signature verification failed for $file"
+            exit 1
+          }
+        }
+      shell: pwsh
+
+    - name: Remove certificate
+      if: always()
+      run: |
+        if ($env:CERTIFICATE_PATH -and (Test-Path $env:CERTIFICATE_PATH)) {
+          Remove-Item $env:CERTIFICATE_PATH -Force
+        }
+      shell: pwsh
+
+    - name: Warn when the release is unsigned
+      if: ${{ env.CERTIFICATE_BASE64 == '' && startsWith(github.ref, 'refs/tags/') }}
+      run: echo "::warning::SIGNING_CERTIFICATE secret is not set - LitePM.exe in this release is NOT signed (LiteTask will install it with a warning)."
+      shell: bash
 
     - name: Create release package
       run: |
@@ -79,9 +167,9 @@ jobs:
         if ($env:GITHUB_REF -like "refs/tags/*") {
           $version = $env:GITHUB_REF -replace "refs/tags/v", ""
         } elseif ($env:GITHUB_REF -like "refs/heads/*") {
-          $branch = $env:GITHUB_REF -replace "refs/heads/", ""
+          $branch = ($env:GITHUB_REF -replace "refs/heads/", "") -replace "[^A-Za-z0-9._-]", "-"
           $sha = $env:GITHUB_SHA.Substring(0,7)
-          $version = "1.0.1-$branch-$sha"
+          $version = $version + "-$branch-$sha"   # not a quoted literal: bump-version.ps1 only rewrites the line above
         }
 
         Compress-Archive -Path "publish\*" -DestinationPath "LitePM-$version-win-x64.zip"
@@ -89,17 +177,30 @@ jobs:
         echo "PACKAGE_NAME=LitePM-$version-win-x64.zip" >> $env:GITHUB_ENV
       shell: powershell
 
+    - name: Check package layout (LiteTask contract)
+      run: |
+        Add-Type -AssemblyName System.IO.Compression.FileSystem
+        $zip = [IO.Compression.ZipFile]::OpenRead((Resolve-Path $env:PACKAGE_NAME))
+        try {
+          $names = $zip.Entries | ForEach-Object { $_.FullName }
+        } finally { $zip.Dispose() }
+        if ($env:PACKAGE_NAME -notmatch '^LitePM-.*-win-x64\.zip$') { Write-Error "Asset name $env:PACKAGE_NAME breaks the LiteTask pattern"; exit 1 }
+        $required = 'LitePM.exe', 'LitePM.exe.config', 'Aga.Controls.dll', 'TaskDialog.dll', 'SecurePasswordTextBox.dll', 'SecureChannel.dll'
+        $missing = $required | Where-Object { $names -notcontains $_ }
+        if ($missing) { Write-Error "Missing next to LitePM.exe in the zip: $($missing -join ', ')"; exit 1 }
+        Write-Host "Package OK: $($names.Count) entries, LitePM.exe and its dependencies at the zip root."
+      shell: powershell
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: LitePM-${{ env.PACKAGE_VERSION }}-x64
-        path: LitePM-${{ env.PACKAGE_VERSION }}-win-x64.zip
+        path: ${{ env.PACKAGE_NAME }}
 
     - name: Upload to release (if tag)
       if: startsWith(github.ref, 'refs/tags/')
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
-        files: ./LitePM-${{ env.PACKAGE_VERSION }}-win-x64.zip
+        files: ./${{ env.PACKAGE_NAME }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
