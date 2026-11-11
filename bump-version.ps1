@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Updates every version location (AssemblyInfo.vb, LitePM.vbproj,
-    app.manifest, build-and-release.yml fallback), commits "Bump version to X"
+    app.manifest), commits "Bump version to X"
     on main, tags v<Major.Minor.Build> and pushes both.
 
     Locally, pushing the tag triggers the "Build and Release" workflow. The
@@ -40,7 +40,6 @@ $ErrorActionPreference = 'Stop'
 $assemblyInfoFile = Join-Path $PSScriptRoot 'LitePM\My Project\AssemblyInfo.vb'
 $projectFile      = Join-Path $PSScriptRoot 'LitePM\LitePM.vbproj'
 $manifestFile     = Join-Path $PSScriptRoot 'LitePM\My Project\app.manifest'
-$workflowFile     = Join-Path $PSScriptRoot '.github\workflows\build-and-release.yml'
 
 # Refuse to tag a dirty tree or a branch other than main: the tag would publish
 # a release that does not match what is on GitHub.
@@ -92,19 +91,16 @@ $manifest = Get-Content $manifestFile -Raw
 $manifest = $manifest -replace '(assemblyIdentity\s+version=")[^"]+(")', "`${1}$Version`${2}"
 Set-Content $manifestFile $manifest -NoNewline
 
-# Update build-and-release.yml (fallback version used for branch builds)
-$wf = Get-Content $workflowFile -Raw
-$wf = $wf -replace '(\$version\s*=\s*")[^"]+(")', "`${1}$version3`${2}"
-Set-Content $workflowFile $wf -NoNewline
+# (build-and-release.yml reads the version from AssemblyInfo.vb: a workflow
+# token cannot push changes to workflow files.)
 
 Write-Host "Version updated to $Version in:"
 Write-Host "  - AssemblyInfo.vb (AssemblyVersion, AssemblyFileVersion)"
 Write-Host "  - LitePM.vbproj (ApplicationVersion -> $version3.%2a)"
 Write-Host "  - app.manifest (assemblyIdentity)"
-Write-Host "  - build-and-release.yml (fallback `$version -> $version3)"
 
 # Git operations
-git add $assemblyInfoFile $projectFile $manifestFile $workflowFile
+git add $assemblyInfoFile $projectFile $manifestFile
 git commit -m "Bump version to $Version"
 if ($LASTEXITCODE -ne 0) { throw 'git commit failed.' }
 git tag $tag
