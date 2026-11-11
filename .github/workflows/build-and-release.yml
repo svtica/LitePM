@@ -2,7 +2,10 @@
 # GitHub Actions workflow for LitePM (.NET Framework 4.8 VB.NET)
 #
 # Release package contract (used by LiteTask, Tools > Process manager):
-#   - asset name LitePM-<version>-win-x64.zip on a v<semver> tag release;
+#   - asset name LitePM.zip (fixed, so that
+#     https://github.com/svtica/LitePM/releases/latest/download/LitePM.zip
+#     always points to the latest release) on a v<semver> tag release;
+#     LiteTask matches ^LitePM.*\.zip$ (LiteTask 1.2.2.5 and later);
 #   - LitePM.exe and all its dependencies (DLLs, .config) in the same folder;
 #   - LitePM.exe signed with Authenticode when the SIGNING_CERTIFICATE secret
 #     exists (LiteTask refuses a signature that does not match the file and
@@ -171,9 +174,9 @@ jobs:
           $version = $version + "-$branch-$sha"   # not a quoted literal: bump-version.ps1 only rewrites the line above
         }
 
-        Compress-Archive -Path "publish\*" -DestinationPath "LitePM-$version-win-x64.zip"
+        Compress-Archive -Path "publish\*" -DestinationPath "LitePM.zip"
         echo "PACKAGE_VERSION=$version" >> $env:GITHUB_ENV
-        echo "PACKAGE_NAME=LitePM-$version-win-x64.zip" >> $env:GITHUB_ENV
+        echo "PACKAGE_NAME=LitePM.zip" >> $env:GITHUB_ENV
       shell: powershell
 
     - name: Check package layout (LiteTask contract)
@@ -183,7 +186,7 @@ jobs:
         try {
           $names = $zip.Entries | ForEach-Object { $_.FullName }
         } finally { $zip.Dispose() }
-        if ($env:PACKAGE_NAME -notmatch '^LitePM-.*-win-x64\.zip$') { Write-Error "Asset name $env:PACKAGE_NAME breaks the LiteTask pattern"; exit 1 }
+        if ($env:PACKAGE_NAME -notmatch '^LitePM.*\.zip$') { Write-Error "Asset name $env:PACKAGE_NAME breaks the LiteTask pattern"; exit 1 }
         $required = 'LitePM.exe', 'LitePM.exe.config', 'Aga.Controls.dll', 'TaskDialog.dll', 'SecurePasswordTextBox.dll', 'SecureChannel.dll'
         $missing = $required | Where-Object { $names -notcontains $_ }
         if ($missing) { Write-Error "Missing next to LitePM.exe in the zip: $($missing -join ', ')"; exit 1 }

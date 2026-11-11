@@ -5,7 +5,7 @@
 #    v<Major.Minor.Build> and pushes both;
 # 2. build-and-release.yml is then called with that tag: it builds, signs
 #    (when the SIGNING_CERTIFICATE secret exists) and publishes the release
-#    asset LitePM-<version>-win-x64.zip that LiteTask installs.
+#    asset LitePM.zip that LiteTask installs.
 #
 # The workflow pushes to main with the default GITHUB_TOKEN. If main is a
 # protected branch that refuses pushes from GitHub Actions, the bump step

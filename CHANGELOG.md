@@ -47,6 +47,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `LitePM.exe` and its dependencies at the zip root).
 
 ### Changed
+- The release asset is now always `LitePM.zip` (was
+  `LitePM-<version>-win-x64.zip`), so the latest release has a fixed link:
+  `https://github.com/svtica/LitePM/releases/latest/download/LitePM.zip`.
+  LiteTask 1.2.2.5 and later accept it; 1.2.2.3 and 1.2.2.4 need to update.
 - All projects of the solution use the SDK-style project format, still
   targeting .NET Framework 4.8 (built assemblies unchanged). CI builds with
   `msbuild -restore`. ClickOnce/bootstrapper leftovers removed from
