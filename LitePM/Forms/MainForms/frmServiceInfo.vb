@@ -202,8 +202,8 @@ Public Class frmServiceInfo
         If Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection Then
             If pctBigIcon.Image Is Nothing Then
                 Try
-                    pctBigIcon.Image = GetIcon(Me.txtServicePath.Text, False).ToBitmap
-                    pctSmallIcon.Image = GetIcon(Me.txtServicePath.Text, True).ToBitmap
+                    pctBigIcon.Image = If(GetIconBitmap(Me.txtServicePath.Text, False), My.Resources.exe32)
+                    pctSmallIcon.Image = If(GetIconBitmap(Me.txtServicePath.Text, True), My.Resources.exe16)
                 Catch ex As Exception
                     pctSmallIcon.Image = My.Resources.exe16
                     pctBigIcon.Image = My.Resources.exe32

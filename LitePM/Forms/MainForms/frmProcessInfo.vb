@@ -517,8 +517,8 @@ Public Class frmProcessInfo
         If Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection Then
             If pctBigIcon.Image Is Nothing Then
                 Try
-                    pctBigIcon.Image = GetIcon(curProc.Infos.Path, False).ToBitmap
-                    pctSmallIcon.Image = GetIcon(curProc.Infos.Path, True).ToBitmap
+                    pctBigIcon.Image = If(GetIconBitmap(curProc.Infos.Path, False), My.Resources.exe32)
+                    pctSmallIcon.Image = If(GetIconBitmap(curProc.Infos.Path, True), My.Resources.exe16)
                 Catch ex As Exception
                     pctSmallIcon.Image = My.Resources.exe16
                     pctBigIcon.Image = My.Resources.exe32

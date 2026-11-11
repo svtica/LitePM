@@ -165,8 +165,8 @@ Public Class frmMain
 
             ' Icons
             Try
-                pctFileBig.Image = GetIcon(file, False).ToBitmap
-                pctFileSmall.Image = GetIcon(file, True).ToBitmap
+                pctFileBig.Image = If(GetIconBitmap(file, False), My.Resources.exe32)
+                pctFileSmall.Image = If(GetIconBitmap(file, True), My.Resources.exe16)
             Catch ex As Exception
                 pctFileSmall.Image = My.Resources.exe16
                 pctFileBig.Image = My.Resources.exe32
@@ -1755,22 +1755,25 @@ Public Class frmMain
     Private Sub processCreated(ByVal pids As List(Of Integer), ByVal newItems As Dictionary(Of Integer, processInfos), ByVal instanceId As Integer, ByVal res As Native.Api.Structs.QueryResult)
         If res.Success AndAlso instanceId = Me.lvProcess.InstanceId Then    ' Associated with lvProcess
             For Each id As Integer In pids
-                Dim item As cProcess = ProcessProvider.GetProcessById(id)
-                If item IsNot Nothing AndAlso ProcessProvider.FirstRefreshDone Then
-                    Program.Log.AppendLine("Process created : " & item.Infos.Name & " (" & item.Infos.ProcessId & ")")
+                ' Use the infos carried by the event: creating a cProcess here
+                ' opened (and leaked) native handles for every new process.
+                Dim infos As processInfos = Nothing
+                newItems.TryGetValue(id, infos)
+                If infos IsNot Nothing AndAlso ProcessProvider.FirstRefreshDone Then
+                    Program.Log.AppendLine("Process created : " & infos.Name & " (" & infos.ProcessId & ")")
                     If Me.MenuItemTaskSelProc.Enabled = False Then
                         MenuItemTaskSelProc.Enabled = True
                     End If
                     If My.Settings.NotifyNewProcesses Then
-                        Dim text As String = "Name : " & item.Infos.Name & " (" & item.Infos.ProcessId.ToString & ")"
-                        If item.Infos.ParentProcessId > 0 Then
+                        Dim text As String = "Name : " & infos.Name & " (" & infos.ProcessId.ToString & ")"
+                        If infos.ParentProcessId > 0 Then
                             text &= vbNewLine & "Parent : " &
-                                cProcess.GetProcessName(item.Infos.ParentProcessId) & " (" &
-                                cProcess.GetProcessName(item.Infos.ParentProcessId) & ")"
+                                cProcess.GetProcessName(infos.ParentProcessId) & " (" &
+                                infos.ParentProcessId.ToString & ")"
                         End If
-                        If item.Infos.FileInfo IsNot Nothing Then
-                            text &= vbNewLine & "Company : " & item.Infos.FileInfo.CompanyName &
-                                vbNewLine & "Description : " & item.Infos.FileInfo.FileDescription
+                        If infos.FileInfo IsNot Nothing Then
+                            text &= vbNewLine & "Company : " & infos.FileInfo.CompanyName &
+                                vbNewLine & "Description : " & infos.FileInfo.FileDescription
                         End If
                         With Me.Tray
                             .BalloonTipText = text

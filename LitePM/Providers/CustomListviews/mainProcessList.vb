@@ -70,6 +70,9 @@ Public Class mainProcessList
     Public Sub ClearItems()
         _first = True
         _firstItemUpdate = True
+        For Each proc As cProcess In _dico.Values
+            proc.Dispose()
+        Next
         _dico.Clear()
         _IMG.Images.Clear()
         _IMG.Images.Add("noIcon", My.Resources.application_blue16)
@@ -324,10 +327,17 @@ Public Class mainProcessList
                         End If
                         For Each key As String In toDel
                             Me.Items.RemoveByKey(key)
-                            If _dico.ContainsKey(key) Then
+                            Dim removed As cProcess = Nothing
+                            If _dico.TryGetValue(key, removed) Then
                                 _dico.Remove(key)
+                                ' Release native handles of the terminated process now
+                                removed.Dispose()
                             End If
                         Next
+                        If toDel.Count > 0 Then
+                            ' One icon per executable path: drop the icons no longer displayed
+                            Me.CompactImageListIfNeeded()
+                        End If
                         If _hasToLock Then
                             Me.EndUpdate()
                         End If
@@ -388,8 +398,23 @@ Public Class mainProcessList
                     Dim fName As String = proc.Infos.Path
 
                     If IO.File.Exists(fName) Then
-                        Me.SmallImageList.Images.Add(fName, Common.Misc.GetIcon(fName, True))
-                        item.ImageKey = fName
+                        ' One image per executable path (previously one per
+                        ' process start, never removed)
+                        If Me.SmallImageList.Images.ContainsKey(fName) = False Then
+                            ' With a created handle the image list copies the icon
+                            ' immediately, so it can be disposed right after Add.
+                            Common.Misc.EnsureImageListHandle(Me.SmallImageList)
+                            Using ico As Icon = Common.Misc.GetIcon(fName, True)
+                                If ico IsNot Nothing Then
+                                    Me.SmallImageList.Images.Add(fName, ico)
+                                End If
+                            End Using
+                        End If
+                        If Me.SmallImageList.Images.ContainsKey(fName) Then
+                            item.ImageKey = fName
+                        Else
+                            item.ImageKey = "noIcon"
+                        End If
                     Else
                         item.ImageKey = "noIcon"
                     End If

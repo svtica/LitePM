@@ -209,6 +209,38 @@ Public Class ProcessProvider
         Return tt
 
     End Function
+    ' Get the cached informations of a process by its id, without creating a
+    ' cProcess (which opens native process/token handles).
+    ' Thread safe. Returns Nothing if the process is not in the current list.
+    Public Shared Function GetProcessInfosById(ByVal id As Integer) As processInfos
+
+        Dim infos As processInfos = Nothing
+
+        Try
+            _semProcess.WaitOne()
+            If _currentProcesses IsNot Nothing Then
+                _currentProcesses.TryGetValue(id, infos)
+            End If
+        Catch ex As Exception
+            Misc.ShowDebugError(ex)
+        Finally
+            _semProcess.Release()
+        End Try
+
+        Return infos
+
+    End Function
+
+    ' Get the name of a process by its id (Nothing if unknown)
+    ' Thread safe, opens no handle
+    Public Shared Function GetProcessNameById(ByVal id As Integer) As String
+        Dim infos As processInfos = GetProcessInfosById(id)
+        If infos Is Nothing Then
+            Return Nothing
+        End If
+        Return infos.Name
+    End Function
+
     ' No sync protection
     Friend Shared Function GetProcessByIdNonThreadSafe(ByVal id As Integer) As cProcess
 
