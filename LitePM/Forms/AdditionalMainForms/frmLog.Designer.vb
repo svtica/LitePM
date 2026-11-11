@@ -100,7 +100,6 @@ Partial Class frmLog
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents Ribbon As System.Windows.Forms.Ribbon
     Friend WithEvents lv As DoubleBufferedLV
     Friend WithEvents ColumnHeader52 As System.Windows.Forms.ColumnHeader
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader

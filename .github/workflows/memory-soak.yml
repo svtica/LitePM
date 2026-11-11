@@ -55,7 +55,8 @@ jobs:
       working-directory: src
       shell: powershell
       run: |
-        Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\"
+        # Older revisions (e.g. the base branch) still use the precompiled ribbon DLL
+        if (Test-Path "res\System.Windows.Forms.Ribbon.dll") { Copy-Item "res\System.Windows.Forms.Ribbon.dll" -Destination "LitePM\" }
         New-Item -ItemType Directory -Force -Path "SecureChannel\bin\Release" | Out-Null
         Copy-Item "res\SecureChannel.dll" -Destination "SecureChannel\bin\Release\"
 
@@ -66,7 +67,7 @@ jobs:
         msbuild LitePM.sln --% -restore /p:Configuration=Release /p:Platform="Any CPU" /v:minimal
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
         foreach ($dll in 'Aga.Controls.dll','SecureChannel.dll','SecurePasswordTextBox.dll','System.Windows.Forms.Ribbon.dll','TaskDialog.dll') {
-          if (!(Test-Path "LitePM\bin\Release\$dll")) { Copy-Item "res\$dll" -Destination "LitePM\bin\Release\" }
+          if (!(Test-Path "LitePM\bin\Release\$dll") -and (Test-Path "res\$dll")) { Copy-Item "res\$dll" -Destination "LitePM\bin\Release\" }
         }
 
     - name: Soak (${{ matrix.variant }})

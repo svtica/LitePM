@@ -1981,8 +1981,7 @@ Public Class frmProcessInfo
                 End If
             Next
         Next
-        _frmMain.Ribbon.ActiveTab = _frmMain.ServiceTab
-        Call _frmMain.Ribbon_MouseMove(Nothing, Nothing)
+        Call _frmMain.SelectPage(_frmMain.pageServices)
     End Sub
 
     Private Sub MenuItemServFileProp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemServFileProp.Click
@@ -3026,21 +3025,7 @@ Public Class frmProcessInfo
         Next
     End Sub
 
-    Private Sub MenuItemNetworkRoute_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemNetworkRoute.Click
-        For Each it As cNetwork In Me.lvProcNetwork.GetSelectedItems
-            Dim frm As New frmNetworkTool(it, Native.Api.Enums.ToolType.TraceRoute)
-            frm.TopMost = _frmMain.TopMost
-            frm.Show()
-        Next
-    End Sub
 
-    Private Sub MenuItemNetworkWhoIs_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemNetworkWhoIs.Click
-        For Each it As cNetwork In Me.lvProcNetwork.GetSelectedItems
-            Dim frm As New frmNetworkTool(it, Native.Api.Enums.ToolType.WhoIs)
-            frm.TopMost = _frmMain.TopMost
-            frm.Show()
-        Next
-    End Sub
 
     Private Sub cmdActivateHeapEnumeration_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdActivateHeapEnumeration.Click
         ' TOREMOVE

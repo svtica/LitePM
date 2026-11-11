@@ -223,9 +223,6 @@
     <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Forms.Ribbon">
-      <HintPath>.\System.Windows.Forms.Ribbon.dll</HintPath>
-    </Reference>
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>

@@ -139,8 +139,6 @@ Partial Class frmProcessInfo
         Me.mnuNetwork = New System.Windows.Forms.ContextMenu
         Me.MenuItemNetworkTools = New System.Windows.Forms.MenuItem
         Me.MenuItemNetworkPing = New System.Windows.Forms.MenuItem
-        Me.MenuItemNetworkRoute = New System.Windows.Forms.MenuItem
-        Me.MenuItemNetworkWhoIs = New System.Windows.Forms.MenuItem
         Me.MenuItem10 = New System.Windows.Forms.MenuItem
         Me.MenuItemColumnsNetwork = New System.Windows.Forms.MenuItem
         Me.mnuService = New System.Windows.Forms.ContextMenu
@@ -1063,23 +1061,15 @@ Partial Class frmProcessInfo
         'MenuItemNetworkTools
         '
         Me.MenuItemNetworkTools.Index = 1
-        Me.MenuItemNetworkTools.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItemNetworkPing, Me.MenuItemNetworkRoute, Me.MenuItemNetworkWhoIs})
+        Me.MenuItemNetworkTools.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItemNetworkPing})
         Me.MenuItemNetworkTools.Text = "Tools"
         '
         'MenuItemNetworkPing
         '
         Me.MenuItemNetworkPing.Index = 0
         Me.MenuItemNetworkPing.Text = "Ping"
-        '
-        'MenuItemNetworkRoute
-        '
-        Me.MenuItemNetworkRoute.Index = 1
-        Me.MenuItemNetworkRoute.Text = "TraceRoute"
-        '
-        'MenuItemNetworkWhoIs
-        '
-        Me.MenuItemNetworkWhoIs.Index = 2
-        Me.MenuItemNetworkWhoIs.Text = "WhoIs"
+
+
         '
         'MenuItem10
         '
@@ -3979,7 +3969,5 @@ Partial Class frmProcessInfo
     Friend WithEvents cmdGoProcess As System.Windows.Forms.Button
     Friend WithEvents MenuItemNetworkTools As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItemNetworkPing As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuItemNetworkRoute As System.Windows.Forms.MenuItem
-    Friend WithEvents MenuItemNetworkWhoIs As System.Windows.Forms.MenuItem
     Friend WithEvents cmdActivateHeapEnumeration As System.Windows.Forms.Button
 End Class

@@ -151,7 +151,7 @@ Partial Class frmSystemInfo
         '
         'timerRefresh
         '
-        Me.timerRefresh.Enabled = True
+        Me.timerRefresh.Enabled = False
         Me.timerRefresh.Interval = 1000
         '
         'mainSplit
