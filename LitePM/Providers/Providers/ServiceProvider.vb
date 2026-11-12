@@ -311,8 +311,11 @@ Public Class ServiceProvider
 
                 Dim __con As New ConnectionOptions
                 __con.Impersonation = ImpersonationLevel.Impersonate
-                __con.Password = Common.Misc.SecureStringToCharArray(Program.Connection.WmiParameters.password)
-                __con.Username = Program.Connection.WmiParameters.userName
+                ' Empty user: WMI uses the current user (LitePM -REMOTE)
+                If Not String.IsNullOrEmpty(Program.Connection.WmiParameters.userName) Then
+                    __con.Password = Common.Misc.SecureStringToCharArray(Program.Connection.WmiParameters.password)
+                    __con.Username = Program.Connection.WmiParameters.userName
+                End If
 
                 Try
                     wmiSearcher = New Management.ManagementObjectSearcher("SELECT * FROM Win32_Service")

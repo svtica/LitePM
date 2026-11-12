@@ -26,6 +26,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     and `NtGetNextProcess` handles leaked in the fallback handle lookup.
 
 ### Added
+- `-REMOTE <computer>` command-line option: LitePM starts connected to that
+  computer through WMI, with the current Windows user (no password asked or
+  stored). LiteDeploy uses it to open a computer in LitePM. Only a computer
+  name or address is accepted (letters, digits, `.`, `-`, `_`).
+- WMI connections with an empty user name now use the current user instead of
+  sending an empty user name and password.
 - **Release** workflow (Actions > Release > Run workflow): bumps the version
   (patch / minor / major or an explicit version), commits and tags it on
   `main`, then builds and publishes the release. `bump-version.ps1` gains
