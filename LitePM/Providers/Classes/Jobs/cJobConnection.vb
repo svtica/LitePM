@@ -60,8 +60,11 @@ Public Class cJobConnection
 
                 Dim __con As New ConnectionOptions
                 __con.Impersonation = ImpersonationLevel.Impersonate
-                __con.Password = Common.Misc.SecureStringToCharArray(_conObj.WmiParameters.password)
-                __con.Username = _conObj.WmiParameters.userName
+                ' Empty user: WMI uses the current user (LitePM -REMOTE)
+                If Not String.IsNullOrEmpty(_conObj.WmiParameters.userName) Then
+                    __con.Password = Common.Misc.SecureStringToCharArray(_conObj.WmiParameters.password)
+                    __con.Username = _conObj.WmiParameters.userName
+                End If
 
                 Try
                     wmiSearcher = New Management.ManagementObjectSearcher("SELECT * FROM Win32_NamedJobObject")

@@ -374,8 +374,14 @@ Public Class frmMain
         ' Init position & size
         Pref.LoadFormPositionAndSize(Me, "PSfrmMain")
 
-        ' Connect to the local machine
-        Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection
+        ' Connect to the local machine, or to the computer of -REMOTE through WMI with the
+        ' current user (LiteDeploy opens a computer this way)
+        If Not String.IsNullOrEmpty(Program.Parameters.RemoteComputer) Then
+            Program.Connection.Type = cConnection.TypeOfConnection.RemoteConnectionViaWMI
+            Program.Connection.WmiParameters = New cConnection.WmiConnectionParameters(Program.Parameters.RemoteComputer, "", New System.Security.SecureString())
+        Else
+            Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection
+        End If
         Call ConnectToMachine()
 
         Me.timerMonitoring.Enabled = True

@@ -110,6 +110,24 @@ Public Module Program
             End Get
         End Property
 
+        ' -REMOTE <computer>: start connected to that computer through WMI, with the
+        ' current user (used by LiteDeploy to open a computer in LitePM)
+        Private remoteComputerName As String = Nothing
+        Public ReadOnly Property RemoteComputer As String
+            Get
+                Return remoteComputerName
+            End Get
+        End Property
+
+        ' A computer name or address: letters, digits, . - _ only
+        Public Shared Function IsValidComputerName(name As String) As Boolean
+            If String.IsNullOrWhiteSpace(name) OrElse name.Length > 253 Then Return False
+            For Each c As Char In name
+                If Not (Char.IsLetterOrDigit(c) OrElse c = "."c OrElse c = "-"c OrElse c = "_"c) Then Return False
+            Next
+            Return True
+        End Function
+
         Public Sub New(ByRef parameters As String())
             If parameters Is Nothing Then
                 Exit Sub
@@ -139,6 +157,10 @@ Public Module Program
                     End If
                 ElseIf parameters(i).ToUpperInvariant = "-SERVERSERVICE" Then
                     serviceMode = True
+                ElseIf parameters(i).ToUpperInvariant = "-REMOTE" Then
+                    If parameters.Length - 1 >= i + 1 AndAlso IsValidComputerName(parameters(i + 1)) Then
+                        remoteComputerName = parameters(i + 1)
+                    End If
                 ElseIf parameters(i).ToUpperInvariant = "-FILTER" Then
                     If parameters.Length - 1 >= i + 1 Then
                         procfilter = parameters(i + 1)
