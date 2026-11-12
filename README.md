@@ -57,6 +57,11 @@ LitePM is a comprehensive process management application that provides detailed 
 - View service dependencies and startup types
 - Monitor service status changes in real-time
 
+### Command line
+- `LitePM.exe -REMOTE <computer>`: open LitePM connected to a remote computer
+  through WMI, as the current Windows user (used by LiteDeploy). Needs
+  administrator rights and WMI access on that computer.
+
 ## Technology Stack
 
 - **Platform**: .NET Framework 4.8 (SDK-style projects; see [docs/dotnet-migration.md](docs/dotnet-migration.md) for .NET 10)
