@@ -10,28 +10,28 @@ LitePM is a comprehensive process management application that provides detailed 
 ## Features
 
 ### Process Management
-- **Real-time Process Monitoring**: Live view of all running processes with detailed information
-- **Process Control**: Terminate, suspend, resume, and manage process priorities
-- **Process Tree View**: Hierarchical display showing parent-child relationships
-- **Service Management**: Control Windows services and view service dependencies
+- **Processes**: live list with CPU, memory, handles, threads, modules and environment of each process; hidden
+  process detection
+- **Process Control**: kill (also by method or the whole tree), suspend and resume, priority and affinity,
+  reduce the working set, dump file, add to a job
+- **Jobs**: create jobs, set their limits, terminate them
 
-### System Information
-- **Hardware Details**: CPU, memory, storage, and network adapter information
-- **Performance Metrics**: Real-time CPU usage, memory consumption, and system statistics
-- **Network Monitoring**: Active connections, listening ports, and network statistics
-- **System Diagnostics**: Event log viewing and system health monitoring
+### Services
+- Start, stop, pause and resume services; change the start type; create a service; dependency viewer;
+  new and deleted services
 
-### Advanced Features
-- **Process Filtering**: Search and filter processes by name, PID, or resource usage
-- **Memory Analysis**: Detailed memory usage breakdown and working set information
-- **Module Information**: View loaded modules and DLLs for processes
-- **Handle Monitoring**: Track file handles, registry keys, and other system resources
+### Monitoring and Search
+- **Monitor**: performance counters of selected processes over time
+- **Notifications and log**: new and terminated processes, new and deleted services
+- **Search**: find a string in processes, modules, services, handles, windows and environment variables
+- **Emergency hotkeys** and state-based actions
 
-### System Tools
-- **Cleanup Utilities**: Temporary file cleanup and system optimization
-- **Registry Tools**: Safe registry viewing and basic management
-- **Performance Analysis**: CPU and memory usage trending
-- **Export Capabilities**: Export process lists and system information
+### Network, Files and System
+- **Network**: TCP/UDP connections with their process, close a TCP connection, ping and network information
+- **Files**: properties, attributes and dates, strings, release a locked file, encrypt or decrypt
+- **System**: system information, system report and snapshot files, signature check of files, opened windows,
+  log off, lock, sleep, hibernate, restart, shutdown
+- **Remote**: manage another computer through WMI or the LitePM server
 
 ## Installation
 
@@ -43,10 +43,8 @@ LitePM is a comprehensive process management application that provides detailed 
 ## Usage
 
 ### Main Interface
-- **Processes Tab**: View and manage running processes
-- **Services Tab**: Control Windows services
-- **Performance Tab**: Monitor system performance metrics
-- **System Info Tab**: View hardware and system details
+- Tabs: Tasks, Processes, Jobs, Monitor, Services, Network, File and Search
+- System information from **System > System infos**
 
 ### Process Operations
 - Right-click processes for context menu with control options
@@ -72,7 +70,7 @@ This project is **Production Ready** but **not actively developed**. Moderate co
 
 ## System Requirements
 
-- Windows 7 or later
+- Windows 7 SP1 or later (required by .NET Framework 4.8)
 - .NET Framework 4.8
 - Administrative privileges recommended for full functionality
 
@@ -113,11 +111,11 @@ This software is released under [The Unlicense](LICENSE) - public domain.
 This tool is part of **[LiteSuite](https://github.com/svtica/LiteSuite)** - a comprehensive collection of lightweight Windows administration tools.
 
 ### Other Tools in the Suite:
-- **[LiteTask](https://github.com/svtica/LiteTask)** - Advanced Task Scheduler Alternative  
+- **[LiteTask](https://github.com/svtica/LiteTask)** - Advanced Task Scheduler Alternative
 - **[LitePM](https://github.com/svtica/LitePM)** - Process Manager with System Monitoring
 - **[LiteDeploy](https://github.com/svtica/LiteDeploy)** - Network Deployment and Management
-- **[LiteRun](https://github.com/svtica/LiteRun)** - Remote Command Execution Utility
-- **[LiteSrv](https://github.com/svtica/LiteSrv)** - Windows Service Wrapper
+- **[LiteRun](https://github.com/svtica/LiteRun)** - Remote Command Execution Utility (archived)
+- **[LiteSrv](https://github.com/svtica/LiteSrv)** - Windows Service Wrapper (archived)
 
 ### 📦 Download the Complete Suite
 Get all tools in one package: **[LiteSuite Releases](https://github.com/svtica/LiteSuite/releases/latest)**
