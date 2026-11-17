@@ -117,11 +117,6 @@ Public Class Pref
         If first Then
             first = False
 
-            ' Update ?
-            If My.Settings.UpdateAuto Then
-                Program.Updater.CheckUpdates(True)
-            End If
-
             _frmMain.TopMost = My.Settings.TopMost
             _frmMain.MenuItemSystemAlwaysVisible.Checked = My.Settings.TopMost
             _frmMain.Visible = Not (My.Settings.StartHidden)

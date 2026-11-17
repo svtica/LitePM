@@ -9,6 +9,7 @@ Public Class frmPreferences
 
     Private _newcolor As Integer
     Private _deletedcolor As Integer
+    Private _exitForUpdate As Boolean
 
     Private Sub cmdQuit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdQuit.Click
         _frmMain.timerProcess.Interval = My.Settings.ProcessInterval
@@ -47,10 +48,7 @@ Public Class frmPreferences
         My.Settings.ShowStatusBar = Me.chkStatusBar.Checked
         My.Settings.ShowFixedTab = Me.chkFixedTab.Checked
         My.Settings.FixedTab = Me.cbShownTab.Text
-        My.Settings.UpdateAlpha = Me.chkUpdateAlpha.Checked
-        My.Settings.UpdateBeta = Me.chkUpdateBeta.Checked
         My.Settings.UpdateAuto = Me.chkUpdateAuto.Checked
-        My.Settings.UpdateServer = Me.txtUpdateServer.Text
         My.Settings.ShowClassicMessageBoxes = Me.chkClassicMsgbox.Checked
         My.Settings.CoefTimeMul = CInt(Me.valCoefRemote.Value)
         My.Settings.RememberPosAndSize = Me.chkRemember.Checked
@@ -159,11 +157,8 @@ Public Class frmPreferences
         SetToolTip(Me.chkStatusBar, "Show or not status bar on main form.")
         SetToolTip(Me.chkFixedTab, "Show always the same tab when LitePM starts.")
         SetToolTip(Me.cbShownTab, "Tab to show when LitePM starts.")
-        SetToolTip(Me.chkUpdateAlpha, "Check for alpha releases.")
-        SetToolTip(Me.chkUpdateBeta, "Check for beta releases.")
-        SetToolTip(Me.chkUpdateAuto, "Check for updates at startup.")
-        SetToolTip(Me.cmdUpdateCheckNow, "Check for updates now.")
-        SetToolTip(Me.txtUpdateServer, "Update server.")
+        SetToolTip(Me.chkUpdateAuto, "Check for a new LitePM release on GitHub when LitePM starts (nothing is shown if LitePM is up to date).")
+        SetToolTip(Me.cmdUpdateCheckNow, "Check for updates now (same as Help > Check for updates).")
         SetToolTip(Me.chkClassicMsgbox, "Display classical messageboxes (Windows XP style)")
         SetToolTip(Me.valCoefRemote, "Coefficient for update interval in case of remote monitoring." & vbNewLine & "For example, if you set 200, all refreshment intervals for remote monitoring will" & vbNewLine & "be 2 times greater than intervals for local monitoring.")
         SetToolTip(Me.chkRemember, "Remember position and size of the main windows.")
@@ -200,10 +195,7 @@ Public Class frmPreferences
         Me.chkStatusBar.Checked = My.Settings.ShowStatusBar
         Me.txtJobInterval.Text = My.Settings.JobInterval.ToString
         Me.chkFixedTab.Checked = My.Settings.ShowFixedTab
-        Me.chkUpdateAlpha.Checked = My.Settings.UpdateAlpha
-        Me.chkUpdateBeta.Checked = My.Settings.UpdateBeta
         Me.chkUpdateAuto.Checked = My.Settings.UpdateAuto
-        Me.txtUpdateServer.Text = My.Settings.UpdateServer
         Me.chkClassicMsgbox.Checked = My.Settings.ShowClassicMessageBoxes
         Me.chkClassicMsgbox.Enabled = False ' cEnvironment.SupportsTaskDialog
         Me.valCoefRemote.Value = My.Settings.CoefTimeMul
@@ -315,10 +307,7 @@ Public Class frmPreferences
         Me.bufferSize.Value = 100
         Me.chkStatusBar.Checked = True
         Me.chkFixedTab.Checked = False
-        Me.chkUpdateAlpha.Checked = False
-        Me.chkUpdateBeta.Checked = False
         Me.chkUpdateAuto.Checked = False
-        Me.txtUpdateServer.Text = "http://yaprocmon.sourceforge.net/update.xml"
         Me.valCoefRemote.Value = 250
         Me.chkShowIconsList.Checked = True
         Me.chkRemember.Checked = True
@@ -486,13 +475,26 @@ Public Class frmPreferences
         Me.cbShownTab.Enabled = Me.chkFixedTab.Checked
     End Sub
 
-    Private Sub cmdUpdateCheckNow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUpdateCheckNow.Click
-        ' Check for updates manually
-        ' No silent mode, so it will cause a messagebox to be displayed
-        My.Settings.UpdateAlpha = Me.chkUpdateAlpha.Checked
-        My.Settings.UpdateBeta = Me.chkUpdateBeta.Checked
-        Program.Updater.CheckUpdates(False)
+    ' Check for updates now: same check as Help > Check for updates (latest
+    ' GitHub release, AppUpdater). When the update script is started, this
+    ' dialog closes and the caller (frmMain) exits LitePM (ExitForUpdate).
+    Private Async Sub cmdUpdateCheckNow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUpdateCheckNow.Click
+        Me.cmdUpdateCheckNow.Enabled = False
+        Dim mustExit As Boolean = Await _frmMain.CheckForUpdatesAsync(Me, False)
+        If mustExit Then
+            _exitForUpdate = True
+            Me.Close()
+        ElseIf Not Me.IsDisposed Then
+            Me.cmdUpdateCheckNow.Enabled = True
+        End If
     End Sub
+
+    ' True when the update script was started from this dialog: LitePM must exit
+    Public ReadOnly Property ExitForUpdate() As Boolean
+        Get
+            Return _exitForUpdate
+        End Get
+    End Property
 
     Private Sub cmdClearLog_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearLog.Click
         Dim lSize As Long = cFile.GetFileSize(Program.LogPath)

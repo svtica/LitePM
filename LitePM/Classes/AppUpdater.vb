@@ -63,28 +63,39 @@ Public NotInheritable Class AppUpdater
     ' starts the replacement script. Returns True when the script is started:
     ' the caller must then exit LitePM (Program.ExitLitePM). Every message is
     ' shown here; failures do not throw.
-    Public Shared Async Function CheckAndInstallAsync(ByVal owner As Form) As Task(Of Boolean)
+    ' Silent mode (check at startup): nothing is shown when the check fails or
+    ' when no new version is available, and the new version is offered only if
+    ' the owner is still visible (not closed, hidden in the tray or minimized).
+    ' Once the user has accepted the installation, its failures are shown as
+    ' in the normal mode.
+    Public Shared Async Function CheckAndInstallAsync(ByVal owner As Form, ByVal silent As Boolean) As Task(Of Boolean)
         Using updater As New AppUpdater()
-            Return Await updater.RunAsync(owner)
+            Return Await updater.RunAsync(owner, silent)
         End Using
     End Function
 
-    Private Async Function RunAsync(ByVal owner As Form) As Task(Of Boolean)
+    Private Async Function RunAsync(ByVal owner As Form, ByVal silent As Boolean) As Task(Of Boolean)
 
-        ' 1. Latest release
+        ' 1. Latest release (no wait cursor in silent mode: background check)
         Dim check As UpdateCheckResult = Nothing
         Dim failure As Exception = Nothing
-        owner.UseWaitCursor = True
+        If Not silent Then owner.UseWaitCursor = True
         Try
             check = Await _selfUpdater.CheckAsync()
         Catch ex As Exception
             failure = ex
         Finally
-            owner.UseWaitCursor = False
+            If Not silent AndAlso Not owner.IsDisposed Then owner.UseWaitCursor = False
         End Try
+        If owner.IsDisposed Then Return False
         If failure IsNot Nothing Then
-            ShowFailure(owner, failure)
+            If Not silent Then ShowFailure(owner, failure)
             Return False
+        End If
+
+        If silent Then
+            If Not check.IsUpdateAvailable Then Return False
+            If Not owner.Visible OrElse owner.WindowState = FormWindowState.Minimized Then Return False
         End If
 
         If Not check.IsUpdateAvailable Then
