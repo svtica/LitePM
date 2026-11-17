@@ -407,6 +407,7 @@ Partial Class frmMain
         Me.MenuItemSystemNewProcess = New System.Windows.Forms.MenuItem()
         Me.MenuItemProcNewProcess = New System.Windows.Forms.MenuItem()
         Me.MenuItemProcSep1 = New System.Windows.Forms.MenuItem()
+        Me.MenuItemHelpCheckUpdates = New System.Windows.Forms.MenuItem()
         Me.MenuItemHelpAbout = New System.Windows.Forms.MenuItem()
         Me.MenuItemFileSep2 = New System.Windows.Forms.MenuItem()
         Me.MenuItemFileProperties = New System.Windows.Forms.MenuItem()
@@ -3260,8 +3261,14 @@ Partial Class frmMain
         '
         Me.MenuItemProcSep1.Text = "-"
         '
+        'MenuItemHelpCheckUpdates
+        '
+        Me.MenuItemHelpCheckUpdates.Index = 0
+        Me.MenuItemHelpCheckUpdates.Text = "&Check for updates..."
+        '
         'MenuItemHelpAbout
         '
+        Me.MenuItemHelpAbout.Index = 1
         Me.MenuItemHelpAbout.Text = "&About LitePM..."
         '
         'MenuItemFileSep2
@@ -3287,7 +3294,7 @@ Partial Class frmMain
         'MenuItemSYSTEMHEL
         '
         Me.MenuItemSYSTEMHEL.Index = 10
-        Me.MenuItemSYSTEMHEL.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItemHelpAbout})
+        Me.MenuItemSYSTEMHEL.MenuItems.AddRange(New System.Windows.Forms.MenuItem() {Me.MenuItemHelpCheckUpdates, Me.MenuItemHelpAbout})
         Me.MenuItemSYSTEMHEL.Text = "&Help"
         '
         'MenuItem39
@@ -3797,6 +3804,7 @@ Partial Class frmMain
     Friend WithEvents MenuItemSystemNewProcess As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItemProcNewProcess As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItemProcSep1 As System.Windows.Forms.MenuItem
+    Friend WithEvents MenuItemHelpCheckUpdates As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItemHelpAbout As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItemFileSep2 As System.Windows.Forms.MenuItem
     Friend WithEvents MenuItemFileProperties As System.Windows.Forms.MenuItem

@@ -25,6 +25,12 @@ on:
 
 permissions:
   contents: read
+  # LiteSuite.Common NuGet package (GitHub Packages), restored by the build
+  packages: read
+
+env:
+  # NuGet package LiteSuite.Common from GitHub Packages (nuget.config)
+  LITESUITE_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   soak:

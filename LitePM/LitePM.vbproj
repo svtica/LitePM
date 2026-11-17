@@ -600,6 +600,7 @@
     <None Include="Resources\process.png" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AppUpdater.vb" />
     <Compile Include="Classes\Async.vb" />
     <Compile Include="Classes\Download\BugReporter.vb">
       <SubType>Component</SubType>
@@ -1415,6 +1416,12 @@
       <Project>{5BF15AF5-DEB8-46A8-99C7-21993617D0C8}</Project>
       <Name>TaskDialog</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Components shared with LiteDeploy and LiteTask (self-update: Classes\AppUpdater.vb):
+         NuGet package of svtica/LiteSuite.Common (GitHub Packages, see nuget.config);
+         LiteSuite.Common.dll ships next to LitePM.exe -->
+    <PackageReference Include="LiteSuite.Common" Version="1.1.0" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <!-- After Sdk.targets so that $(TargetDir) is defined -->
