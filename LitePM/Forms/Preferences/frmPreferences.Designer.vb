@@ -94,11 +94,8 @@ Partial Class frmPreferences
         Me.Label1 = New System.Windows.Forms.Label
         Me.TabPage2 = New System.Windows.Forms.TabPage
         Me.cmdUpdateCheckNow = New System.Windows.Forms.Button
-        Me.txtUpdateServer = New System.Windows.Forms.TextBox
         Me.Label13 = New System.Windows.Forms.Label
         Me.chkUpdateAuto = New System.Windows.Forms.CheckBox
-        Me.chkUpdateAlpha = New System.Windows.Forms.CheckBox
-        Me.chkUpdateBeta = New System.Windows.Forms.CheckBox
         Me.cmdSave = New System.Windows.Forms.Button
         Me.cmdQuit = New System.Windows.Forms.Button
         Me.cmdDefaut = New System.Windows.Forms.Button
@@ -782,11 +779,8 @@ Partial Class frmPreferences
         'TabPage2
         '
         Me.TabPage2.Controls.Add(Me.cmdUpdateCheckNow)
-        Me.TabPage2.Controls.Add(Me.txtUpdateServer)
         Me.TabPage2.Controls.Add(Me.Label13)
         Me.TabPage2.Controls.Add(Me.chkUpdateAuto)
-        Me.TabPage2.Controls.Add(Me.chkUpdateAlpha)
-        Me.TabPage2.Controls.Add(Me.chkUpdateBeta)
         Me.TabPage2.ImageKey = "(aucun)"
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
@@ -798,58 +792,31 @@ Partial Class frmPreferences
         '
         'cmdUpdateCheckNow
         '
-        Me.cmdUpdateCheckNow.Location = New System.Drawing.Point(11, 131)
+        Me.cmdUpdateCheckNow.Location = New System.Drawing.Point(11, 75)
         Me.cmdUpdateCheckNow.Name = "cmdUpdateCheckNow"
         Me.cmdUpdateCheckNow.Size = New System.Drawing.Size(108, 23)
         Me.cmdUpdateCheckNow.TabIndex = 18
         Me.cmdUpdateCheckNow.Text = "Check now"
         Me.cmdUpdateCheckNow.UseVisualStyleBackColor = True
         '
-        'txtUpdateServer
-        '
-        Me.txtUpdateServer.Location = New System.Drawing.Point(56, 90)
-        Me.txtUpdateServer.Name = "txtUpdateServer"
-        Me.txtUpdateServer.Size = New System.Drawing.Size(345, 22)
-        Me.txtUpdateServer.TabIndex = 17
-        '
         'Label13
         '
         Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(11, 93)
+        Me.Label13.Location = New System.Drawing.Point(11, 48)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(38, 13)
+        Me.Label13.Size = New System.Drawing.Size(335, 13)
         Me.Label13.TabIndex = 16
-        Me.Label13.Text = "Server"
+        Me.Label13.Text = "Updates are installed from the GitHub releases of LitePM (svtica/LitePM)."
         '
         'chkUpdateAuto
         '
         Me.chkUpdateAuto.AutoSize = True
-        Me.chkUpdateAuto.Location = New System.Drawing.Point(11, 67)
+        Me.chkUpdateAuto.Location = New System.Drawing.Point(11, 21)
         Me.chkUpdateAuto.Name = "chkUpdateAuto"
-        Me.chkUpdateAuto.Size = New System.Drawing.Size(219, 17)
+        Me.chkUpdateAuto.Size = New System.Drawing.Size(172, 17)
         Me.chkUpdateAuto.TabIndex = 15
-        Me.chkUpdateAuto.Text = "Check if LitePM is up to date at startup"
+        Me.chkUpdateAuto.Text = "Check for updates at startup"
         Me.chkUpdateAuto.UseVisualStyleBackColor = True
-        '
-        'chkUpdateAlpha
-        '
-        Me.chkUpdateAlpha.AutoSize = True
-        Me.chkUpdateAlpha.Location = New System.Drawing.Point(11, 44)
-        Me.chkUpdateAlpha.Name = "chkUpdateAlpha"
-        Me.chkUpdateAlpha.Size = New System.Drawing.Size(151, 17)
-        Me.chkUpdateAlpha.TabIndex = 14
-        Me.chkUpdateAlpha.Text = "Check for alpha releases"
-        Me.chkUpdateAlpha.UseVisualStyleBackColor = True
-        '
-        'chkUpdateBeta
-        '
-        Me.chkUpdateBeta.AutoSize = True
-        Me.chkUpdateBeta.Location = New System.Drawing.Point(11, 21)
-        Me.chkUpdateBeta.Name = "chkUpdateBeta"
-        Me.chkUpdateBeta.Size = New System.Drawing.Size(145, 17)
-        Me.chkUpdateBeta.TabIndex = 13
-        Me.chkUpdateBeta.Text = "Check for beta releases"
-        Me.chkUpdateBeta.UseVisualStyleBackColor = True
         '
         'cmdSave
         '
@@ -1012,10 +979,7 @@ Partial Class frmPreferences
     Friend WithEvents cbShownTab As System.Windows.Forms.ComboBox
     Friend WithEvents chkFixedTab As System.Windows.Forms.CheckBox
     Friend WithEvents chkUpdateAuto As System.Windows.Forms.CheckBox
-    Friend WithEvents chkUpdateAlpha As System.Windows.Forms.CheckBox
-    Friend WithEvents chkUpdateBeta As System.Windows.Forms.CheckBox
     Friend WithEvents cmdUpdateCheckNow As System.Windows.Forms.Button
-    Friend WithEvents txtUpdateServer As System.Windows.Forms.TextBox
     Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents chkClassicMsgbox As System.Windows.Forms.CheckBox
     Friend WithEvents valCoefRemote As System.Windows.Forms.NumericUpDown

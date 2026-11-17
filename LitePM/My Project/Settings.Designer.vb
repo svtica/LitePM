@@ -1091,48 +1091,12 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UpdateAlpha() As Boolean
-            Get
-                Return CType(Me("UpdateAlpha"),Boolean)
-            End Get
-            Set
-                Me("UpdateAlpha") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property UpdateBeta() As Boolean
-            Get
-                Return CType(Me("UpdateBeta"),Boolean)
-            End Get
-            Set
-                Me("UpdateBeta") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property UpdateAuto() As Boolean
             Get
                 Return CType(Me("UpdateAuto"),Boolean)
             End Get
             Set
                 Me("UpdateAuto") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
-        Public Property UpdateServer() As String
-            Get
-                Return CType(Me("UpdateServer"),String)
-            End Get
-            Set
-                Me("UpdateServer") = value
             End Set
         End Property
         

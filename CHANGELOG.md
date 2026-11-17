@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed
+- The **Check now** button of Preferences > Update and the
+  **Check for updates at startup** option (setting `UpdateAuto`, still off by
+  default) now use the GitHub releases of LitePM, like
+  **Help > Check for updates...**. The startup check runs in the background
+  when the main window is first shown (not in server mode, nor hidden or
+  minimized) and stays silent when the check fails or LitePM is up to date;
+  when a new version exists, it offers the same installation dialog.
+
+### Removed
+- The old update checker (`cUpdate`, update file on SourceForge, which no
+  longer answers), its "new version available" window
+  (`frmNewVersionAvailable`) and its preferences: update server, alpha and
+  beta releases (settings `UpdateServer`, `UpdateAlpha`, `UpdateBeta`).
+
+## [1.1.4] - 2026-11-17
+
 ### Fixed
 - Memory and handle leak when LitePM stays open for a long time (the reason
   the README asked to restart it every few hours):

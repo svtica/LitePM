@@ -193,7 +193,6 @@ Public Module Program
     Private _networkProvider As NetworkConnectionsProvider
     Private _envVariableProvider As EnvVariableProvider
     Private _jobProvider As JobProvider
-    Private WithEvents _updater As cUpdate
     Private _progParameters As ProgramParameters
     Private WithEvents theConnection As New cConnection
     Private _systemInfo As cSystemInfo
@@ -316,11 +315,6 @@ Public Module Program
     Public ReadOnly Property IsElevated() As Boolean
         Get
             Return _isElevated
-        End Get
-    End Property
-    Public ReadOnly Property Updater() As cUpdate
-        Get
-            Return _updater
         End Get
     End Property
     Public Property MustCloseWithCloseButton() As Boolean
@@ -542,7 +536,6 @@ Public Module Program
                 _log.LogToFile = My.Settings.SaveErrorLog
                 _log.LogFilePath = LogPath
                 _trayIcon = New cTrayIcon(2)            ' Tray icons
-                _updater = New cUpdate                  ' Updater class
                 ' frmNetworkInfo and frmSystemInfo are created when first shown
             Else
                 _frmServer = New frmServer          ' Server form (server mode)
@@ -818,81 +811,6 @@ Public Module Program
             Call Native.Api.NativeFunctions.ExitProcess(res)
 
         End Try
-    End Sub
-
-    Private Sub _updater_FailedToCheckVersion(ByVal silent As Boolean, ByVal msg As String) Handles _updater.FailedToCheckVersion
-        ' Failed to check update
-        If silent Then
-            ' Silent mode -> only displays a tooltip
-            If _frmMain IsNot Nothing AndAlso _frmMain.Tray IsNot Nothing Then
-                With _frmMain.Tray
-                    .BalloonTipText = msg
-                    .BalloonTipIcon = ToolTipIcon.Info
-                    .BalloonTipTitle = "Could not check if LitePM us ip to date."
-                    .ShowBalloonTip(3000)
-                End With
-            End If
-        Else
-            _frmMain.Invoke(New frmMain.FailedToCheckUpDateNotification(AddressOf impFailedToCheckUpDateNotification), msg)
-        End If
-    End Sub
-
-    Private Sub _updater_NewVersionAvailable(ByVal silent As Boolean, ByVal release As cUpdate.NewReleaseInfos) Handles _updater.NewVersionAvailable
-        ' A new version of LitePM is available
-        If silent Then
-            ' Silent mode -> only displays a tooltip
-            If _frmMain IsNot Nothing AndAlso _frmMain.Tray IsNot Nothing Then
-                With _frmMain.Tray
-                    .BalloonTipText = release.Infos
-                    .BalloonTipIcon = ToolTipIcon.Info
-                    .BalloonTipTitle = "A new version of LitePM is available !"
-                    .ShowBalloonTip(3000)
-                End With
-            End If
-        Else
-            _frmMain.Invoke(New frmMain.NewUpdateAvailableNotification(AddressOf impNewUpdateAvailableNotification), release)
-        End If
-    End Sub
-
-    Private Sub _updater_ProgramUpToDate(ByVal silent As Boolean) Handles _updater.ProgramUpToDate
-        ' LitePM is up to date (no new version available)
-        If silent Then
-            ' Silent mode -> only displays a tooltip
-            If _frmMain IsNot Nothing AndAlso _frmMain.Tray IsNot Nothing Then
-                With _frmMain.Tray
-                    .BalloonTipText = "LitePM is up to date !"
-                    .BalloonTipIcon = ToolTipIcon.Info
-                    .BalloonTipTitle = "No new version of LitePM is available."
-                    .ShowBalloonTip(3000)
-                End With
-            End If
-        Else
-            _frmMain.Invoke(New frmMain.NoNewUpdateAvailableNotification(AddressOf impNoNewUpdateAvailableNotification))
-        End If
-    End Sub
-
-    ' Called when a new update is available
-    ' It's here cause of thread safety
-    Public Sub impNewUpdateAvailableNotification(ByVal release As cUpdate.NewReleaseInfos)
-        Dim frm As New frmNewVersionAvailable(release)
-        frm.ShowDialog()
-    End Sub
-
-    ' Called when no new update is available
-    ' It's here cause of thread safety
-    Public Sub impNoNewUpdateAvailableNotification()
-        Common.Misc.ShowMsg("LitePM update",
-                          "LitePM is up to date !" & vbNewLine & vbNewLine &
-                          "The current version (" & My.Application.Info.Version.ToString & ") is the latest available for download.",
-                          MessageBoxButtons.OK)
-    End Sub
-
-    ' Called when failed to check is LitePM is up to date
-    Public Sub impFailedToCheckUpDateNotification(ByVal msg As String)
-        Common.Misc.ShowMsg("LitePM update",
-                                "Could not check if LitePM is up to date." & vbNewLine & vbNewLine &
-                                msg,
-                                MessageBoxButtons.OK)
     End Sub
 
     Public Sub RunwithFilter(ByVal procfilter As String)
