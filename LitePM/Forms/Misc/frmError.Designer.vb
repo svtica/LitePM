@@ -28,20 +28,18 @@ Partial Class frmError
         Me.cmdQuit = New System.Windows.Forms.Button
         Me.cmdContinue = New System.Windows.Forms.Button
         Me.cmdIgnore = New System.Windows.Forms.Button
-        Me.cmdSend = New System.Windows.Forms.Button
+        Me.cmdCopy = New System.Windows.Forms.Button
         Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.txtCustomMessage = New System.Windows.Forms.TextBox
         Me.SuspendLayout()
         '
         'txtReport
         '
-        Me.txtReport.Location = New System.Drawing.Point(12, 144)
+        Me.txtReport.Location = New System.Drawing.Point(12, 138)
         Me.txtReport.Multiline = True
         Me.txtReport.Name = "txtReport"
         Me.txtReport.ReadOnly = True
         Me.txtReport.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtReport.Size = New System.Drawing.Size(641, 124)
+        Me.txtReport.Size = New System.Drawing.Size(641, 244)
         Me.txtReport.TabIndex = 0
         '
         'Label1
@@ -85,57 +83,34 @@ Partial Class frmError
         Me.cmdIgnore.Text = "Ignore"
         Me.cmdIgnore.UseVisualStyleBackColor = True
         '
-        'cmdSend
+        'cmdCopy
         '
-        Me.cmdSend.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.cmdSend.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdSend.Image = Global.My.Resources.Resources.up16
-        Me.cmdSend.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
-        Me.cmdSend.Location = New System.Drawing.Point(15, 394)
-        Me.cmdSend.Name = "cmdSend"
-        Me.cmdSend.Size = New System.Drawing.Size(169, 23)
-        Me.cmdSend.TabIndex = 7
-        Me.cmdSend.Text = "    Send the bug report"
-        Me.cmdSend.UseVisualStyleBackColor = True
+        Me.cmdCopy.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.cmdCopy.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdCopy.Location = New System.Drawing.Point(12, 394)
+        Me.cmdCopy.Name = "cmdCopy"
+        Me.cmdCopy.Size = New System.Drawing.Size(121, 23)
+        Me.cmdCopy.TabIndex = 7
+        Me.cmdCopy.Text = "Copy the report"
+        Me.cmdCopy.UseVisualStyleBackColor = True
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(12, 125)
+        Me.Label2.Location = New System.Drawing.Point(12, 119)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(170, 17)
         Me.Label2.TabIndex = 8
         Me.Label2.Text = "Generated error message :"
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(15, 280)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(404, 17)
-        Me.Label3.TabIndex = 10
-        Me.Label3.Text = "Your custom message (how to reproduce the crash for example)"
-        '
-        'txtCustomMessage
-        '
-        Me.txtCustomMessage.Location = New System.Drawing.Point(15, 299)
-        Me.txtCustomMessage.Multiline = True
-        Me.txtCustomMessage.Name = "txtCustomMessage"
-        Me.txtCustomMessage.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtCustomMessage.Size = New System.Drawing.Size(638, 78)
-        Me.txtCustomMessage.TabIndex = 9
         '
         'frmError
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(665, 429)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.txtCustomMessage)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.cmdSend)
+        Me.Controls.Add(Me.cmdCopy)
         Me.Controls.Add(Me.cmdIgnore)
         Me.Controls.Add(Me.cmdContinue)
         Me.Controls.Add(Me.cmdQuit)
@@ -159,9 +134,7 @@ Partial Class frmError
     Friend WithEvents cmdQuit As System.Windows.Forms.Button
     Friend WithEvents cmdContinue As System.Windows.Forms.Button
     Friend WithEvents cmdIgnore As System.Windows.Forms.Button
-    Friend WithEvents cmdSend As System.Windows.Forms.Button
+    Friend WithEvents cmdCopy As System.Windows.Forms.Button
     Friend WithEvents Label2 As System.Windows.Forms.Label
-    Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents txtCustomMessage As System.Windows.Forms.TextBox
 
 End Class

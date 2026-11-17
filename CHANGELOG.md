@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Removed
+- Bug report sent to the SourceForge tracker (no longer answers): the
+  **Send the bug report** button and the custom message field of the error
+  window (`BugReporter`). The error window now has a **Copy the report** button
+  and points to the GitHub issues of LitePM.
+- Unused `frmTracker` window and unused `Pref.MessageFirstStartOfLitePM`
+  message (both pointed to SourceForge).
+
+## [1.1.5] - 2026-11-17
+
 ### Changed
 - The **Check now** button of Preferences > Update and the
   **Check for updates at startup** option (setting `UpdateAuto`, still off by
