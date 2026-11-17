@@ -13,6 +13,7 @@ Public Class frmMain
     Private _notWMI As Boolean = True
     Private _notSnapshotMode As Boolean = True
     Private _callExitWhenExitLitePM As Boolean = True
+    Private _updateCheckRunning As Boolean
     Private handlesToRefresh() As Integer
     Private threadsToRefresh() As Integer
     Private modulesToRefresh() As Integer
@@ -489,6 +490,8 @@ Public Class frmMain
 
         Call _tab_SelectedIndexChanged(Nothing, Nothing)
         Call Me.frmMain_Resize(Nothing, Nothing)
+
+        Call Me.CheckForUpdatesAtStartup()
     End Sub
 
 
@@ -503,18 +506,53 @@ Public Class frmMain
     ' path (the script waits for this process, then replaces the files and
     ' restarts LitePM).
     Private Async Sub MenuItemHelpCheckUpdates_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemHelpCheckUpdates.Click
+        If Await Me.CheckForUpdatesAsync(Me, False) Then
+            Call Program.ExitLitePM()
+        End If
+    End Sub
+
+    ' Update check shared by Help > Check for updates, the "Check now" button
+    ' of the preferences and the check at startup (silent: nothing is shown
+    ' when the check fails or when LitePM is up to date). One check at a time.
+    ' Returns True when the update script is started: the caller must then
+    ' close its own dialogs and call Program.ExitLitePM.
+    Public Async Function CheckForUpdatesAsync(ByVal owner As Form, ByVal silent As Boolean) As System.Threading.Tasks.Task(Of Boolean)
+        If _updateCheckRunning Then
+            If Not silent Then
+                MessageBox.Show(owner, "An update check is already in progress.",
+                                AppUpdater.DIALOG_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+            Return False
+        End If
+        _updateCheckRunning = True
         Me.MenuItemHelpCheckUpdates.Enabled = False
         Dim mustExit As Boolean = False
         Try
-            mustExit = Await AppUpdater.CheckAndInstallAsync(Me)
+            mustExit = Await AppUpdater.CheckAndInstallAsync(owner, silent)
         Catch ex As Exception
-            MessageBox.Show(Me, "The update failed: an unexpected error occurred." & vbCrLf & vbCrLf & "Details: " & ex.Message,
-                            AppUpdater.DIALOG_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            If Not silent AndAlso Not owner.IsDisposed Then
+                MessageBox.Show(owner, "The update failed: an unexpected error occurred." & vbCrLf & vbCrLf & "Details: " & ex.Message,
+                                AppUpdater.DIALOG_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+        Finally
+            _updateCheckRunning = False
         End Try
-        If mustExit Then
-            Call Program.ExitLitePM()
-        Else
+        If Not mustExit AndAlso Not Me.IsDisposed Then
             Me.MenuItemHelpCheckUpdates.Enabled = True
+        End If
+        Return mustExit
+    End Function
+
+    ' Preference "Check for updates at startup" (UpdateAuto): background check
+    ' when the main window is first shown, in interactive mode only (not in
+    ' server mode, not when the window is hidden or minimized)
+    Private Async Sub CheckForUpdatesAtStartup()
+        If Not My.Settings.UpdateAuto Then Return
+        If Program.Parameters Is Nothing OrElse Program.Parameters.ModeServer OrElse Program.Parameters.ModeServerService OrElse
+           Program.Parameters.ModeHidden Then Return
+        If Not Me.Visible OrElse Me.WindowState = FormWindowState.Minimized Then Return
+        If Await Me.CheckForUpdatesAsync(Me, True) Then
+            Call Program.ExitLitePM()
         End If
     End Sub
 
@@ -607,14 +645,6 @@ Public Class frmMain
             End If
         End If
     End Sub
-
-    Private Sub butUpdate_Click(ByVal sender As Object, ByVal e As System.EventArgs)
-        ' Check for updates manually
-        ' No silent mode, so it will cause a messagebox to be displayed
-        Program.Updater.CheckUpdates(False)
-    End Sub
-
-
 
     Private Sub butSearchSaveReport_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Dim frm As New frmSaveReport
@@ -1086,6 +1116,10 @@ Public Class frmMain
         Dim frm As New frmPreferences
         frm.TopMost = _frmMain.TopMost
         frm.ShowDialog()
+        ' "Check now" started the update script: exit once the dialog is closed
+        If frm.ExitForUpdate Then
+            Call Program.ExitLitePM()
+        End If
     End Sub
 
     Private Sub butProcessDisplayDetails_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -3120,7 +3154,7 @@ Public Class frmMain
     End Sub
 
     Private Sub MenuItemSystemUpdate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemSystemUpdate.Click
-        Call Me.butUpdate_Click(Nothing, Nothing)
+        Call Me.MenuItemHelpCheckUpdates_Click(sender, e)
     End Sub
 
 
@@ -3512,9 +3546,6 @@ Public Class frmMain
         Call butDeleteService_Click(Nothing, Nothing)
     End Sub
 
-    Public Delegate Sub NewUpdateAvailableNotification(ByVal release As cUpdate.NewReleaseInfos)
-    Public Delegate Sub NoNewUpdateAvailableNotification()
-    Public Delegate Sub FailedToCheckUpDateNotification(ByVal msg As String)
     Public Delegate Sub GotErrorFromServer(ByVal err As Exception)
 
 #Region "Select window in window tab feature"

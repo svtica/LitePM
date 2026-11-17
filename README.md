@@ -60,7 +60,11 @@ LitePM is a comprehensive process management application that provides detailed 
 - **Help > Check for updates...** reads the latest release on GitHub. When a
   newer version exists, it shows its notes and, if you accept, downloads
   `LitePM.zip`, checks the Authenticode signature of `LitePM.exe` (LiteSuite
-  publisher), then closes LitePM, replaces the files and restarts it.
+  publisher), then closes LitePM, replaces the files and restarts it. The
+  **Check now** button of Preferences > Update does the same.
+- **Check for updates at startup** (Preferences > Update, off by default):
+  LitePM checks in the background when its window opens and says nothing
+  unless a new version exists; it then offers the same installation.
 - The LitePM remote service (`LitePM.exe -SERVERSERVICE`, whatever its name)
   is stopped during the copy and restarted if it was running. Administrator
   rights (UAC) are asked for the copy only when needed (folder not writable,
