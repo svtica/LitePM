@@ -20,7 +20,8 @@ removed with the ribbon.
 Not blocking: P/Invoke declarations (~410, plain Win32/NT calls), WMI
 (`System.Management` package), `ServiceBase` in `InteractiveProcessFromService`
 (`System.ServiceProcess.ServiceController` package), the VB `My` namespace,
-`Aga.Controls` and `MemoryHexEditor` (source code in the repository).
+`Aga.Controls` and `MemoryHexEditor` (source code in the repository), the
+`LiteSuite.Common` package (self-update; it also targets `net10.0-windows`).
 
 ## Estimate
 

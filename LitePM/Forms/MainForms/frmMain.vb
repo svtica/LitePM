@@ -498,6 +498,26 @@ Public Class frmMain
         frm.ShowDialog()
     End Sub
 
+    ' Help > Check for updates: latest GitHub release of LitePM (AppUpdater).
+    ' When the update script is started, LitePM exits through its normal exit
+    ' path (the script waits for this process, then replaces the files and
+    ' restarts LitePM).
+    Private Async Sub MenuItemHelpCheckUpdates_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles MenuItemHelpCheckUpdates.Click
+        Me.MenuItemHelpCheckUpdates.Enabled = False
+        Dim mustExit As Boolean = False
+        Try
+            mustExit = Await AppUpdater.CheckAndInstallAsync(Me)
+        Catch ex As Exception
+            MessageBox.Show(Me, "The update failed: an unexpected error occurred." & vbCrLf & vbCrLf & "Details: " & ex.Message,
+                            AppUpdater.DIALOG_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+        If mustExit Then
+            Call Program.ExitLitePM()
+        Else
+            Me.MenuItemHelpCheckUpdates.Enabled = True
+        End If
+    End Sub
+
     Private Sub butProcessRerfresh_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         Me.refreshProcessList()
     End Sub

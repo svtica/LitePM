@@ -6,7 +6,9 @@
 #     https://github.com/svtica/LitePM/releases/latest/download/LitePM.zip
 #     always points to the latest release) on a v<semver> tag release;
 #     LiteTask matches ^LitePM.*\.zip$ (LiteTask 1.2.2.5 and later);
-#   - LitePM.exe and all its dependencies (DLLs, .config) in the same folder;
+#   - LitePM.exe and all its dependencies (DLLs, .config) in the same folder,
+#     LiteSuite.Common.dll included (self-update of LitePM, Help > Check for
+#     updates, which installs this same LitePM.zip);
 #   - LitePM.exe signed with Authenticode when the SIGNING_CERTIFICATE secret
 #     exists (LiteTask refuses a signature that does not match the file and
 #     installs an unsigned exe with a warning).
@@ -15,6 +17,10 @@
 #   SIGNING_CERTIFICATE   the .pfx file, base64-encoded
 #   CERTIFICATE_PASSWORD  its password
 # Without them the build still runs and produces an unsigned package.
+#
+# The NuGet package LiteSuite.Common comes from GitHub Packages (nuget.config),
+# read with the workflow's GITHUB_TOKEN (LITESUITE_PACKAGES_TOKEN below,
+# permission packages: read).
 
 name: Build and Release
 
@@ -46,12 +52,15 @@ env:
   RELEASE_REF: ${{ inputs.tag && format('refs/tags/{0}', inputs.tag) || github.ref }}
   CERTIFICATE_BASE64: ${{ secrets.SIGNING_CERTIFICATE }}
   CERTIFICATE_PASSWORD: ${{ secrets.CERTIFICATE_PASSWORD }}
+  # NuGet package LiteSuite.Common from GitHub Packages (nuget.config)
+  LITESUITE_PACKAGES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
     runs-on: windows-latest
     permissions:
       contents: write
+      packages: read
 
     steps:
     - name: Checkout code
@@ -191,7 +200,7 @@ jobs:
           $names = $zip.Entries | ForEach-Object { $_.FullName }
         } finally { $zip.Dispose() }
         if ($env:PACKAGE_NAME -notmatch '^LitePM.*\.zip$') { Write-Error "Asset name $env:PACKAGE_NAME breaks the LiteTask pattern"; exit 1 }
-        $required = 'LitePM.exe', 'LitePM.exe.config', 'Aga.Controls.dll', 'TaskDialog.dll', 'SecurePasswordTextBox.dll', 'SecureChannel.dll'
+        $required = 'LitePM.exe', 'LitePM.exe.config', 'Aga.Controls.dll', 'TaskDialog.dll', 'SecurePasswordTextBox.dll', 'SecureChannel.dll', 'LiteSuite.Common.dll'
         $missing = $required | Where-Object { $names -notcontains $_ }
         if ($missing) { Write-Error "Missing next to LitePM.exe in the zip: $($missing -join ', ')"; exit 1 }
         Write-Host "Package OK: $($names.Count) entries, LitePM.exe and its dependencies at the zip root."
