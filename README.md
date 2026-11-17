@@ -1,6 +1,5 @@
 # LitePM
 
-[![Part of LiteSuite](https://img.shields.io/badge/part%20of-LiteSuite-blue)](https://github.com/svtica/LiteSuite)
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-green.svg)](LICENSE)
 
 **Advanced Windows process manager with real-time monitoring, process control, and system optimization tools.**
