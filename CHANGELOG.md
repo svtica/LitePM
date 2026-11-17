@@ -26,6 +26,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
     and `NtGetNextProcess` handles leaked in the fallback handle lookup.
 
 ### Added
+- **Help > Check for updates...**: LitePM checks its latest GitHub release
+  and, when a newer one exists, shows the versions and release notes, then
+  (if accepted) downloads `LitePM.zip`, closes LitePM, replaces the files and
+  restarts it. Built on `SelfUpdater` of LiteSuite.Common (`AppUpdater`):
+  - the Authenticode signature of the new `LitePM.exe` is verified (pinned
+    LiteSuite publisher or signer of the running `LitePM.exe`); a modified,
+    foreign or missing signature is refused, and an unsigned package is
+    offered, with a confirmation, only to an unsigned development build;
+  - the LitePM remote service (`LitePM.exe -SERVERSERVICE`, found from its
+    command line whatever its name) is stopped during the copy and restarted
+    if it was running;
+  - only the copy is elevated (UAC), and only when the folder is not writable
+    or a service must be stopped; LitePM restarts without elevation;
+  - files of the user next to `LitePM.exe` (`tcp.txt`, `udp.txt`) are kept;
+    the settings, hotkeys and log are in the user profile and untouched;
+  - nothing is replaced before the package is downloaded and verified; the
+    replaced files are restored if the copy fails
+    (log: `%TEMP%\LitePM-update.log`).
 - `-REMOTE <computer>` command-line option: LitePM starts connected to that
   computer through WMI, with the current Windows user (no password asked or
   stored). LiteDeploy uses it to open a computer in LitePM. Only a computer
@@ -53,6 +71,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `LitePM.exe` and its dependencies at the zip root).
 
 ### Changed
+- New dependency: the NuGet package `LiteSuite.Common` 1.1.0 (components
+  shared with LiteDeploy and LiteTask), from GitHub Packages through
+  `nuget.config`; `LiteSuite.Common.dll` ships next to `LitePM.exe`, is signed
+  with the other binaries and is required by the CI package check. Restoring
+  needs a token even for a public package: the CI uses its `GITHUB_TOKEN`
+  (`packages: read`); on a development computer, set the user environment
+  variable `LITESUITE_PACKAGES_TOKEN` to a personal access token with
+  `read:packages` only.
 - The release asset is now always `LitePM.zip` (was
   `LitePM-<version>-win-x64.zip`), so the latest release has a fixed link:
   `https://github.com/svtica/LitePM/releases/latest/download/LitePM.zip`.

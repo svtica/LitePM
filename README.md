@@ -56,6 +56,19 @@ LitePM is a comprehensive process management application that provides detailed 
 - View service dependencies and startup types
 - Monitor service status changes in real-time
 
+### Updates
+- **Help > Check for updates...** reads the latest release on GitHub. When a
+  newer version exists, it shows its notes and, if you accept, downloads
+  `LitePM.zip`, checks the Authenticode signature of `LitePM.exe` (LiteSuite
+  publisher), then closes LitePM, replaces the files and restarts it.
+- The LitePM remote service (`LitePM.exe -SERVERSERVICE`, whatever its name)
+  is stopped during the copy and restarted if it was running. Administrator
+  rights (UAC) are asked for the copy only when needed (folder not writable,
+  or the service must be stopped).
+- Your settings, hotkeys and log are in your user profile and are not touched;
+  `tcp.txt` / `udp.txt` next to `LitePM.exe` are kept. Log of the update:
+  `%TEMP%\LitePM-update.log`.
+
 ### Command line
 - `LitePM.exe -REMOTE <computer>`: open LitePM connected to a remote computer
   through WMI, as the current Windows user (used by LiteDeploy). Needs
@@ -78,6 +91,18 @@ This project is **Production Ready** but **not actively developed**. Moderate co
 - .NET Framework 4.8
 - Administrative privileges recommended for full functionality
 
+## Build
+
+- Windows, Visual Studio 2022 or Build Tools (MSBuild, .NET Framework 4.8
+  targeting pack): `msbuild LitePM.sln -restore /p:Configuration=Release`
+  (output in `LitePM\bin\Release\`).
+- The NuGet package `LiteSuite.Common` (self-update) comes from GitHub Packages
+  (`nuget.config` at the root of the repository). GitHub Packages asks for a
+  token even for a public package: set the user environment variable
+  `LITESUITE_PACKAGES_TOKEN` to a personal access token (classic) with
+  `read:packages` only. Never commit a token. The CI uses the workflow's
+  `GITHUB_TOKEN` (`packages: read`).
+
 ## Releases and code signing
 
 To publish a release, run **Actions > Release > Run workflow** on GitHub and
@@ -87,10 +112,12 @@ and publishes the release. From a local clone on `main`, the same is done with
 `.\bump-version.ps1 -Bump patch` (or `-Version 1.2.3.0`): pushing the tag
 triggers `.github/workflows/build-and-release.yml`. The release asset is always named `LitePM.zip`
 (latest: https://github.com/svtica/LitePM/releases/latest/download/LitePM.zip), with `LitePM.exe` and
-all its DLLs and `.config` at the root of the zip: LiteTask downloads this asset
-(Tools > Process manager) and keeps that layout.
+all its DLLs and `.config` at the root of the zip (`LiteSuite.Common.dll`
+included): LiteTask downloads this asset (Tools > Process manager) and keeps
+that layout, and LitePM installs it itself (Help > Check for updates).
 
-`LitePM.exe`, `LitePMService.exe` and the DLLs built by the solution are signed
+`LitePM.exe`, `LitePMService.exe`, the DLLs built by the solution and
+`LiteSuite.Common.dll` are signed
 with Authenticode (SHA-256, RFC 3161 timestamp) when the repository has these
 Actions secrets:
 

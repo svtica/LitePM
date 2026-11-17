@@ -4,7 +4,10 @@
 
 .DESCRIPTION
     Signs, in -Dir, the executables and DLLs built by the solution
-    (System.Windows.Forms.Ribbon.dll is third-party and left as is) with
+    (System.Windows.Forms.Ribbon.dll is third-party and left as is), and
+    LiteSuite.Common.dll (NuGet package, already signed by its own build with
+    the same LiteSuite publisher certificate: signed again here so that the
+    package never ships it unsigned), with
     signtool from the latest Windows 10/11 SDK, SHA-256 file digest and an
     RFC 3161 timestamp, then checks each signature with "signtool verify /pa".
     Used by .github/workflows/build-and-release.yml. The certificate password
@@ -33,7 +36,8 @@ $names = @(
     'Aga.Controls.dll',
     'TaskDialog.dll',
     'SecurePasswordTextBox.dll',
-    'SecureChannel.dll'
+    'SecureChannel.dll',
+    'LiteSuite.Common.dll'
 )
 $files = $names | ForEach-Object { Join-Path $Dir $_ } | Where-Object { Test-Path $_ }
 if (-not ($files | Where-Object { $_ -like '*LitePM.exe' })) { throw "LitePM.exe not found in $Dir" }
