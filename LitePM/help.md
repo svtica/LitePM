@@ -38,7 +38,6 @@ Here are the features available in the main menu (click on the Orb) or when yo
 -   **System informations** : displays numerical informations about the local system.
 -   **Windows list** : displays the list of the windows opened by LitePM itself. You can show or close these windows.
 -   **Find Window' Process** : this allows to determine which process owns a particular window displayed on the screen. See [Find Window' Process](FindWindowProcess).
--   **Bug report & feedbacks** : opens a window with some links to send feedbacks and contact me.
 -   **Hidden processes feature** : shows hidden processes, e.g. rootkits. See [Show hidden processes](ShowHiddenProcesses)
 -   **Dependency viewer** : shows dependencies of a process/dll/driver... [See Dependency Viewer](DependenciesViewer)
 -   **Pending tasks** : displays the list of pending tasks (e.g. the action launched by the user which are not yet completed)

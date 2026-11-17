@@ -126,12 +126,9 @@
   <data name="Label1.Text" xml:space="preserve">
     <value>An unhandled exception has occurred in LitePM.
 
-Please report this bug to the tracker of LitePM, it will help me A LOT to fix it ASAP :-)
-The only thing you have to do is to click on the "Send the bug report" button. This will ONLY SEND to sourceforge.net the informations which are written below.
+To report this bug, click "Copy the report" and paste it in a new issue on https://github.com/svtica/LitePM/issues, with the steps to reproduce the crash if you know them. Check the report before posting it: it lists the paths of the loaded modules.
 
-You can also add a custom message ; anything you want me to know about the crash. How to reproduce the crash would be sooooooo helpful for me !!!
-
-Thanks for your help, and sorry for this crash :-)</value>
+You can then terminate LitePM, continue (LitePM will probably crash) or ignore the error.</value>
   </data>
   <metadata name="cmdQuit.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
@@ -142,16 +139,10 @@ Thanks for your help, and sorry for this crash :-)</value>
   <metadata name="cmdIgnore.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="cmdSend.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <metadata name="cmdCopy.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="Label2.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Label3.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="txtCustomMessage.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
   <metadata name="$this.Locked" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
