@@ -25,7 +25,7 @@ Public Class frmHandleInfo
 
         If curHandle Is Nothing Then Exit Sub
 
-        Select Case Me.tabProcess.SelectedTab.Text
+        Select Case Localization.Original(Me.tabProcess.SelectedTab)
 
             Case "Details"
                 Me.txtAccess.Text = curHandle.GetInformation("GrantedAccess")
@@ -74,7 +74,7 @@ Public Class frmHandleInfo
 
         curHandle = handle
 
-        Me.Text = "Handle " & curHandle.Infos.Handle.ToString
+        Me.Text = Localization.Format("Handle {0}", curHandle.Infos.Handle.ToString)
 
         _local = (Program.Connection.Type = cConnection.TypeOfConnection.LocalConnection)
         _notWMI = (Program.Connection.Type <> cConnection.TypeOfConnection.RemoteConnectionViaWMI)

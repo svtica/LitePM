@@ -30,7 +30,7 @@ Public Class frmSaveReport
 
     ' Report has been succesfully saved
     Private Sub ReportSaved()
-        Me.lblProgress.Text = "Saving done."
+        Me.lblProgress.Text = Localization.Text("Saving done.")
         Me.pgb.Value = Me.pgb.Maximum
         Me.cmdOK.Enabled = True
         Me.cmdOpenReport.Enabled = True
@@ -42,8 +42,8 @@ Public Class frmSaveReport
     Private Sub ReportFailed(ByVal ex As Exception)
         Me.pgb.Value = Me.pgb.Maximum
         Me.cmdOK.Enabled = True
-        Me.cmdOK.Text = "Quit"
-        Me.lblProgress.Text = "Saving failed"
+        Me.cmdOK.Text = Localization.Text("Quit")
+        Me.lblProgress.Text = Localization.Text("Saving failed")
         Me.cmdOpenReport.Enabled = False
         Me.cmdGO.Enabled = True
         Misc.ShowError(ex, "Could not save report")
@@ -64,7 +64,7 @@ Public Class frmSaveReport
         SetToolTip(Me.cmdOK, "Close this window")
         SetToolTip(Me.cmdOpenReport, "Open the report which was saved")
 
-        Me.lblProgress.Text = "Waiting for save..."
+        Me.lblProgress.Text = Localization.Text("Waiting for save...")
         With Me.pgb
             .Maximum = 1
             .Minimum = 0
@@ -74,7 +74,7 @@ Public Class frmSaveReport
 
     Private Sub UpdateProgress(ByVal value As Integer)
         Me.pgb.Value = value
-        Me.lblProgress.Text = "Computing item " & CStr(value) & "/" & CStr(Me.pgb.Maximum)
+        Me.lblProgress.Text = Localization.Format("Computing item {0}/{1}", CStr(value), CStr(Me.pgb.Maximum))
         Application.DoEvents()
     End Sub
 

@@ -86,16 +86,16 @@ Public Class frmConnection
         Me.cmdSSFileInfos.Enabled = Program.Connection.Type = cConnection.TypeOfConnection.SnapshotFile AndAlso Program.Connection.IsConnected
 
         If optLocal.Checked Then
-            Me.txtDesc.Text = _localDesc
+            Me.txtDesc.Text = Localization.Text(_localDesc)
             Me.gpShutdown.Enabled = (_formConnectionReference IsNot Nothing AndAlso _formConnectionReference.IsConnected AndAlso _formConnectionReference.Type = cConnection.TypeOfConnection.LocalConnection)
         ElseIf optServer.Checked Then
-            Me.txtDesc.Text = _serverDes
+            Me.txtDesc.Text = Localization.Text(_serverDes)
             Me.gpShutdown.Enabled = (_formConnectionReference IsNot Nothing AndAlso _formConnectionReference.IsConnected AndAlso _formConnectionReference.Type = cConnection.TypeOfConnection.RemoteConnectionViaSocket)
         ElseIf optSnapshot.Checked Then
-            Me.txtDesc.Text = _snapshotDesc
+            Me.txtDesc.Text = Localization.Text(_snapshotDesc)
             Me.gpShutdown.Enabled = False
         Else
-            Me.txtDesc.Text = _wmiDesc
+            Me.txtDesc.Text = Localization.Text(_wmiDesc)
             Me.gpShutdown.Enabled = (_formConnectionReference IsNot Nothing AndAlso _formConnectionReference.IsConnected AndAlso _formConnectionReference.Type = cConnection.TypeOfConnection.RemoteConnectionViaWMI)
         End If
 
@@ -109,21 +109,19 @@ Public Class frmConnection
         If optLocal.Checked Then
             If _formConnectionReference IsNot Nothing AndAlso (_oldType <> _formConnectionReference.Type OrElse _formConnectionReference.IsConnected <> _oldConnected) Then
                 Me.cbShutdown.Items.Clear()
-                Dim _items() As String = {"Restart", "Shutdown", "Poweroff", "Sleep", "Logoff", "Lock"}
-                Me.cbShutdown.Items.AddRange(_items)
-                Me.gpShutdown.Text = "Shutdown local system"
+                Me.cbShutdown.Items.AddRange(ShutdownChoice.List("Restart", "Shutdown", "Poweroff", "Sleep", "Logoff", "Lock"))
+                Me.gpShutdown.Text = Localization.Text("Shutdown local system")
             End If
-            Me.txtDesc.Text = _localDesc
+            Me.txtDesc.Text = Localization.Text(_localDesc)
             Me.gpShutdown.Enabled = (_formConnectionReference IsNot Nothing AndAlso _formConnectionReference.IsConnected AndAlso _formConnectionReference.Type = cConnection.TypeOfConnection.LocalConnection)
             _oldType = cConnection.TypeOfConnection.LocalConnection
         ElseIf optServer.Checked Then
             If _formConnectionReference IsNot Nothing AndAlso (_oldType <> _formConnectionReference.Type OrElse _formConnectionReference.IsConnected <> _oldConnected) Then
                 Me.cbShutdown.Items.Clear()
-                Dim _items() As String = {"Restart", "Shutdown", "Poweroff", "Sleep", "Logoff", "Lock"}
-                Me.cbShutdown.Items.AddRange(_items)
-                Me.gpShutdown.Text = "Shutdown remote system via socket"
+                Me.cbShutdown.Items.AddRange(ShutdownChoice.List("Restart", "Shutdown", "Poweroff", "Sleep", "Logoff", "Lock"))
+                Me.gpShutdown.Text = Localization.Text("Shutdown remote system via socket")
             End If
-            Me.txtDesc.Text = _serverDes
+            Me.txtDesc.Text = Localization.Text(_serverDes)
             Me.gpShutdown.Enabled = (_formConnectionReference IsNot Nothing AndAlso _formConnectionReference.IsConnected AndAlso _formConnectionReference.Type = cConnection.TypeOfConnection.RemoteConnectionViaSocket)
             _oldType = cConnection.TypeOfConnection.RemoteConnectionViaSocket
         ElseIf optSnapshot.Checked Then
@@ -131,11 +129,10 @@ Public Class frmConnection
         Else
             If _formConnectionReference IsNot Nothing AndAlso (_oldType <> _formConnectionReference.Type OrElse _formConnectionReference.IsConnected <> _oldConnected) Then
                 Me.cbShutdown.Items.Clear()
-                Dim _items() As String = {"Restart", "Shutdown", "Poweroff", "Logoff"}
-                Me.cbShutdown.Items.AddRange(_items)
-                Me.gpShutdown.Text = "Shutdown remote system via WMI"
+                Me.cbShutdown.Items.AddRange(ShutdownChoice.List("Restart", "Shutdown", "Poweroff", "Logoff"))
+                Me.gpShutdown.Text = Localization.Text("Shutdown remote system via WMI")
             End If
-            Me.txtDesc.Text = _wmiDesc
+            Me.txtDesc.Text = Localization.Text(_wmiDesc)
             Me.gpShutdown.Enabled = (_formConnectionReference IsNot Nothing AndAlso _formConnectionReference.IsConnected AndAlso _formConnectionReference.Type = cConnection.TypeOfConnection.RemoteConnectionViaWMI)
             _oldType = cConnection.TypeOfConnection.RemoteConnectionViaWMI
         End If
@@ -173,7 +170,7 @@ Public Class frmConnection
         End If
 
         If _formConnectionReference.IsConnected Then
-            Me.Text = "Disconnecting from current machine..."
+            Me.Text = Localization.Text("Disconnecting from current machine...")
             Call _frmMain.DisconnectFromMachine()
         Else
             With Program.Connection
@@ -206,7 +203,7 @@ Public Class frmConnection
                     .SnapshotFile = Me.txtSSFile.Text
                 End If
             End With
-            Me.Text = "Connecting to machine..."
+            Me.Text = Localization.Text("Connecting to machine...")
             Call _frmMain.ConnectToMachine()
         End If
 
@@ -215,11 +212,11 @@ Public Class frmConnection
     ' Change the caption of the button 'Connect/Disconnect'
     Private Sub ChangeCaption()
         If _formConnectionReference.IsConnected Then
-            Me.cmdConnect.Text = "Disconnect"
-            Me.Text = "Connected"
+            Me.cmdConnect.Text = Localization.Text("Disconnect")
+            Me.Text = Localization.Text("Connected")
         Else
-            Me.cmdConnect.Text = "Connect"
-            Me.Text = "Disconnected"
+            Me.cmdConnect.Text = Localization.Text("Connect")
+            Me.Text = Localization.Text("Disconnected")
         End If
         Call changeInfos()
     End Sub
@@ -289,12 +286,15 @@ Public Class frmConnection
     End Function
     Private Sub shutdownDone(ByVal Success As Boolean, ByVal type As ShutdownType, ByVal msg As String)
         If Success = False Then
-            Misc.ShowMsg("Shutdown command", "Could not send " & type.ToString & " command." & msg, MessageBoxButtons.OK)
+            Misc.ShowMsg("Shutdown command", Localization.Format("Could not send {0} command.{1}", type.ToString, msg), MessageBoxButtons.OK)
         End If
     End Sub
 
     Private Sub cmdShutdown_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdShutdown.Click
-        Select Case Me.cbShutdown.Text
+        ' The action is the English name of the item (its text may be translated)
+        Dim choice As ShutdownChoice = TryCast(Me.cbShutdown.SelectedItem, ShutdownChoice)
+        Dim action As String = If(choice Is Nothing, Me.cbShutdown.Text, choice.Name)
+        Select Case action
             Case "Restart"
                 Call ShutdownAction(ShutdownType.Restart, Me.chkForceShutdown.Checked)
             Case "Shutdown"
@@ -331,10 +331,10 @@ Public Class frmConnection
     Private Sub cmdShowDatas_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdShowDatas.Click
         If Me.Width = 643 Then
             Me.Width = 347
-            Me.cmdShowDatas.Text = "Show received data"
+            Me.cmdShowDatas.Text = Localization.Text("Show received data")
         Else
             Me.Width = 643
-            Me.cmdShowDatas.Text = "Hide received data"
+            Me.cmdShowDatas.Text = Localization.Text("Hide received data")
         End If
     End Sub
 
@@ -373,7 +373,28 @@ Public Class frmConnection
                     "TotalPhysicalMemory : " & GetFormatedSize(snap.SystemInformation.TotalPhysicalMemory) & vbNewLine & _
                     "TotalVirtualMemory : " & GetFormatedSize(snap.SystemInformation.TotalVirtualMemory)
             End If
-            Misc.ShowMsg("System Snapshot File information", "Informations about the file " & Program.Connection.SnapshotFile, MessageBoxButtons.OK)
+            Misc.ShowMsg("System Snapshot File information", Localization.Format("Informations about the file {0}", Program.Connection.SnapshotFile), MessageBoxButtons.OK)
         End If
     End Sub
+    ' An action of the shutdown list: its English name, displayed in the language of the interface
+    Private NotInheritable Class ShutdownChoice
+        Public ReadOnly Name As String
+
+        Private Sub New(ByVal name As String)
+            Me.Name = name
+        End Sub
+
+        Public Shared Function List(ByVal ParamArray names() As String) As Object()
+            Dim res(names.Length - 1) As Object
+            For i As Integer = 0 To names.Length - 1
+                res(i) = New ShutdownChoice(names(i))
+            Next
+            Return res
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return Localization.Text(Name)
+        End Function
+    End Class
+
 End Class

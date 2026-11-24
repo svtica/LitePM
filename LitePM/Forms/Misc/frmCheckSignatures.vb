@@ -128,9 +128,9 @@ Public Class frmCheckSignatures
                     _unknown += 1
             End Select
         Next
-        Me.lblFailed.Text = "Not trusted : " & _failed.ToString
-        Me.lblOK.Text = "Trusted : " & _success.ToString
-        Me.lblUnknown.Text = "Unknown : " & _unknown.ToString
+        Me.lblFailed.Text = Localization.Format("Not trusted : {0}", _failed.ToString)
+        Me.lblOK.Text = Localization.Format("Trusted : {0}", _success.ToString)
+        Me.lblUnknown.Text = Localization.Format("Unknown : {0}", _unknown.ToString)
         Me.lvResult.EndUpdate()
 
     End Sub

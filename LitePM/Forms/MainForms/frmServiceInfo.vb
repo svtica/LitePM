@@ -22,7 +22,7 @@ Public Class frmServiceInfo
 
         If curServ Is Nothing Then Exit Sub
 
-        Select Case Me.tabProcess.SelectedTab.Text
+        Select Case Localization.Original(Me.tabProcess.SelectedTab)
 
             Case "General - 1"
                 If curServ.Infos.FileInfo IsNot Nothing Then
@@ -38,7 +38,7 @@ Public Class frmServiceInfo
                 If Me.curServ.Infos.ProcessId > 0 Then
                     Me.txtProcess.Text = curServ.Infos.ProcessName & " -- " & curServ.Infos.ProcessId
                 Else
-                    Me.txtProcess.Text = "Not started"
+                    Me.txtProcess.Text = Localization.Text("Not started")
                 End If
                 Me.txtCommand.Text = curServ.GetInformation("ImagePath")
                 Me.txtServicePath.Text = GetPathFromCommand(Me.txtCommand.Text)
@@ -266,15 +266,15 @@ Public Class frmServiceInfo
             Try
                 Dim bVer As Boolean = Security.WinTrust.WinTrust.VerifyEmbeddedSignature(Me.txtServicePath.Text)
                 If bVer Then
-                    gpProcGeneralFile.Text = "Image file (successfully verified)"
+                    gpProcGeneralFile.Text = Localization.Text("Image file (successfully verified)")
                 Else
-                    gpProcGeneralFile.Text = "Image file (not verified)"
+                    gpProcGeneralFile.Text = Localization.Text("Image file (not verified)")
                 End If
             Catch ex As Exception
                 Misc.ShowDebugError(ex)
             End Try
         Else
-            gpProcGeneralFile.Text = "Image file (no verification was made)"
+            gpProcGeneralFile.Text = Localization.Text("Image file (no verification was made)")
         End If
     End Sub
 
@@ -315,7 +315,7 @@ Public Class frmServiceInfo
     Private Sub tabProcess_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabProcess.SelectedIndexChanged
         Call Me.refreshServiceTab()
         Call ChangeCaption()
-        My.Settings.ServSelectedTab = Me.tabProcess.SelectedTab.Text
+        My.Settings.ServSelectedTab = Localization.Original(Me.tabProcess.SelectedTab)
     End Sub
 
     Private Sub rtb_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles rtb.TextChanged
@@ -377,7 +377,7 @@ Public Class frmServiceInfo
     End Sub
 
     Private Sub servDep_Connected() Handles tv.Connected
-        If Me.tabProcess.SelectedTab.Text = "Dependencies" Then
+        If Localization.Original(Me.tabProcess.SelectedTab) = "Dependencies" Then
             With tv
                 .RootService = curServ.Infos.Name
                 .InfosToGet = cServDepConnection.DependenciesToget.DependenciesOfMe
@@ -391,7 +391,7 @@ Public Class frmServiceInfo
     End Sub
 
     Private Sub servDep2_Connected() Handles tv2.Connected
-        If Me.tabProcess.SelectedTab.Text = "Dependencies" Then
+        If Localization.Original(Me.tabProcess.SelectedTab) = "Dependencies" Then
             With tv2
                 .RootService = curServ.Infos.Name
                 .InfosToGet = cServDepConnection.DependenciesToget.ServiceWhichDependsFromMe
@@ -472,8 +472,8 @@ Public Class frmServiceInfo
 
     Private Sub Timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer.Tick
         ' Refresh informations about process
-        If Not (Me.tabProcess.SelectedTab.Text = "Informations" Or _
-                Me.tabProcess.SelectedTab.Text = "Dependencies") Then _
+        If Not (Localization.Original(Me.tabProcess.SelectedTab) = "Informations" Or _
+                Localization.Original(Me.tabProcess.SelectedTab) = "Dependencies") Then _
             Call Me.refreshServiceTab()
 
         ' Display caption
@@ -481,7 +481,7 @@ Public Class frmServiceInfo
 
         ' If online infos received, display it
         If _asyncDownloadDone Then
-            Me.lblSecurityRisk.Text = "Risk : " & _asyncInfoRes._Risk.ToString
+            Me.lblSecurityRisk.Text = Localization.Format("Risk : {0}", _asyncInfoRes._Risk.ToString)
             Me.rtbOnlineInfos.Text = _asyncInfoRes._Description
             _asyncDlThread.Abort()
             _asyncInfoRes = Nothing

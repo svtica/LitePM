@@ -21,15 +21,15 @@ Public Class frmSnapshotInfos
 
     Private Sub cmdGo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdGo.Click
         If System.IO.File.Exists(Me.txtSSFile.Text) Then
-            Me.Text = "System Snapshot File information - Exploring file..."
+            Me.Text = Localization.Text("System Snapshot File information - Exploring file...")
             Try
                 Dim snap As New cSnapshot250(Me.txtSSFile.Text)
-                Me.Text = "System Snapshot File information - Building tree..."
+                Me.Text = Localization.Text("System Snapshot File information - Building tree...")
                 Call Me.BuildTree(snap)
-                Me.Text = "System Snapshot File information"
+                Me.Text = Localization.Text("System Snapshot File information")
             Catch ex As Exception
                 Misc.ShowError(ex, "Could not explore file !")
-                Me.Text = "System Snapshot File information - Failed to explore file"
+                Me.Text = Localization.Text("System Snapshot File information - Failed to explore file")
             End Try
         End If
     End Sub
@@ -56,8 +56,8 @@ Public Class frmSnapshotInfos
         Me.tv.Nodes.Add(rootRoot)
 
         ' Informations about the snapshot
-        rootInfo.Nodes.Add("File type version : " & snap.FileVersion)
-        rootInfo.Nodes.Add("Date : " & snap.Date.ToLongDateString & "-" & snap.Date.ToLongTimeString)
+        rootInfo.Nodes.Add(Localization.Format("File type version : {0}", snap.FileVersion))
+        rootInfo.Nodes.Add(Localization.Format("Date : {0}-{1}", snap.Date.ToLongDateString, snap.Date.ToLongTimeString))
         If snap.SystemInformation IsNot Nothing Then
             rootInfo.Nodes.Add("ComputerName : " & snap.SystemInformation.ComputerName)
             rootInfo.Nodes.Add("UserName : " & snap.SystemInformation.UserName)

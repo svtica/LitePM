@@ -289,7 +289,7 @@ Friend NotInheritable Class UpdateProgressForm
         _label.AutoSize = False
         _label.Location = New Point(12, 14)
         _label.Size = New Size(356, 22)
-        _label.Text = "Checking for updates..."
+        _label.Text = Localization.Text("Checking for updates...")
 
         _bar = New ProgressBar()
         _bar.Location = New Point(12, 44)
@@ -318,19 +318,19 @@ Friend NotInheritable Class UpdateProgressForm
         If Me.IsDisposed Then Return
         Select Case stage
             Case UpdateStage.Checking
-                _label.Text = "Checking for updates..."
+                _label.Text = Localization.Text("Checking for updates...")
             Case UpdateStage.Downloading
-                _label.Text = "Downloading the update..."
+                _label.Text = Localization.Text("Downloading the update...")
             Case UpdateStage.Extracting
-                _label.Text = "Extracting the update..."
+                _label.Text = Localization.Text("Extracting the update...")
             Case UpdateStage.VerifyingSignature
-                _label.Text = "Verifying the signature..."
+                _label.Text = Localization.Text("Verifying the signature...")
             Case UpdateStage.SignatureAccepted
-                _label.Text = "Signature verified."
+                _label.Text = Localization.Text("Signature verified.")
             Case UpdateStage.UnsignedAccepted
-                _label.Text = "The update is not signed."
+                _label.Text = Localization.Text("The update is not signed.")
             Case UpdateStage.LaunchingScript
-                _label.Text = "Starting the update..."
+                _label.Text = Localization.Text("Starting the update...")
         End Select
     End Sub
 

@@ -69,7 +69,7 @@ Public Class frmMain
 
             ' Clean string list
             Me.lvFileString.Items.Clear()
-            Me.lvFileString.Items.Add("Click on 'Others->Show file strings' to retrieve file strings")
+            Me.lvFileString.Items.Add(Localization.Text("Click on 'Others->Show file strings' to retrieve file strings"))
 
             s &= "{\rtf1\ansi\ansicpg1252\deff0\deflang1036{\fonttbl{\f0\fswiss\fprq2\fcharset0 Tahoma;}{\f1\fswiss\fcharset0 Arial;}}"
             s &= "{\*\generator Msftedit 5.41.21.2508;}\viewkind4\uc1\pard\f0\fs18   "
@@ -482,7 +482,7 @@ Public Class frmMain
             tabToShow = My.Settings.FixedTab
         End If
         For Each page As TabPage In _tab.TabPages
-            If page.Text = tabToShow Then
+            If Localization.Original(page) = tabToShow Then
                 _tab.SelectedTab = page
                 Exit For
             End If
@@ -608,7 +608,7 @@ Public Class frmMain
         Else
             s = CStr(Me.lvProcess.Items.Count) & " processes running"
         End If
-        Me.Text = "Lite Process Monitor -- " & s
+        Me.Text = Localization.Format("Lite Process Monitor -- {0}", s)
     End Sub
 
     Private Sub butDownload_Click(ByVal sender As Object, ByVal e As System.EventArgs)
@@ -670,7 +670,7 @@ Public Class frmMain
     Private Sub butOpenFile_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         ' Open a file
         openDial.Filter = "All files (*.*)|*.*"
-        openDial.Title = "Open a file to retrieve details"
+        openDial.Title = Localization.Text("Open a file to retrieve details")
         If openDial.ShowDialog = Windows.Forms.DialogResult.OK Then
             If IO.File.Exists(openDial.FileName) Then
                 DisplayDetailsFile(openDial.FileName)
@@ -755,7 +755,7 @@ Public Class frmMain
                     If Misc.ShowMsg("File size is greater than 2MB. It is not recommended to open a large file, do you want to continue?",
                     "Show file strings",
                     MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.No Then
-                        lvFileString.Items.Add("Click on 'Others->Show file strings' to retrieve file strings")
+                        lvFileString.Items.Add(Localization.Text("Click on 'Others->Show file strings' to retrieve file strings"))
                         Exit Sub
                     End If
                 End If
@@ -1073,7 +1073,7 @@ Public Class frmMain
 
     Private Sub butFileMove_Click(ByVal sender As Object, ByVal e As System.EventArgs)
         With Me.FolderChooser
-            .Description = "Select new location"
+            .Description = Localization.Text("Select new location")
             .SelectedPath = cFile.GetParentDir(cSelFile.Path)
             .ShowNewFolderButton = True
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
@@ -1132,7 +1132,7 @@ Public Class frmMain
     End Sub
 
     Private Sub lvServices_GotAnError(ByVal origin As String, ByVal msg As String) Handles lvServices.GotAnError
-        Misc.ShowError("Error : " & msg & vbNewLine & "Origin : " & origin & vbNewLine & vbNewLine & "LitePM will be disconnected from the machine.")
+        Misc.ShowError(Localization.Format("Error : {0}" & vbCrLf & "Origin : {1}" & vbCrLf & vbCrLf & "LitePM will be disconnected from the machine.", msg, origin))
         Call Me.DisconnectFromMachine()
     End Sub
 
@@ -1245,7 +1245,7 @@ Public Class frmMain
             Me.lvMonitorReport.BringToFront()
 
         Else
-            Me.txtMonitoringLog.Text = "No process monitored." & vbNewLine & "Click on 'Add' button to monitor a process."
+            Me.txtMonitoringLog.Text = Localization.Text("No process monitored." & vbNewLine & "Click on 'Add' button to monitor a process.")
             Me.txtMonitoringLog.SelectionLength = 0
             Me.txtMonitoringLog.SelectionStart = 0
             Me.txtMonitoringLog.BringToFront()
@@ -1287,7 +1287,7 @@ Public Class frmMain
                 it.Group = lvServices.Groups(1)
             End If
         Next
-        Me.lblResCount2.Text = CStr(lvServices.Groups(1).Items.Count) & " result(s)"
+        Me.lblResCount2.Text = Localization.Format("{0} result(s)", CStr(lvServices.Groups(1).Items.Count))
     End Sub
 
     Public Sub txtSearch_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtSearch.Click
@@ -1314,7 +1314,7 @@ Public Class frmMain
                 it.Group = lvProcess.Groups(1)
             End If
         Next
-        Me.lblResCount.Text = CStr(lvProcess.Groups(1).Items.Count) & " result(s)"
+        Me.lblResCount.Text = Localization.Format("{0} result(s)", CStr(lvProcess.Groups(1).Items.Count))
     End Sub
 
     Private Sub txtFile_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtFile.TextChanged
@@ -1421,7 +1421,7 @@ Public Class frmMain
                     Dim state As Native.Api.NativeEnums.ServiceState = cSe.Infos.State
                     Dim acc As Native.Api.NativeEnums.ServiceAccept = cSe.Infos.AcceptedControl
 
-                    Me.MenuItemServPause.Text = IIf(state = Native.Api.NativeEnums.ServiceState.Running, "Pause", "Resume").ToString
+                    Me.MenuItemServPause.Text = Localization.Text(IIf(state = Native.Api.NativeEnums.ServiceState.Running, "Pause", "Resume").ToString)
                     MenuItemServPause.Enabled = (acc And Native.Api.NativeEnums.ServiceAccept.PauseContinue) = Native.Api.NativeEnums.ServiceAccept.PauseContinue
                     MenuItemServStart.Enabled = Not (state = Native.Api.NativeEnums.ServiceState.Running)
                     Me.MenuItemServStop.Enabled = (acc And Native.Api.NativeEnums.ServiceAccept.Stop) = Native.Api.NativeEnums.ServiceAccept.Stop
@@ -1434,7 +1434,7 @@ Public Class frmMain
                     MenuItemServOnDemand.Enabled = Not (MenuItemServOnDemand.Checked)
                     MenuItemServStartType.Enabled = True
                 ElseIf lvServices.SelectedItems.Count > 1 Then
-                    MenuItemServPause.Text = "Pause"
+                    MenuItemServPause.Text = Localization.Text("Pause")
                     MenuItemServPause.Enabled = True
                     MenuItemServStart.Enabled = True
                     MenuItemServStop.Enabled = True
@@ -1446,7 +1446,7 @@ Public Class frmMain
                     MenuItemServOnDemand.Enabled = True
                     MenuItemServStartType.Enabled = True
                 ElseIf lvServices.SelectedItems.Count = 0 Then
-                    MenuItemServPause.Text = "Pause"
+                    MenuItemServPause.Text = Localization.Text("Pause")
                     MenuItemServPause.Enabled = False
                     MenuItemServStart.Enabled = False
                     MenuItemServStop.Enabled = False
@@ -1459,7 +1459,7 @@ Public Class frmMain
                     MenuItemServStartType.Enabled = False
                 End If
             Else
-                MenuItemServPause.Text = "Pause"
+                MenuItemServPause.Text = Localization.Text("Pause")
                 MenuItemServPause.Enabled = False
                 MenuItemServStart.Enabled = False
                 MenuItemServStop.Enabled = False
@@ -1492,8 +1492,8 @@ Public Class frmMain
             Try
                 Dim cS As cService = Me.lvServices.GetSelectedItem
 
-                Me.lblServiceName.Text = "Service name : " & cS.Infos.Name
-                Me.lblServicePath.Text = "Service path : " & cS.GetInformation("ImagePath")
+                Me.lblServiceName.Text = Localization.Format("Service name : {0}", cS.Infos.Name)
+                Me.lblServicePath.Text = Localization.Format("Service path : {0}", cS.GetInformation("ImagePath"))
 
                 ' Description
                 Dim s As String = vbNullString
@@ -1580,7 +1580,7 @@ Public Class frmMain
     End Sub
 
     Private Sub lvProcess_GotAnError(ByVal origin As String, ByVal msg As String) Handles lvProcess.GotAnError
-        Misc.ShowError("Error : " & msg & vbNewLine & "Origin : " & origin & vbNewLine & vbNewLine & "LitePM will be disconnected from the machine.")
+        Misc.ShowError(Localization.Format("Error : {0}" & vbCrLf & "Origin : {1}" & vbCrLf & vbCrLf & "LitePM will be disconnected from the machine.", msg, origin))
         Call Me.DisconnectFromMachine()
     End Sub
 
@@ -1599,20 +1599,20 @@ Public Class frmMain
                         MenuItemTaskSelProc.Enabled = True
                     End If
                     If My.Settings.NotifyNewProcesses Then
-                        Dim text As String = "Name : " & infos.Name & " (" & infos.ProcessId.ToString & ")"
+                        Dim text As String = Localization.Text("Name : ") & infos.Name & " (" & infos.ProcessId.ToString & ")"
                         If infos.ParentProcessId > 0 Then
-                            text &= vbNewLine & "Parent : " &
+                            text &= vbNewLine & Localization.Text("Parent : ") &
                                 cProcess.GetProcessName(infos.ParentProcessId) & " (" &
                                 infos.ParentProcessId.ToString & ")"
                         End If
                         If infos.FileInfo IsNot Nothing Then
-                            text &= vbNewLine & "Company : " & infos.FileInfo.CompanyName &
-                                vbNewLine & "Description : " & infos.FileInfo.FileDescription
+                            text &= vbNewLine & Localization.Text("Company : ") & infos.FileInfo.CompanyName &
+                                vbNewLine & Localization.Text("Description : ") & infos.FileInfo.FileDescription
                         End If
                         With Me.Tray
                             .BalloonTipText = text
                             .BalloonTipIcon = ToolTipIcon.Info
-                            .BalloonTipTitle = "A new process has been started"
+                            .BalloonTipTitle = Localization.Text("A new process has been started")
                             .ShowBalloonTip(3000)
                         End With
                     End If
@@ -1628,20 +1628,20 @@ Public Class frmMain
                 If item IsNot Nothing Then
                     Program.Log.AppendLine("Process deleted : " & item.Name & " (" & item.ProcessId & ")")
                     If My.Settings.NotifyTerminatedProcesses Then
-                        Dim text As String = "Name : " & item.Name & " (" & item.ProcessId.ToString & ")"
+                        Dim text As String = Localization.Text("Name : ") & item.Name & " (" & item.ProcessId.ToString & ")"
                         If item.ParentProcessId > 0 Then
-                            text &= vbNewLine & "Parent : " &
+                            text &= vbNewLine & Localization.Text("Parent : ") &
                                 cProcess.GetProcessName(item.ParentProcessId) & " (" &
                                 cProcess.GetProcessName(item.ParentProcessId) & ")"
                         End If
                         If item.FileInfo IsNot Nothing Then
-                            text &= vbNewLine & "Company : " & item.FileInfo.CompanyName &
-                                vbNewLine & "Description : " & item.FileInfo.FileDescription
+                            text &= vbNewLine & Localization.Text("Company : ") & item.FileInfo.CompanyName &
+                                vbNewLine & Localization.Text("Description : ") & item.FileInfo.FileDescription
                         End If
                         With Me.Tray
                             .BalloonTipText = text
                             .BalloonTipIcon = ToolTipIcon.Info
-                            .BalloonTipTitle = "A process has been terminated"
+                            .BalloonTipTitle = Localization.Text("A process has been terminated")
                             .ShowBalloonTip(3000)
                         End With
                     End If
@@ -1657,18 +1657,18 @@ Public Class frmMain
                 If item IsNot Nothing AndAlso ServiceProvider.FirstRefreshDone Then
                     Program.Log.AppendLine("Service created : " & item.Infos.Name & " (" & item.Infos.ProcessId & ")")
                     If My.Settings.NotifyNewServices Then
-                        Dim text As String = "Name : " & item.Infos.Name
+                        Dim text As String = Localization.Text("Name : ") & item.Infos.Name
                         If item.Infos.ProcessId > 0 Then
                             text &= " (" & item.Infos.ProcessId.ToString & ")"
                         End If
                         If item.Infos.FileInfo IsNot Nothing Then
-                            text &= vbNewLine & "Company : " & item.Infos.FileInfo.CompanyName &
-                                vbNewLine & "Description : " & item.Infos.FileInfo.FileDescription
+                            text &= vbNewLine & Localization.Text("Company : ") & item.Infos.FileInfo.CompanyName &
+                                vbNewLine & Localization.Text("Description : ") & item.Infos.FileInfo.FileDescription
                         End If
                         With Me.Tray
                             .BalloonTipText = text
                             .BalloonTipIcon = ToolTipIcon.Info
-                            .BalloonTipTitle = "A new service has been created"
+                            .BalloonTipTitle = Localization.Text("A new service has been created")
                             .ShowBalloonTip(3000)
                         End With
                     End If
@@ -1684,18 +1684,18 @@ Public Class frmMain
                 If item IsNot Nothing Then
                     Program.Log.AppendLine("Service deleted : " & item.Name & " (" & item.ProcessId & ")")
                     If My.Settings.NotifyDeletedServices Then
-                        Dim text As String = "Name : " & item.Name
+                        Dim text As String = Localization.Text("Name : ") & item.Name
                         If item.ProcessId > 0 Then
                             text &= " (" & item.ProcessId.ToString & ")"
                         End If
                         If item.FileInfo IsNot Nothing Then
-                            text &= vbNewLine & "Company : " & item.FileInfo.CompanyName &
-                                vbNewLine & "Description : " & item.FileInfo.FileDescription
+                            text &= vbNewLine & Localization.Text("Company : ") & item.FileInfo.CompanyName &
+                                vbNewLine & Localization.Text("Description : ") & item.FileInfo.FileDescription
                         End If
                         With Me.Tray
                             .BalloonTipText = text
                             .BalloonTipIcon = ToolTipIcon.Info
-                            .BalloonTipTitle = "A service has been deleted"
+                            .BalloonTipTitle = Localization.Text("A service has been deleted")
                             .ShowBalloonTip(3000)
                         End With
                     End If
@@ -1835,7 +1835,7 @@ Public Class frmMain
                 it.Group = lvTask.Groups(1)
             End If
         Next
-        Me.lblTaskCountResult.Text = CStr(lvTask.Groups(1).Items.Count) & " result(s)"
+        Me.lblTaskCountResult.Text = Localization.Format("{0} result(s)", CStr(lvTask.Groups(1).Items.Count))
     End Sub
 
     Private Sub lblResCount2_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lblResCount2.Click
@@ -2068,7 +2068,7 @@ Public Class frmMain
                 it.Group = lvSearchResults.Groups(1)
             End If
         Next
-        Me.lblResultsCount.Text = CStr(lvSearchResults.Groups(1).Items.Count) & " result(s)"
+        Me.lblResultsCount.Text = Localization.Format("{0} result(s)", CStr(lvSearchResults.Groups(1).Items.Count))
     End Sub
 
     Private Sub txtSearchResults_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtSearchResults.TextChanged
@@ -2080,7 +2080,7 @@ Public Class frmMain
                 it.Group = lvSearchResults.Groups(1)
             End If
         Next
-        Me.lblResultsCount.Text = CStr(lvSearchResults.Groups(1).Items.Count) & " result(s)"
+        Me.lblResultsCount.Text = Localization.Format("{0} result(s)", CStr(lvSearchResults.Groups(1).Items.Count))
     End Sub
 
     Private Sub lblResultsCount_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lblResultsCount.Click
@@ -2095,7 +2095,7 @@ Public Class frmMain
     Private Sub _tab_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles _tab.SelectedIndexChanged
         Dim page As TabPage = _tab.SelectedTab
         If page Is Nothing Then Exit Sub
-        My.Settings.SelectedTab = page.Text
+        My.Settings.SelectedTab = Localization.Original(page)
 
         ' Menu of the displayed page only
         Me.MenuItemProcesses.Visible = (page Is Me.pageProcesses)
@@ -2590,14 +2590,14 @@ Public Class frmMain
                     ' Cannot retrieve a good path
                     Dim box As New frmBox
                     With box
-                        .txtMsg1.Text = "The file path cannot be extracted. Please edit it and then click 'OK' to open file properties box, or click 'Cancel' to cancel."
+                        .txtMsg1.Text = Localization.Text("The file path cannot be extracted. Please edit it and then click 'OK' to open file properties box, or click 'Cancel' to cancel.")
                         .txtMsg1.Height = 35
                         .txtMsg2.Top = 50
                         .txtMsg2.Height = 25
                         .txtMsg2.Text = s
                         .txtMsg2.ReadOnly = False
                         .txtMsg2.BackColor = Drawing.Color.White
-                        .Text = "Show file properties box"
+                        .Text = Localization.Text("Show file properties box")
                         .Height = 150
                         .ShowDialog()
                         .TopMost = _frmMain.TopMost
@@ -2623,14 +2623,14 @@ Public Class frmMain
                     ' Cannot retrieve a good path
                     Dim box As New frmBox
                     With box
-                        .txtMsg1.Text = "The file directory cannot be extracted. Please edit it and then click 'OK' to open directory, or click 'Cancel' to cancel."
+                        .txtMsg1.Text = Localization.Text("The file directory cannot be extracted. Please edit it and then click 'OK' to open directory, or click 'Cancel' to cancel.")
                         .txtMsg1.Height = 35
                         .txtMsg2.Top = 50
                         .txtMsg2.Height = 25
                         .txtMsg2.Text = s
                         .txtMsg2.ReadOnly = False
                         .txtMsg2.BackColor = Drawing.Color.White
-                        .Text = "Open directory"
+                        .Text = Localization.Text("Open directory")
                         .Height = 150
                         .ShowDialog()
                         .TopMost = _frmMain.TopMost
@@ -3048,7 +3048,7 @@ Public Class frmMain
     End Sub
 
     Private Sub MenuItemSystemRefresh_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MenuItemSystemRefresh.Click
-        Select Case _tab.TabPages(_tab.SelectedIndex).Text
+        Select Case Localization.Original(_tab.TabPages(_tab.SelectedIndex))
             Case "Tasks"
                 Call Me.butTaskRefresh_Click(Nothing, Nothing)
             Case "Processes"
@@ -3278,10 +3278,10 @@ Public Class frmMain
             Call Program.SystemInfo.RefreshInfo()
 
             Me.sbPanelConnection.Text = Program.Connection.ToString
-            Me.sbPanelCpu.Text = "CPU : " & Common.Misc.GetFormatedPercentage(Program.SystemInfo.CpuUsage, 3, True) & " %"
-            Me.sbPanelMemory.Text = "Phys. Memory : " & Common.Misc.GetFormatedPercentage(Program.SystemInfo.PhysicalMemoryPercentageUsage, 3, True) & " %"
-            Me.sbPanelProcesses.Text = Me.lvProcess.Items.Count & " processes"
-            Me.sbPanelServices.Text = Me.lvServices.Items.Count & " services"
+            Me.sbPanelCpu.Text = Localization.Format("CPU : {0} %", Common.Misc.GetFormatedPercentage(Program.SystemInfo.CpuUsage, 3, True))
+            Me.sbPanelMemory.Text = Localization.Format("Phys. Memory : {0} %", Common.Misc.GetFormatedPercentage(Program.SystemInfo.PhysicalMemoryPercentageUsage, 3, True))
+            Me.sbPanelProcesses.Text = Localization.Format("{0} processes", Me.lvProcess.Items.Count)
+            Me.sbPanelServices.Text = Localization.Format("{0} services", Me.lvServices.Items.Count)
 
             ' We disable some buttons on the main form
             Me.MenuItemSystemSaveSSFile.Enabled = Program.Connection.Type <> cConnection.TypeOfConnection.SnapshotFile
@@ -3679,7 +3679,7 @@ Public Class frmMain
             .AddExtension = True
             .CheckPathExists = True
             .Filter = "HTML (*.html)|*.html"
-            .Title = "Save report"
+            .Title = Localization.Text("Save report")
             If .ShowDialog() = Windows.Forms.DialogResult.OK Then
                 sFile = .FileName
             Else

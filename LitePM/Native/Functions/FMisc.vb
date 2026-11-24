@@ -46,7 +46,7 @@ Namespace Native.Functions
 
         ' Set 'explorer' theme
         Public Shared Sub SetTheme(ByVal handle As IntPtr)
-            Native.Api.NativeFunctions.SetWindowTheme(handle, "explorer", Nothing)
+            Native.Api.NativeFunctions.SetWindowTheme(handle, Theme.ListThemeName, Nothing)
         End Sub
 
         ' Set a listview as 'double buffered'

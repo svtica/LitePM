@@ -1090,6 +1090,30 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("auto")>  _
+        Public Property Language() As String
+            Get
+                Return CType(Me("Language"),String)
+            End Get
+            Set
+                Me("Language") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("auto")>  _
+        Public Property Theme() As String
+            Get
+                Return CType(Me("Theme"),String)
+            End Get
+            Set
+                Me("Theme") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
         Public Property UpdateAuto() As Boolean
             Get

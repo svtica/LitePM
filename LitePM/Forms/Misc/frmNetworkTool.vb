@@ -15,11 +15,11 @@ Public Class frmNetworkTool
         _net = conn
         _type = type
         If _net.Infos.Remote Is Nothing Then
-            Me.Text = "No IP address !"
+            Me.Text = Localization.Text("No IP address !")
             Me.lv.Enabled = False
         Else
             Me.lv.Enabled = True
-            Me.Text = "IP address : " & _net.Infos.Remote.Address.ToString
+            Me.Text = Localization.Format("IP address : {0}", _net.Infos.Remote.Address.ToString)
         End If
     End Sub
 

@@ -461,7 +461,7 @@ Namespace Common
         Public Shared Sub SetToolTip(ByVal ctrl As Control, ByVal text As String)
             Dim tToolTip As ToolTip = New System.Windows.Forms.ToolTip
             With tToolTip
-                .SetToolTip(ctrl, text)
+                .SetToolTip(ctrl, Localization.Text(text))
                 .IsBalloon = False
                 .Active = True
             End With
@@ -471,8 +471,8 @@ Namespace Common
         Public Shared Function CInputBox(ByVal text As String, ByVal title As String, Optional ByVal defaultValue As String = Nothing) As String
             Dim frm As New frmInput
             With frm
-                .Text = title
-                .lblMessage.Text = text
+                .Text = Localization.Text(title)
+                .lblMessage.Text = Localization.Text(text)
                 .txtRes.Text = defaultValue
                 .TopMost = _frmMain.TopMost
                 .ShowDialog()
@@ -1041,7 +1041,8 @@ Namespace Common
 
         ' General ShowMessage function
         Public Shared Function ShowMsg(message As String, Optional title As String = "Message", Optional buttons As MessageBoxButtons = MessageBoxButtons.OK) As DialogResult
-            Return MessageBox.Show(message, title, buttons)
+            ' Messages are written in English in the code and translated here (Localization.Text)
+            Return MessageBox.Show(Localization.Text(message), Localization.Text(title), buttons)
         End Function
 
         ' Dangerous action message
@@ -1055,7 +1056,7 @@ Namespace Common
 
         ' Show Vista Message
         Public Shared Function ShowVistaMessage(ByVal text As String, ByVal title As String, ByVal buttons As MessageBoxButtons, ByVal icon As MessageBoxIcon) As DialogResult
-            Return MessageBox.Show(text, title, buttons, icon)
+            Return MessageBox.Show(Localization.Text(text), Localization.Text(title), buttons, icon)
         End Function
 
         ' Show an error message

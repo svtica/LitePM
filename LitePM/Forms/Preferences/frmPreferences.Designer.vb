@@ -1,6 +1,6 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmPreferences
-    Inherits System.Windows.Forms.Form
+    Inherits LocalizedForm
 
     'Form remplace la méthode Dispose pour nettoyer la liste des composants.
     <System.Diagnostics.DebuggerNonUserCode()> _
@@ -58,6 +58,10 @@ Partial Class frmPreferences
         Me.chkRemember = New System.Windows.Forms.CheckBox
         Me.chkClassicMsgbox = New System.Windows.Forms.CheckBox
         Me.cbShownTab = New System.Windows.Forms.ComboBox
+        Me.lblLanguage = New System.Windows.Forms.Label
+        Me.cbLanguage = New System.Windows.Forms.ComboBox
+        Me.lblTheme = New System.Windows.Forms.Label
+        Me.cbTheme = New System.Windows.Forms.ComboBox
         Me.chkFixedTab = New System.Windows.Forms.CheckBox
         Me.chkStatusBar = New System.Windows.Forms.CheckBox
         Me.chkUserGroup = New System.Windows.Forms.CheckBox
@@ -375,6 +379,10 @@ Partial Class frmPreferences
         Me.TabPage3.Controls.Add(Me.chkRemember)
         Me.TabPage3.Controls.Add(Me.chkClassicMsgbox)
         Me.TabPage3.Controls.Add(Me.cbShownTab)
+        Me.TabPage3.Controls.Add(Me.lblLanguage)
+        Me.TabPage3.Controls.Add(Me.cbLanguage)
+        Me.TabPage3.Controls.Add(Me.lblTheme)
+        Me.TabPage3.Controls.Add(Me.cbTheme)
         Me.TabPage3.Controls.Add(Me.chkFixedTab)
         Me.TabPage3.Controls.Add(Me.chkStatusBar)
         Me.TabPage3.Controls.Add(Me.chkUserGroup)
@@ -419,6 +427,44 @@ Partial Class frmPreferences
         Me.chkClassicMsgbox.TabIndex = 14
         Me.chkClassicMsgbox.Text = "Show classic messageboxes"
         Me.chkClassicMsgbox.UseVisualStyleBackColor = True
+        '
+        'lblLanguage
+        '
+        Me.lblLanguage.AutoSize = True
+        Me.lblLanguage.Location = New System.Drawing.Point(181, 197)
+        Me.lblLanguage.Name = "lblLanguage"
+        Me.lblLanguage.Size = New System.Drawing.Size(58, 13)
+        Me.lblLanguage.TabIndex = 20
+        Me.lblLanguage.Text = "Language:"
+        '
+        'cbLanguage
+        '
+        Me.cbLanguage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbLanguage.FormattingEnabled = True
+        Me.cbLanguage.Items.AddRange(New Object() {"Automatic (Windows language)", "English", "Français"})
+        Me.cbLanguage.Location = New System.Drawing.Point(293, 194)
+        Me.cbLanguage.Name = "cbLanguage"
+        Me.cbLanguage.Size = New System.Drawing.Size(150, 21)
+        Me.cbLanguage.TabIndex = 21
+        '
+        'lblTheme
+        '
+        Me.lblTheme.AutoSize = True
+        Me.lblTheme.Location = New System.Drawing.Point(181, 224)
+        Me.lblTheme.Name = "lblTheme"
+        Me.lblTheme.Size = New System.Drawing.Size(44, 13)
+        Me.lblTheme.TabIndex = 22
+        Me.lblTheme.Text = "Display:"
+        '
+        'cbTheme
+        '
+        Me.cbTheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cbTheme.FormattingEnabled = True
+        Me.cbTheme.Items.AddRange(New Object() {"Automatic (Windows mode)", "Light", "Dark"})
+        Me.cbTheme.Location = New System.Drawing.Point(293, 221)
+        Me.cbTheme.Name = "cbTheme"
+        Me.cbTheme.Size = New System.Drawing.Size(150, 21)
+        Me.cbTheme.TabIndex = 23
         '
         'cbShownTab
         '
@@ -989,4 +1035,8 @@ Partial Class frmPreferences
     Friend WithEvents chkSaveErrorLog As System.Windows.Forms.CheckBox
     Friend WithEvents cmdOpenLog As System.Windows.Forms.Button
     Friend WithEvents cmdClearLog As System.Windows.Forms.Button
+    Friend WithEvents lblLanguage As System.Windows.Forms.Label
+    Friend WithEvents cbLanguage As System.Windows.Forms.ComboBox
+    Friend WithEvents lblTheme As System.Windows.Forms.Label
+    Friend WithEvents cbTheme As System.Windows.Forms.ComboBox
 End Class

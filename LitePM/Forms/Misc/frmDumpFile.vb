@@ -81,7 +81,7 @@ Public Class frmDumpFile
 
     Private Sub cmdBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
         With ChooseFolder
-            .Description = "Select target directory"
+            .Description = Localization.Text("Select target directory")
             .RootFolder = Environment.SpecialFolder.MyComputer
             .ShowNewFolderButton = True
             If .ShowDialog() = Windows.Forms.DialogResult.OK Then

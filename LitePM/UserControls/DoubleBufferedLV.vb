@@ -188,6 +188,51 @@ Public Class DoubleBufferedLV
         End If
     End Sub
 
+    ' The text of a column is its identity (saved in the settings, used to fill the
+    ' sub-items): it stays English. Only the header shown by Windows is translated
+    ' (Localization.ColumnText), by changing the text of the LVCOLUMN of the
+    ' insert/set messages the ListView sends to itself.
+    Private Const LVM_SETCOLUMNW As Integer = &H1060
+    Private Const LVM_INSERTCOLUMNW As Integer = &H1061
+    Private Const LVCF_TEXT As Integer = &H4
+
+    <System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)>
+    Private Structure LVCOLUMN
+        Public mask As Integer
+        Public fmt As Integer
+        Public cx As Integer
+        Public pszText As IntPtr
+        Public cchTextMax As Integer
+        Public iSubItem As Integer
+        Public iImage As Integer
+        Public iOrder As Integer
+    End Structure
+
+    Private Shared ReadOnly _textOffset As Integer = System.Runtime.InteropServices.Marshal.OffsetOf(GetType(LVCOLUMN), "pszText").ToInt32()
+
+    Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+        If (m.Msg = LVM_SETCOLUMNW OrElse m.Msg = LVM_INSERTCOLUMNW) AndAlso m.LParam <> IntPtr.Zero AndAlso Localization.TranslatesColumns Then
+            Dim mask As Integer = System.Runtime.InteropServices.Marshal.ReadInt32(m.LParam)
+            Dim original As IntPtr = System.Runtime.InteropServices.Marshal.ReadIntPtr(m.LParam, _textOffset)
+            If (mask And LVCF_TEXT) <> 0 AndAlso original <> IntPtr.Zero Then
+                Dim name As String = System.Runtime.InteropServices.Marshal.PtrToStringUni(original)
+                Dim shown As String = Localization.ColumnText(name)
+                If shown <> name Then
+                    Dim translated As IntPtr = System.Runtime.InteropServices.Marshal.StringToHGlobalUni(shown)
+                    Try
+                        System.Runtime.InteropServices.Marshal.WriteIntPtr(m.LParam, _textOffset, translated)
+                        MyBase.WndProc(m)
+                    Finally
+                        System.Runtime.InteropServices.Marshal.WriteIntPtr(m.LParam, _textOffset, original)
+                        System.Runtime.InteropServices.Marshal.FreeHGlobal(translated)
+                    End Try
+                    Exit Sub
+                End If
+            End If
+        End If
+        MyBase.WndProc(m)
+    End Sub
+
     ' Avoid to reorder first column
     Protected Overrides Sub OnColumnReordered(ByVal e As System.Windows.Forms.ColumnReorderedEventArgs)
         If e.OldDisplayIndex = 0 Or e.NewDisplayIndex = 0 Then
