@@ -47,7 +47,11 @@ Public Class frmPreferences
         My.Settings.ShowUserGroupDomain = Me.chkUserGroup.Checked
         My.Settings.ShowStatusBar = Me.chkStatusBar.Checked
         My.Settings.ShowFixedTab = Me.chkFixedTab.Checked
+        ' The English name of the tab is saved (the displayed one may be translated)
         My.Settings.FixedTab = Me.cbShownTab.Text
+        For Each t As TabPage In _frmMain._tab.TabPages
+            If t.Text = Me.cbShownTab.Text Then My.Settings.FixedTab = Localization.Original(t)
+        Next
         My.Settings.UpdateAuto = Me.chkUpdateAuto.Checked
         My.Settings.ShowClassicMessageBoxes = Me.chkClassicMsgbox.Checked
         My.Settings.CoefTimeMul = CInt(Me.valCoefRemote.Value)
@@ -66,55 +70,69 @@ Public Class frmPreferences
 
         ' Highlightings
         For Each it As ListViewItem In Me.lvHighlightingOther.Items
-            If it.Text = "Suspended thread" Then
+            If Localization.Original(it) = "Suspended thread" Then
                 My.Settings.HighlightingColorSuspendedThread = it.BackColor
                 'My.Settings.HighlightingPrioritySuspendedThread = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingSuspendedThread = it.Checked
-            ElseIf it.Text = "Relocated module" Then
+            ElseIf Localization.Original(it) = "Relocated module" Then
                 My.Settings.HighlightingColorRelocatedModule = it.BackColor
                 'My.Settings.HighlightingPriorityRelocatedModule = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingRelocatedModule = it.Checked
             End If
         Next
         For Each it As ListViewItem In Me.lvHighlightingProcess.Items
-            If it.Text = "Process being debugged" Then
+            If Localization.Original(it) = "Process being debugged" Then
                 My.Settings.HighlightingColorBeingDebugged = it.BackColor
                 My.Settings.HighlightingPriorityBeingDebugged = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingBeingDebugged = it.Checked
-            ElseIf it.Text = "Critical process" Then
+            ElseIf Localization.Original(it) = "Critical process" Then
                 My.Settings.HighlightingColorCriticalProcess = it.BackColor
                 My.Settings.HighlightingPriorityCriticalProcess = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingCriticalProcess = it.Checked
-            ElseIf it.Text = "Elevated process" Then
+            ElseIf Localization.Original(it) = "Elevated process" Then
                 My.Settings.HighlightingColorElevatedProcess = it.BackColor
                 My.Settings.HighlightingPriorityElevatedProcess = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingElevated = it.Checked
-            ElseIf it.Text = "Process in job" Then
+            ElseIf Localization.Original(it) = "Process in job" Then
                 My.Settings.HighlightingColorJobProcess = it.BackColor
                 My.Settings.HighlightingPriorityJobProcess = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingJobProcess = it.Checked
-            ElseIf it.Text = "Service process" Then
+            ElseIf Localization.Original(it) = "Service process" Then
                 My.Settings.HighlightingColorServiceProcess = it.BackColor
                 My.Settings.HighlightingPriorityServiceProcess = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingServiceProcess = it.Checked
-            ElseIf it.Text = "Owned process" Then
+            ElseIf Localization.Original(it) = "Owned process" Then
                 My.Settings.HighlightingColorOwnedProcess = it.BackColor
                 My.Settings.HighlightingPriorityOwnedProcess = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingOwnedProcess = it.Checked
-            ElseIf it.Text = "System process" Then
+            ElseIf Localization.Original(it) = "System process" Then
                 My.Settings.HighlightingColorSystemProcess = it.BackColor
                 My.Settings.HighlightingPrioritySystemProcess = CByte(it.Index + 1)
                 My.Settings.EnableHighlightingSystemProcess = it.Checked
             End If
         Next
 
+        ' Language and display: used the next time LitePM starts
+        Dim language As String = Languages(Math.Max(0, Me.cbLanguage.SelectedIndex))
+        Dim display As String = Themes(Math.Max(0, Me.cbTheme.SelectedIndex))
+        Dim restartNeeded As Boolean = (language <> My.Settings.Language OrElse display <> My.Settings.Theme)
+        My.Settings.Language = language
+        My.Settings.Theme = display
+
         Program.Preferences.Save()
         Program.Preferences.Apply()
 
 
         Misc.ShowMsg("Preferences", "Saved preferences sucessfully.", MessageBoxButtons.OK)
+        If restartNeeded Then
+            Misc.ShowMsg("The new language or theme is used the next time LitePM starts.", "Preferences", MessageBoxButtons.OK)
+        End If
 
     End Sub
+
+    ' Values of the items of cbLanguage and cbTheme, in their order
+    Private Shared ReadOnly Languages() As String = {Localization.Automatic, Localization.English, Localization.French}
+    Private Shared ReadOnly Themes() As String = {Theme.Automatic, Theme.Light, Theme.Dark}
 
     Private Sub frmPreferences_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
@@ -200,6 +218,8 @@ Public Class frmPreferences
         Me.chkClassicMsgbox.Enabled = False ' cEnvironment.SupportsTaskDialog
         Me.valCoefRemote.Value = My.Settings.CoefTimeMul
         Me.chkRemember.Checked = My.Settings.RememberPosAndSize
+        Me.cbLanguage.SelectedIndex = Math.Max(0, Array.IndexOf(Languages, My.Settings.Language))
+        Me.cbTheme.SelectedIndex = Math.Max(0, Array.IndexOf(Themes, My.Settings.Theme))
         Me.chkShowIconsList.Checked = My.Settings.IconsInList
         Me.chkSaveErrorLog.Checked = My.Settings.SaveErrorLog
 
@@ -216,6 +236,9 @@ Public Class frmPreferences
             Me.cbShownTab.Items.Add(t.Text)
         Next
         Me.cbShownTab.Text = My.Settings.FixedTab
+        For Each t As TabPage In _frmMain._tab.TabPages
+            If Localization.Original(t) = My.Settings.FixedTab Then Me.cbShownTab.Text = t.Text
+        Next
         Me.cbShownTab.Enabled = Me.chkFixedTab.Checked
 
         ' Add items of "Highlighting listviews" in saved order
@@ -237,6 +260,7 @@ Public Class frmPreferences
         s2(My.Settings.HighlightingPrioritySystemProcess - 1) = New ListViewItem("System process")
         s2(My.Settings.HighlightingPriorityBeingDebugged - 1) = New ListViewItem("Process being debugged")
         Me.lvHighlightingProcess.Items.AddRange(s2)
+        Call translateHighlightingItems()
 
         ' Set colors of "Highlighting items"
         Call setColorOfHighlightingItems()
@@ -263,6 +287,17 @@ Public Class frmPreferences
 
     End Sub
 
+    ' Items of the "Highlighting" lists displayed in the language of the interface; the code
+    ' reads their English name with Localization.Original(item)
+    Private Sub translateHighlightingItems()
+        For Each it As ListViewItem In Me.lvHighlightingOther.Items
+            Localization.Translate(it, "frmPreferences.Highlighting." & it.Text.Replace(" ", ""))
+        Next
+        For Each it As ListViewItem In Me.lvHighlightingProcess.Items
+            Localization.Translate(it, "frmPreferences.Highlighting." & it.Text.Replace(" ", ""))
+        Next
+    End Sub
+
     ' Set colors of "Highlighting items"
     Private Sub setColorOfHighlightingItems()
         ' lvProcess
@@ -280,6 +315,8 @@ Public Class frmPreferences
 
     Private Sub cmdDefaut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdDefaut.Click
         ' Defaut settings
+        Me.cbLanguage.SelectedIndex = 0
+        Me.cbTheme.SelectedIndex = 0
         Me.chkStartTray.Checked = False
         Me.chkStart.Checked = False
         Me.chkReplaceTaskmgr.Checked = False
@@ -328,6 +365,7 @@ Public Class frmPreferences
         Me.lvHighlightingOther.Items.Clear()
         Me.lvHighlightingOther.Items.Add("Suspended thread").BackColor = Color.FromArgb(255, 255, 192)
         Me.lvHighlightingOther.Items.Add("Relocated module").BackColor = Color.FromArgb(192, 255, 192)
+        Call translateHighlightingItems()
         For Each it As ListViewItem In Me.lvHighlightingProcess.Items
             it.Checked = True
         Next
@@ -499,13 +537,13 @@ Public Class frmPreferences
     Private Sub cmdClearLog_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearLog.Click
         Dim lSize As Long = cFile.GetFileSize(Program.LogPath)
         Dim size As String = Misc.GetFormatedSize(lSize, 3, True)
-        If Misc.ShowMsg("Clear log", "Are you sure you want to clear the log ?" & " Current log size = " & size, MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+        If Misc.ShowMsg("Clear log", Localization.Format("Are you sure you want to clear the log ? Current log size = {0}", size), MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
             Try
                 ' Clear log
                 Dim stream As New IO.StreamWriter(Program.LogPath, False)
                 stream.Close()
             Catch ex As Exception
-                Misc.ShowMsg("Could not clear log !", "Error : " & ex.Message, MessageBoxButtons.OK)
+                Misc.ShowMsg("Could not clear log !", Localization.Format("Error : {0}", ex.Message), MessageBoxButtons.OK)
             End Try
         End If
     End Sub

@@ -57,7 +57,7 @@ Public Class frmError
         Try
             My.Computer.Clipboard.SetText(Me.txtReport.Text)
         Catch ex As Exception
-            Misc.ShowMsg("Could not copy the error report to the clipboard." & vbNewLine & ex.Message, "Copy error report", MessageBoxButtons.OK)
+            Misc.ShowMsg(Localization.Format("Could not copy the error report to the clipboard." & vbCrLf & "{0}", ex.Message), "Copy error report", MessageBoxButtons.OK)
         End Try
     End Sub
 

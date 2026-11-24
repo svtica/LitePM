@@ -125,7 +125,7 @@ Public Class cMemRegion
     End Function
     Private Sub freedMemoryDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal address As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not free memory (" & address.ToString("x") & ")" & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not free memory ({0}) : {1}", address.ToString("x"), msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -148,7 +148,7 @@ Public Class cMemRegion
     End Function
     Private Sub DumpDone(ByVal Success As Boolean, ByVal file As String, ByVal address As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not dump memory (" & address.ToString("x") & ") to file " & file & ": " & msg)
+            Misc.ShowError(Localization.Format("Could not dump memory ({0}) to file {1}: {2}", address.ToString("x"), file, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -171,7 +171,7 @@ Public Class cMemRegion
     End Function
     Private Sub ChangedProtectionDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal address As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not change memory protection (" & address.ToString("x") & ")" & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not change memory protection ({0}) : {1}", address.ToString("x"), msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -197,7 +197,7 @@ Public Class cMemRegion
     End Function
     Private Shared Sub freedSharedDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal address As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not free memory region (" & address.ToString("x") & ")" & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not free memory region ({0}) : {1}", address.ToString("x"), msg))
         End If
         RemoveSharedPendingTask(actionNumber)
     End Sub
@@ -219,7 +219,7 @@ Public Class cMemRegion
     End Function
     Private Shared Sub changedSharedProtectionDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal address As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not change memory protection (" & address.ToString("x") & ")" & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not change memory protection ({0}) : {1}", address.ToString("x"), msg))
         End If
         RemoveSharedPendingTask(actionNumber)
     End Sub

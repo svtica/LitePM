@@ -140,7 +140,7 @@ Public MustInherit Class customLV
                 End If
 
                 If sMessage IsNot Nothing Then
-                    Misc.ShowError(ex, "Could not retieve informations : " & sMessage)
+                    Misc.ShowError(ex, Localization.Format("Could not retieve informations : {0}", sMessage))
                 Else
                     Misc.ShowError(ex, "Could not retieve informations")
                 End If

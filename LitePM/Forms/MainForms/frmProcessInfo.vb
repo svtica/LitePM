@@ -97,7 +97,7 @@ Public Class frmProcessInfo
         If curProc Is Nothing Then Exit Sub
 
         ' General informations
-        Select Case Me.tabProcess.SelectedTab.Text
+        Select Case Localization.Original(Me.tabProcess.SelectedTab)
 
             Case "Token"
                 If _notWMI Then _
@@ -632,15 +632,15 @@ Public Class frmProcessInfo
             Try
                 Dim bVer As Boolean = Security.WinTrust.WinTrust.VerifyEmbeddedSignature(curProc.Infos.Path)
                 If bVer Then
-                    gpProcGeneralFile.Text = "Image file (successfully verified)"
+                    gpProcGeneralFile.Text = Localization.Text("Image file (successfully verified)")
                 Else
-                    gpProcGeneralFile.Text = "Image file (not verified)"
+                    gpProcGeneralFile.Text = Localization.Text("Image file (not verified)")
                 End If
             Catch ex As Exception
                 Misc.ShowDebugError(ex)
             End Try
         Else
-            gpProcGeneralFile.Text = "Image file (no verification was made)"
+            gpProcGeneralFile.Text = Localization.Text("Image file (no verification was made)")
         End If
 
         ' Parent process exists ?
@@ -648,7 +648,7 @@ Public Class frmProcessInfo
 
         ' Wow64 process ?
         If curProc.IsWow64Process Then
-            Me.GroupBoxProcessInfos.Text = "Wow64 process"
+            Me.GroupBoxProcessInfos.Text = Localization.Text("Wow64 process")
         End If
 
         ' Add values to perf graphs
@@ -731,8 +731,8 @@ Public Class frmProcessInfo
 
 
         ' Refresh informations about process
-        If Not (Me.tabProcess.SelectedTab.Text = "Informations" Or _
-            Me.tabProcess.SelectedTab.Text = "Strings") Then _
+        If Not (Localization.Original(Me.tabProcess.SelectedTab) = "Informations" Or _
+            Localization.Original(Me.tabProcess.SelectedTab) = "Strings") Then _
             Call Me.refreshProcessTab()
 
         ' Display caption
@@ -740,7 +740,7 @@ Public Class frmProcessInfo
 
         ' If online infos received, display it
         If _asyncDownloadDone AndAlso updatedRisk = False Then
-            Me.lblSecurityRisk.Text = "Risk : " & _asyncInfoRes._Risk.ToString
+            Me.lblSecurityRisk.Text = Localization.Format("Risk : {0}", _asyncInfoRes._Risk.ToString)
             Me.rtbOnlineInfos.Text = _asyncInfoRes._Description
             _asyncDlThread.Abort()
             _asyncInfoRes = Nothing
@@ -771,8 +771,8 @@ Public Class frmProcessInfo
             Me.Text = fixedFormCaption
             ' Refresh a last time
             If Me.timerProcPerf.Enabled Then
-                If Not (Me.tabProcess.SelectedTab.Text = "Informations" Or _
-                         Me.tabProcess.SelectedTab.Text = "Strings") Then _
+                If Not (Localization.Original(Me.tabProcess.SelectedTab) = "Informations" Or _
+                         Localization.Original(Me.tabProcess.SelectedTab) = "Strings") Then _
                          Call Me.refreshProcessTab()
             End If
             ' Stop auto refreshment
@@ -785,7 +785,7 @@ Public Class frmProcessInfo
             Me.Text = curProc.Infos.Name & " (" & curProc.Infos.ProcessId.ToString & ")"
         End If
 
-        Select Case Me.tabProcess.SelectedTab.Text
+        Select Case Localization.Original(Me.tabProcess.SelectedTab)
             Case "Modules"
                 Me.Text &= " - " & Me.lvModules.Items.Count.ToString & " modules"
             Case "Threads"
@@ -989,7 +989,7 @@ Public Class frmProcessInfo
         Call Me.refreshProcessTab()
         Call ChangeCaption()
         Call updateFindPanel()
-        My.Settings.ProcSelectedTab = Me.tabProcess.SelectedTab.Text
+        My.Settings.ProcSelectedTab = Localization.Original(Me.tabProcess.SelectedTab)
     End Sub
 
     Private Sub cmdProcSearchL_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdProcSearchL.Click
@@ -1269,7 +1269,7 @@ Public Class frmProcessInfo
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
         ' Save log
         _frmMain.saveDial.Filter = "Text file (*.txt)|*.txt"
-        _frmMain.saveDial.Title = "Save log"
+        _frmMain.saveDial.Title = Localization.Text("Save log")
         Try
             If _frmMain.saveDial.ShowDialog = Windows.Forms.DialogResult.OK Then
                 Dim s As String = _frmMain.saveDial.FileName
@@ -1486,7 +1486,7 @@ Public Class frmProcessInfo
                     Dim state As Native.Api.NativeEnums.ServiceState = cSe.Infos.State
                     Dim acc As Native.Api.NativeEnums.ServiceAccept = cSe.Infos.AcceptedControl
 
-                    Me.MenuItemServPause.Text = IIf(state = Native.Api.NativeEnums.ServiceState.Running, "Pause", "Resume").ToString
+                    Me.MenuItemServPause.Text = Localization.Text(IIf(state = Native.Api.NativeEnums.ServiceState.Running, "Pause", "Resume").ToString)
                     MenuItemServPause.Enabled = (acc And Native.Api.NativeEnums.ServiceAccept.PauseContinue) = Native.Api.NativeEnums.ServiceAccept.PauseContinue
                     MenuItemServStart.Enabled = Not (state = Native.Api.NativeEnums.ServiceState.Running)
                     Me.MenuItemServStop.Enabled = (acc And Native.Api.NativeEnums.ServiceAccept.Stop) = Native.Api.NativeEnums.ServiceAccept.Stop
@@ -1499,7 +1499,7 @@ Public Class frmProcessInfo
                     MenuItemServOnDemand.Enabled = Not (MenuItemServOnDemand.Checked)
                     MenuItem17.Enabled = True
                 ElseIf lvProcServices.SelectedItems.Count > 1 Then
-                    MenuItemServPause.Text = "Pause"
+                    MenuItemServPause.Text = Localization.Text("Pause")
                     MenuItemServPause.Enabled = True
                     MenuItemServStart.Enabled = True
                     MenuItemServStop.Enabled = True
@@ -1511,7 +1511,7 @@ Public Class frmProcessInfo
                     MenuItemServOnDemand.Enabled = True
                     MenuItem17.Enabled = True
                 ElseIf lvProcServices.SelectedItems.Count = 0 Then
-                    MenuItemServPause.Text = "Pause"
+                    MenuItemServPause.Text = Localization.Text("Pause")
                     MenuItemServPause.Enabled = False
                     MenuItemServStart.Enabled = False
                     MenuItemServStop.Enabled = False
@@ -1524,7 +1524,7 @@ Public Class frmProcessInfo
                     MenuItem17.Enabled = False
                 End If
             Else
-                MenuItemServPause.Text = "Pause"
+                MenuItemServPause.Text = Localization.Text("Pause")
                 MenuItemServPause.Enabled = False
                 MenuItemServStart.Enabled = False
                 MenuItemServStop.Enabled = False
@@ -1995,14 +1995,14 @@ Public Class frmProcessInfo
                     ' Cannot retrieve a good path
                     Dim box As New frmBox
                     With box
-                        .txtMsg1.Text = "The file path cannot be extracted. Please edit it and then click 'OK' to open file properties box, or click 'Cancel' to cancel."
+                        .txtMsg1.Text = Localization.Text("The file path cannot be extracted. Please edit it and then click 'OK' to open file properties box, or click 'Cancel' to cancel.")
                         .txtMsg1.Height = 35
                         .txtMsg2.Top = 50
                         .txtMsg2.Height = 25
                         .txtMsg2.Text = s
                         .txtMsg2.ReadOnly = False
                         .txtMsg2.BackColor = Drawing.Color.White
-                        .Text = "Show file properties box"
+                        .Text = Localization.Text("Show file properties box")
                         .Height = 150
                         .TopMost = _frmMain.TopMost
                         .ShowDialog()
@@ -2028,14 +2028,14 @@ Public Class frmProcessInfo
                     ' Cannot retrieve a good path
                     Dim box As New frmBox
                     With box
-                        .txtMsg1.Text = "The file directory cannot be extracted. Please edit it and then click 'OK' to open directory, or click 'Cancel' to cancel."
+                        .txtMsg1.Text = Localization.Text("The file directory cannot be extracted. Please edit it and then click 'OK' to open directory, or click 'Cancel' to cancel.")
                         .txtMsg1.Height = 35
                         .txtMsg2.Top = 50
                         .txtMsg2.Height = 25
                         .txtMsg2.Text = s
                         .txtMsg2.ReadOnly = False
                         .txtMsg2.BackColor = Drawing.Color.White
-                        .Text = "Open directory"
+                        .Text = Localization.Text("Open directory")
                         .Height = 150
                         .TopMost = _frmMain.TopMost
                         .ShowDialog()
@@ -2578,7 +2578,7 @@ Public Class frmProcessInfo
         Dim sDir As String
         ' Select destination dir
         Using chooseF As New Windows.Forms.FolderBrowserDialog
-            chooseF.Description = "Choose destination directory"
+            chooseF.Description = Localization.Text("Choose destination directory")
             chooseF.ShowNewFolderButton = True
             chooseF.ShowDialog()
             sDir = chooseF.SelectedPath
@@ -2589,7 +2589,7 @@ Public Class frmProcessInfo
                 Dim sFile As String = sDir & "\" & curProc.Infos.Name & "-" & curProc.Infos.ProcessId.ToString & "-0x" & it.Infos.BaseAddress.ToString("x") & ".bin"
                 Dim okToReplace As Boolean = True
                 If IO.File.Exists(sFile) Then
-                    okToReplace = (Misc.ShowMsg("Dump memory", "Would you like to replace the existing file ?" & " File " & sFile & " already exists.", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes)
+                    okToReplace = (Misc.ShowMsg("Dump memory", Localization.Format("Would you like to replace the existing file ? File {0} already exists.", sFile), MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes)
                 End If
                 If okToReplace Then
                     it.DumpToFile(sFile)
@@ -2822,7 +2822,7 @@ Public Class frmProcessInfo
 
     ' Update 'Find panel' depending on the selected tab
     Private Sub updateFindPanel()
-        Select Case Me.tabProcess.SelectedTab.Text
+        Select Case Localization.Original(Me.tabProcess.SelectedTab)
             Case "Token"
                 Me.txtSearch.Enabled = True
                 Me.lblResCount.Enabled = True
@@ -2904,7 +2904,7 @@ Public Class frmProcessInfo
                 it.Group = listViewForSearch.Groups(1)
             End If
         Next
-        Me.lblResCount.Text = CStr(listViewForSearch.Groups(1).Items.Count) & " result(s)"
+        Me.lblResCount.Text = Localization.Format("{0} result(s)", CStr(listViewForSearch.Groups(1).Items.Count))
     End Sub
     Private Sub lblResCount_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lblResCount.Click
         If Me.listViewForSearch.Groups(1).Items.Count > 0 Then

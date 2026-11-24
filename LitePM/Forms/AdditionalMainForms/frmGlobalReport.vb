@@ -15,7 +15,7 @@ Public Class frmGlobalReport
 
     Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
         _frmMain.saveDial.Filter = "Text file (*.txt)|*.txt"
-        _frmMain.saveDial.Title = "Save report"
+        _frmMain.saveDial.Title = Localization.Text("Save report")
         If _frmMain.saveDial.ShowDialog = Windows.Forms.DialogResult.OK Then
             Call saveReport(_frmMain.saveDial.FileName)
         End If

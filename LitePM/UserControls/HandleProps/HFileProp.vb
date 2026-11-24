@@ -45,19 +45,19 @@ Public Class HFileProp
         If _local Then
             If bFileExists Then
                 Me.lblFileExists.ForeColor = Color.DarkGreen
-                Me.lblFileExists.Text = "File exists"
+                Me.lblFileExists.Text = Localization.Text("File exists")
             Else
                 If bDirExists Then
                     Me.lblFileExists.ForeColor = Color.DarkGreen
-                    Me.lblFileExists.Text = "Directory exists"
+                    Me.lblFileExists.Text = Localization.Text("Directory exists")
                 Else
                     Me.lblFileExists.ForeColor = Color.DarkRed
-                    Me.lblFileExists.Text = "Unknown file"
+                    Me.lblFileExists.Text = Localization.Text("Unknown file")
                 End If
             End If
         Else
             Me.lblFileExists.ForeColor = Color.Black
-            Me.lblFileExists.Text = "Remote file"
+            Me.lblFileExists.Text = Localization.Text("Remote file")
         End If
     End Sub
 

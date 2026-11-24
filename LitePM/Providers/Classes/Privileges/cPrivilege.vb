@@ -70,7 +70,7 @@ Public Class cPrivilege
     End Function
     Private Sub changeStatusDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not change privilege (" & name & ") status : " & msg)
+            Misc.ShowError(Localization.Format("Could not change privilege ({0}) status : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub

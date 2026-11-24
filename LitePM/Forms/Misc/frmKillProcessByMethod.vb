@@ -26,16 +26,16 @@ Public Class frmKillProcessByMethod
         Native.Functions.Misc.SetTheme(Me.lstMethods.Handle)
 
         ' Add all methods to the listview
-        Me.lstMethods.Items.Add("Use NtTerminateProcess").Tag = Native.Api.Enums.KillMethod.NtTerminate
-        Me.lstMethods.Items.Add("Terminate all threads").Tag = Native.Api.Enums.KillMethod.ThreadTerminate
+        Me.lstMethods.Items.Add(Localization.Text("Use NtTerminateProcess")).Tag = Native.Api.Enums.KillMethod.NtTerminate
+        Me.lstMethods.Items.Add(Localization.Text("Terminate all threads")).Tag = Native.Api.Enums.KillMethod.ThreadTerminate
         If cEnvironment.SupportsGetNextThreadProcessFunctions Then
-            Me.lstMethods.Items.Add("Terminate all threads (other method)").Tag = Native.Api.Enums.KillMethod.ThreadTerminate_GetNextThread
+            Me.lstMethods.Items.Add(Localization.Text("Terminate all threads (other method)")).Tag = Native.Api.Enums.KillMethod.ThreadTerminate_GetNextThread
         End If
-        'Me.lstMethods.Items.Add("Create remote thread and call ExitProcess").Tag = Native.Api.Enums.KillMethod.CreateRemoteThread
-        Me.lstMethods.Items.Add("Close all handles").Tag = Native.Api.Enums.KillMethod.CloseAllHandles
-        Me.lstMethods.Items.Add("Close all windows").Tag = Native.Api.Enums.KillMethod.CloseAllWindows
-        Me.lstMethods.Items.Add("Assign process to a job and terminate job").Tag = Native.Api.Enums.KillMethod.TerminateJob
-        Me.lstMethods.Items.Add("All methods").Tag = Native.Api.Enums.KillMethod.All
+        'Me.lstMethods.Items.Add(Localization.Text("Create remote thread and call ExitProcess")).Tag = Native.Api.Enums.KillMethod.CreateRemoteThread
+        Me.lstMethods.Items.Add(Localization.Text("Close all handles")).Tag = Native.Api.Enums.KillMethod.CloseAllHandles
+        Me.lstMethods.Items.Add(Localization.Text("Close all windows")).Tag = Native.Api.Enums.KillMethod.CloseAllWindows
+        Me.lstMethods.Items.Add(Localization.Text("Assign process to a job and terminate job")).Tag = Native.Api.Enums.KillMethod.TerminateJob
+        Me.lstMethods.Items.Add(Localization.Text("All methods")).Tag = Native.Api.Enums.KillMethod.All
 
         Me.Text = Me.Text.Replace("[PID]", _proc.Infos.ProcessId.ToString).Replace("[NAME]", _proc.Infos.Name)
     End Sub

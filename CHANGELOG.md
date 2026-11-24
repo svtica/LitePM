@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added
+- **Language** (Preferences > Display): Automatic (Windows display language),
+  English or French. The whole interface is translated into French (Quebec
+  typography): windows, menus, tool tips, list column headers, messages and
+  confirmations. Translations live in `lang\fr.xml` next to `LitePM.exe`
+  (shipped in `LitePM.zip`); a missing or outdated translation keeps the
+  English text. `LITEPM_LANG` (`en`, `fr`) overrides the choice, for tests.
+- **Display** (Preferences > Display): Automatic (light or dark mode of
+  Windows), Light or Dark. The dark mode darkens every window: dark title bar,
+  scroll bars and popup menus, lists and tabs drawn by LitePM (rows highlighted
+  by LitePM keep their color with a dark text), dark buttons and text boxes.
+  `LITEPM_THEME` (`light`, `dark`) overrides the choice. The new language or
+  display applies at the next start.
+- `docs/localization.md`: how the translation works and how to add a text;
+  `tools/ci/Test-Translations.ps1` checks `lang\fr.xml` in the build.
+
+### Changed
+- The code no longer relies on the displayed text of tabs, combo boxes and
+  highlighting items (saved tab names, shutdown actions...): it reads their
+  English name, so the saved settings stay the same in both languages.
+
 ### Removed
 - Bug report sent to the SourceForge tracker (no longer answers): the
   **Send the bug report** button and the custom message field of the error

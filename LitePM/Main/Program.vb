@@ -571,6 +571,11 @@ Public Module Program
                 My.Settings.ShouldUpgrade = False
                 My.Settings.Save()
             End If
+
+            '  Language and display (light or dark) of the interface, before any window is shown
+            Localization.Initialize(My.Settings.Language)
+            Theme.Initialize(My.Settings.Theme)
+
             If _progParameters.ModeServer = False Then
                 Try
                     If My.Settings.FirstTime Then

@@ -257,6 +257,12 @@
     <Setting Name="FixedTab" Type="System.String" Scope="User">
       <Value Profile="(Default)">Tasks</Value>
     </Setting>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">auto</Value>
+    </Setting>
+    <Setting Name="Theme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">auto</Value>
+    </Setting>
     <Setting Name="UpdateAuto" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>

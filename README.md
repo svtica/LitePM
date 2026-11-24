@@ -73,6 +73,16 @@ LitePM is a comprehensive process management application that provides detailed 
   `tcp.txt` / `udp.txt` next to `LitePM.exe` are kept. Log of the update:
   `%TEMP%\LitePM-update.log`.
 
+### Language and display
+- **Preferences > Display > Language**: *Automatic (Windows language)*
+  (default), *English* or *Français* (Quebec typography). **Display**:
+  *Automatic (Windows mode)* (default: light or dark like the Windows apps),
+  *Light* or *Dark*. Both apply the next time LitePM starts.
+- The translations are in `lang\fr.xml` next to `LitePM.exe`; a missing text
+  stays in English. The names of the list columns stay English in the settings
+  (only their display is translated). See
+  [docs/localization.md](docs/localization.md).
+
 ### Command line
 - `LitePM.exe -REMOTE <computer>`: open LitePM connected to a remote computer
   through WMI, as the current Windows user (used by LiteDeploy). Needs

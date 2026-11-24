@@ -81,6 +81,10 @@ jobs:
         Write-Host "Restored dependencies from res/"
       shell: powershell
 
+    - name: Check translations
+      run: ./tools/ci/Test-Translations.ps1
+      shell: pwsh
+
     - name: Build solution
       run: |
         msbuild LitePM.sln --% -restore /p:Configuration=Release /p:Platform="Any CPU"
@@ -114,6 +118,10 @@ jobs:
         Copy-Item "$buildPath\*.exe" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "$buildPath\*.dll" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "$buildPath\*.config" -Destination $publishPath -ErrorAction SilentlyContinue
+        # Translations of the interface (lang\fr.xml)
+        if (Test-Path "$buildPath\lang") {
+          Copy-Item "$buildPath\lang" -Destination $publishPath -Recurse
+        }
 
         Copy-Item "README.md" -Destination $publishPath -ErrorAction SilentlyContinue
         Copy-Item "LICENSE" -Destination $publishPath -ErrorAction SilentlyContinue

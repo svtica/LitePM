@@ -72,7 +72,7 @@ Public Class cModule
     End Function
     Private Sub unloadModuleDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not unload module " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not unload module {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -563,7 +563,7 @@ Public Class cModule
     End Function
     Private Shared Sub unloadsharedModuleDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not unload module " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not unload module {0} : {1}", name, msg))
         End If
         RemoveSharedPendingTask(actionNumber)
     End Sub

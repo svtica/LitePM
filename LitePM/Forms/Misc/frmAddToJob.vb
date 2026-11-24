@@ -66,7 +66,7 @@ Public Class frmAddToJob
                 job.AddProcess(pid)
             Next
         Else
-            Misc.ShowMsg("Add process to job", "Failed to add the process to the job." & " Informations : " & Native.Api.Win32.GetLastError, MessageBoxButtons.OK)
+            Misc.ShowMsg("Add process to job", Localization.Format("Failed to add the process to the job. Informations : {0}", Native.Api.Win32.GetLastError), MessageBoxButtons.OK)
         End If
 
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
