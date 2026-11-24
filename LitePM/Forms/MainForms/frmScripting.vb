@@ -121,7 +121,7 @@ Public Class frmScripting
             Misc.ShowMsg("Check script", "Script is OK.", MessageBoxButtons.OK)
             Exit Sub
         Else
-            Misc.ShowMsg("Check script" & " Script is not valid", "Message : " & _res, MessageBoxButtons.OK)
+            Misc.ShowMsg("Check script" & " Script is not valid", Localization.Format("Message : {0}", _res), MessageBoxButtons.OK)
             Exit Sub
         End If
     End Sub
@@ -137,7 +137,7 @@ Public Class frmScripting
         Dim _engine As New Scripting.Engine(_scriptFilePath)
         Dim _res As String = ""
         If _engine.Verify(_res) = False Then
-            Misc.ShowMsg("Check script" & " Script is not valid", "Message : " & _res, MessageBoxButtons.OK)
+            Misc.ShowMsg("Check script" & " Script is not valid", Localization.Format("Message : {0}", _res), MessageBoxButtons.OK)
             Exit Sub
         End If
 

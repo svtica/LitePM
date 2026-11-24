@@ -14,7 +14,7 @@ Public Class frmDepViewerMain
 
     Public Sub OpenReferences(ByVal asmFile As String)
 
-        Me.Text = "Dependencies - " & asmFile
+        Me.Text = Localization.Format("Dependencies - {0}", asmFile)
         Try
             tree = New NativeDependenciesTree(asmFile)
             tvDepends.Nodes.Clear()

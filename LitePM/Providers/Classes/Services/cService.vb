@@ -104,7 +104,7 @@ Public Class cService
     End Function
     Private Sub startServiceDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not start service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not start service {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -128,7 +128,7 @@ Public Class cService
     End Function
     Private Sub deleteServiceDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not delete service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not delete service {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -152,7 +152,7 @@ Public Class cService
     End Function
     Private Sub pauseServiceDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not pause service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not pause service {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -175,7 +175,7 @@ Public Class cService
     End Function
     Private Sub resumeServiceDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not resume service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not resume service {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -198,7 +198,7 @@ Public Class cService
     End Function
     Private Sub stopServiceDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not stop service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not stop service {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -221,7 +221,7 @@ Public Class cService
     End Sub
     Private Sub setServiceStartTypeDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not change start type of service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not change start type of service {0} : {1}", name, msg))
         Else
             Call Me.Refresh()
         End If

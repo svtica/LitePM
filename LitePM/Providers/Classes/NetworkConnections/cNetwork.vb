@@ -249,7 +249,7 @@ Public Class cNetwork
             If local IsNot Nothing Then
                 s = local.ToString
             End If
-            Misc.ShowError("Could not close TCP connection " & s & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not close TCP connection {0} : {1}", s, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub

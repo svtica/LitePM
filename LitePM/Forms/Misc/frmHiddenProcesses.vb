@@ -29,15 +29,15 @@ Public Class frmHiddenProcesses
 
     Private Sub TimerProcess_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TimerProcess.Tick
         Me.lvProcess.UpdateItems()
-        lblTotal.Text = Me.lvProcess.Items.Count.ToString & " processes"
+        lblTotal.Text = Localization.Format("{0} processes", Me.lvProcess.Items.Count.ToString)
         Dim _hidd As Integer = 0
         For Each p As cProcess In Me.lvProcess.GetAllItems
             If p.Infos.IsHidden Then
                 _hidd += 1
             End If
         Next
-        lblHidden.Text = _hidd.ToString & " hidden processes"
-        lblVisible.Text = (Me.lvProcess.Items.Count - _hidd).ToString & " visible processes"
+        lblHidden.Text = Localization.Format("{0} hidden processes", _hidd.ToString)
+        lblVisible.Text = Localization.Format("{0} visible processes", (Me.lvProcess.Items.Count - _hidd).ToString)
     End Sub
 
     Private Sub handleMethod_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles handleMethod.Click

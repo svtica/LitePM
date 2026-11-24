@@ -14,7 +14,7 @@ Public Class frmHeapBlocks
         InitializeComponent()
         _pid = processId
         _nodeAdd = nodeAddress
-        Me.Text = "Heap blocks (node address : 0x" & nodeAddress.ToString("x") & ")"
+        Me.Text = Localization.Format("Heap blocks (node address : 0x{0})", nodeAddress.ToString("x"))
     End Sub
 
     Private Sub frmFileRelease_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load

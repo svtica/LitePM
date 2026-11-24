@@ -42,6 +42,15 @@ Public Class HXXXProp
         _handle = handle
     End Sub
 
+    ' Texts and display of the derived control (created by the code, after its window loaded)
+    Protected Overrides Sub OnLoad(ByVal e As EventArgs)
+        If Not Me.DesignMode Then
+            Localization.Apply(Me)
+            Theme.Apply(Me)
+        End If
+        MyBase.OnLoad(e)
+    End Sub
+
     ' Refresh displayed informations
     Public Overridable Sub RefreshInfos()
         '

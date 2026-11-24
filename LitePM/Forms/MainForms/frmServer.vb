@@ -66,7 +66,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate environnement variables : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate environnement variables : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -89,7 +89,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate heap list : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate heap list : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -135,7 +135,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate jobs : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate jobs : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -158,7 +158,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate log items : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate log items : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -204,7 +204,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate memory regions : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate memory regions : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -227,7 +227,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate processes : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate processes : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -250,7 +250,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate privileges : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate privileges : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -273,7 +273,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate services : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate services : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -296,7 +296,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate threads : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate threads : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -319,7 +319,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate modules : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate modules : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -342,7 +342,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate handles : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate handles : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -365,7 +365,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate network connections : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate network connections : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -411,7 +411,7 @@ Public Class frmServer
             End Try
         Else
             ' Send an error
-            Misc.ShowError("Unable to enumerate windows : " & res.ErrorMessage)
+            Misc.ShowError(Localization.Format("Unable to enumerate windows : {0}", res.ErrorMessage))
         End If
 
     End Sub
@@ -995,11 +995,11 @@ Public Class frmServer
 
         Dim s() As String = GetIpv4Ips()
         If (s Is Nothing) OrElse s.Length = 0 Then
-            Me.txtIp.Text = "Error while trying to retrieve local IP address."
+            Me.txtIp.Text = Localization.Text("Error while trying to retrieve local IP address.")
         ElseIf s.Length = 1 Then
-            Me.txtIp.Text = "You will have to configure LitePM with this IP : " & s(0)
+            Me.txtIp.Text = Localization.Format("You will have to configure LitePM with this IP : {0}", s(0))
         Else
-            Me.txtIp.Text = "You have more than one network card, so you will have to use one of these IP addresses to configure LitePM : " & vbNewLine
+            Me.txtIp.Text = Localization.Text("You have more than one network card, so you will have to use one of these IP addresses to configure LitePM : " & vbNewLine)
             For Each x As String In s
                 Me.txtIp.Text &= x & vbNewLine
             Next

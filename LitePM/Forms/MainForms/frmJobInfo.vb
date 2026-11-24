@@ -19,7 +19,7 @@ Public Class frmJobInfo
     ' Refresh current tab
     Private Sub refreshJobTab()
 
-        Me.Text = "Job informations (" & curJob.Infos.Name & ")"
+        Me.Text = Localization.Format("Job informations ({0})", curJob.Infos.Name)
 
         ' Here is a special function call :
         ' we retrieve our cJob from the main form (lvJob), as they
@@ -34,7 +34,7 @@ Public Class frmJobInfo
             Exit Sub
         End If
 
-        Select Case Me.tabJob.SelectedTab.Text
+        Select Case Localization.Original(Me.tabJob.SelectedTab)
 
             Case "General"
                 ' Update processes in job
@@ -217,7 +217,7 @@ Public Class frmJobInfo
 
     Private Sub tabJob_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabJob.SelectedIndexChanged
         Call Me.refreshJobTab()
-        My.Settings.JobSelectedTab = Me.tabJob.SelectedTab.Text
+        My.Settings.JobSelectedTab = Localization.Original(Me.tabJob.SelectedTab)
     End Sub
 
     Private Sub theConnection_Connected() Handles theConnection.Connected

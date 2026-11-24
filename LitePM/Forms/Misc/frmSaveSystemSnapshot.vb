@@ -21,7 +21,7 @@ Public Class frmSaveSystemSnapshot
 
         Native.Functions.Misc.SetTheme(Me.lstOptions.Handle)
 
-        Me.txtWarning.Text = "Be careful !" & vbNewLine & vbNewLine & "If you plan to post the file on a forum asking someone to analyze your system, keep in mind that important information can be transmitted (eg list of processes/services, list of files opened by the system...etc.)."
+        Me.txtWarning.Text = Localization.Text("Be careful !" & vbNewLine & vbNewLine & "If you plan to post the file on a forum asking someone to analyze your system, keep in mind that important information can be transmitted (eg list of processes/services, list of files opened by the system...etc.).")
 
         ' Check all items in lstOptions
         For i As Integer = 0 To Me.lstOptions.Items.Count - 1
@@ -39,7 +39,7 @@ Public Class frmSaveSystemSnapshot
 
         Dim res As String = Nothing
 
-        Me.lblState.Text = "Creating snapshot..."
+        Me.lblState.Text = Localization.Text("Creating snapshot...")
         Me.Enabled = False
 
         ' Create empty snapshot file
@@ -63,7 +63,7 @@ Public Class frmSaveSystemSnapshot
         End If
 
         ' Save it
-        Me.lblState.Text = "Saving snapshot..."
+        Me.lblState.Text = Localization.Text("Saving snapshot...")
         If snap.SaveSnapshot(Me.txtSSFile.Text, res) = False Then
             ' Failed
             Misc.ShowMsg("Snapshot creation", "Could not save snapshot.", MessageBoxButtons.OK)
@@ -79,7 +79,7 @@ Public Class frmSaveSystemSnapshot
             sSize = "unknown"
             Misc.ShowDebugError(ex)
         End Try
-        Me.lblState.Text = "Created a " & sSize & " size file."
+        Me.lblState.Text = Localization.Format("Created a {0} size file.", sSize)
         Me.Enabled = True
 
     End Sub

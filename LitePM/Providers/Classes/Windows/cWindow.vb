@@ -119,7 +119,7 @@ Public Class cWindow
 
     Private Sub actionDone(ByVal Success As Boolean, ByVal action As Native.Api.Enums.AsyncWindowAction, ByVal handle As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not " & action.ToString & " (window = 0x" & handle.ToString("x") & ") : " & msg)
+            Misc.ShowError(Localization.Format("Could not {0} (window = 0x{1}) : {2}", action.ToString, handle.ToString("x"), msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub

@@ -122,7 +122,7 @@ Public Class cJob
     End Function
     Private Shared Sub sharedKillJobDone(ByVal Success As Boolean, ByVal jobName As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not kill job " & jobName & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not kill job {0} : {1}", jobName, msg))
         End If
         RemoveSharedPendingTask(actionNumber)
     End Sub
@@ -145,7 +145,7 @@ Public Class cJob
     End Function
     Private Shared Sub sharedAddedJobDone(ByVal Success As Boolean, ByVal pid() As Integer, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not add processes to job : " & msg)
+            Misc.ShowError(Localization.Format("Could not add processes to job : {0}", msg))
         End If
         RemoveSharedPendingTask(actionNumber)
     End Sub
@@ -170,7 +170,7 @@ Public Class cJob
     End Function
     Private Shared Sub sharedHasSetL(ByVal Success As Boolean, ByVal jobName As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not set limits to job " & jobName & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not set limits to job {0} : {1}", jobName, msg))
         End If
         RemoveSharedPendingTask(actionNumber)
     End Sub
@@ -200,7 +200,7 @@ Public Class cJob
     End Function
     Private Sub addedProcessDone(ByVal Success As Boolean, ByVal pid() As Integer, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not add processes to job : " & msg)
+            Misc.ShowError(Localization.Format("Could not add processes to job : {0}", msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -223,7 +223,7 @@ Public Class cJob
     End Function
     Private Sub killJobDone(ByVal Success As Boolean, ByVal jobName As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not terminate job " & jobName & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not terminate job {0} : {1}", jobName, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
@@ -247,7 +247,7 @@ Public Class cJob
     End Function
     Private Sub hasSetL(ByVal Success As Boolean, ByVal jobName As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not set limits to job " & jobName & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not set limits to job {0} : {1}", jobName, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub

@@ -61,7 +61,7 @@ Public Class frmCreateService
         If Native.Objects.Service.CreateService(params) Then
             Me.Close()
         Else
-            Misc.ShowMsg("Create service", "Failed to create the service." & " Informations : " & Native.Api.Win32.GetLastError, MessageBoxButtons.OK)
+            Misc.ShowMsg("Create service", Localization.Format("Failed to create the service. Informations : {0}", Native.Api.Win32.GetLastError), MessageBoxButtons.OK)
         End If
 
         Me.OK_Button.Enabled = True
@@ -85,7 +85,7 @@ Public Class frmCreateService
         ' Open a file
         With Me.openDial
             .Filter = "Executables (*.exe)|*.exe|All files (*.*)|*.*"
-            .Title = "Select service executable"
+            .Title = Localization.Text("Select service executable")
             If .ShowDialog = Windows.Forms.DialogResult.OK Then
                 Me.txtPath.Text = .FileName
             End If

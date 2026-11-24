@@ -17,14 +17,14 @@ Public Class frmDownload
 
     Private Sub _download_CompleteCallback(ByVal e As System.ComponentModel.AsyncCompletedEventArgs) Handles _download.CompleteCallback
         Misc.ShowMsg("Download", "Download complete.", MessageBoxButtons.OK)
-        Me.Cancel_Button.Text = "OK"
+        Me.Cancel_Button.Text = Localization.Text("OK")
         cFile.OpenDirectory(Me._download.Destination)
     End Sub
 
     Private Sub _download_ProgressCallback(ByVal sender As Object, ByVal e As System.Net.DownloadProgressChangedEventArgs) Handles _download.ProgressCallback
         Try
             Dim s As String = "Downloaded " & CStr(Math.Round(e.BytesReceived / 1024, 3)) & "KB out of " & CStr(Math.Round(e.TotalBytesToReceive / 1024, 3)) & "KB"
-            Me.Text = "Downloading last update....  " & CStr(e.ProgressPercentage) & " %"
+            Me.Text = Localization.Format("Downloading last update....  {0} %", CStr(e.ProgressPercentage))
             With pgb
                 .Maximum = 100
                 .Minimum = 0
@@ -43,11 +43,11 @@ Public Class frmDownload
     End Sub
 
     Public Sub StartDownload(ByVal dest As String)
-        Me.Text = "Downloading in preparation..."
+        Me.Text = Localization.Text("Downloading in preparation...")
         Me.pgb.Value = 0
         Me.txtPath.Text = dest
         Me.pgb.Maximum = 1
-        Me.Text = "Waiting for download..."
+        Me.Text = Localization.Text("Waiting for download...")
         Application.DoEvents()
         _download.StartDownload()
     End Sub

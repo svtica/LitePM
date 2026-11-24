@@ -146,31 +146,31 @@ Public Class cSearchItem
     End Function
     Private Sub unloadHandleDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal handle As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not unload handle " & handle.ToString & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not unload handle {0} : {1}", handle.ToString, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
     Private Sub unloadModuleDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not unload module " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not unload module {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
     Private Sub killDone(ByVal Success As Boolean, ByVal pid As Integer, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not kill process (" & pid.ToString & ") : " & msg)
+            Misc.ShowError(Localization.Format("Could not kill process ({0}) : {1}", pid.ToString, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
     Private Sub stopServiceDone(ByVal Success As Boolean, ByVal name As String, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not stop service " & name & " : " & msg)
+            Misc.ShowError(Localization.Format("Could not stop service {0} : {1}", name, msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub
     Private Sub windowActionDone(ByVal Success As Boolean, ByVal action As Native.Api.Enums.AsyncWindowAction, ByVal handle As IntPtr, ByVal msg As String, ByVal actionNumber As Integer)
         If Success = False Then
-            Misc.ShowError("Could not " & action.ToString & " (window = 0x" & handle.ToString("x") & ") : " & msg)
+            Misc.ShowError(Localization.Format("Could not {0} (window = 0x{1}) : {2}", action.ToString, handle.ToString("x"), msg))
         End If
         RemovePendingTask(actionNumber)
     End Sub

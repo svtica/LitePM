@@ -57,8 +57,8 @@ Public Class cError
         If Program.Parameters.ModeServer = False Then
             ' The we have to display our error as a message box
             Misc.ShowMsg("An handled error occured",
-                         CustomMessage &
-                         "Detailed information : " & Message,
+                         Localization.Text(CustomMessage) &
+                         Localization.Text("Detailed information : ") & Localization.Text(Message),
                          MessageBoxButtons.OK)
         Else
             ' Then we have to send the error to the client
