@@ -46,7 +46,9 @@ Namespace Native.Functions
 
         ' Set 'explorer' theme
         Public Shared Sub SetTheme(ByVal handle As IntPtr)
-            Native.Api.NativeFunctions.SetWindowTheme(handle, Theme.ListThemeName, Nothing)
+            ' A list view takes the dark "items view" theme (light group headers), a tree the explorer one
+            Dim name As String = If(TypeOf System.Windows.Forms.Control.FromHandle(handle) Is System.Windows.Forms.ListView, Theme.ListViewThemeName, Theme.ListThemeName)
+            Native.Api.NativeFunctions.SetWindowTheme(handle, name, Nothing)
         End Sub
 
         ' Set a listview as 'double buffered'
