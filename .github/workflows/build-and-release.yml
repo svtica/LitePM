@@ -94,11 +94,10 @@ jobs:
     - name: Copy fallback DLLs from res/ if missing
       run: |
         $buildPath = "LitePM\bin\Release"
+        # Aga.Controls, SecurePasswordTextBox and TaskDialog are built from their projects
+        # in the solution; only SecureChannel has a precompiled copy in res/
         $fallbackDlls = @(
-          "Aga.Controls.dll",
-          "SecureChannel.dll",
-          "SecurePasswordTextBox.dll",
-          "TaskDialog.dll"
+          "SecureChannel.dll"
         )
         foreach ($dll in $fallbackDlls) {
           if (!(Test-Path "$buildPath\$dll")) {
