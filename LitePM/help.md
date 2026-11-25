@@ -27,12 +27,12 @@ Some of the features of LitePM are not available with remote monitoring. On the 
 Here are the features available in the main menu (click on the Orb) or when you click on the small icons on the ribbon, near the Orb :
 
 -   **Restart with privileges** : if LitePM is running on Vista or above and UAC is enabled, this button will cause LitePM to restart with full privileges. This will require an administrator account and will prompt the user to accept the elevation of LitePM. This elevation is required to enable all features of LitePM (job management and control of all processes).
--   **Change connection type** : changes the type of connection LitePM is using. You can choose "local", "remote via WMI" or "remote via server". "Local" should be used to monitor the system on which LitePM is running. "WMI" should be used to monitor a remote machine on the same workgroup. It's a bit limited but does not require anything to be started on the remote machine. "Server" should be used to have full control on the remote machine, but it requires LitePM to be launched on the remote machine as a server. See [Remote monitoring](#RemoteManagement).
+-   **Change connection type** : changes the type of connection LitePM is using. You can choose "local", "remote via WMI" or "remote via server". "Local" should be used to monitor the system on which LitePM is running. "WMI" should be used to monitor a remote machine on the same workgroup. It's a bit limited but does not require anything to be started on the remote machine. "Server" should be used to have full control on the remote machine, but it requires LitePM to be launched on the remote machine as a server. See [Remote monitoring](#remote-management).
 -   **Emergency hotkeys** : adds custom hotkeys you will be able to use in case of emergency. For example, you can configure LitePM to kill the foreground application with Ctrl+Shift+Suppr shortcut. See [Emergency hotkeys](EmergencyHotkeys).
 -   **Save report** : saves a report about the local system.
 -   **About** : displays the 'about' window.
 -   **Free memory** : calls the garbage collector and tries to free some memory used by LitePM.
--   **Preferences** : shows preferences window.
+-   **Preferences** : shows preferences window. The **Display** tab also holds the **Language** (Automatic: the Windows display language, English or Français) and the **Display** (Automatic: the light or dark mode of Windows, Light or Dark); both apply the next time LitePM starts.
 -   **Quit** : closes LitePM.
 -   **Log file** : displays the history of new/killed processes.
 -   **System informations** : displays numerical informations about the local system.
@@ -74,7 +74,7 @@ These features are available in the 'Processes' tab of the main form. Use the ic
 -   **Other -> Set affinity** : you will be able to select the processor(s) that the process will use.
 -   **Other -> Create dump file** : creates a custom dump file of the process' memory.
 -   **Job -> Add to job** : adds the selected processes to a job. [See Jobs](JobManagement).
--   **Job -> Control job** : opens a window with detailed informations about the job related to the selected process. [See Jobs](#JobManagement).
+-   **Job -> Control job** : opens a window with detailed informations about the job related to the selected process. [See Jobs](#jobs).
 -   **File properties** : opens the Windows property dialog box about the executable file.
 -   **Open directory** : opens the directory which contains the executable file.
 -   **File details** : shows details of the executable in the 'File' tab.
@@ -90,7 +90,7 @@ These features are available in the 'Jobs' tab of the main form. Use the icons o
 -   **Terminate** : this causes all the processes in the selected job to be terminated. The job itself can't be deleted.
 -   **Restart with privileges** : if LitePM is running on Vista or above and UAC is enabled, this button will cause LitePM to restart with full privileges. This will require an administrator account. This command is only available if the job management feature is not available to the user.
 
-Double-click on a job to open a detailed view of the job. See [Detailed view for job](#DetailedViewJobs).
+Double-click on a job to open a detailed view of the job. See [Detailed view for job](#detailed-view-for-jobs).
 
 These features are available in the 'Monitor' tab of the main form. Use the icons on the ribbon, or use the popup menu (right-click on the treeview). This feature allows to use the "performance counters" of Windows available on the system (local system if connection type is local, or remote system if connection type is remote via WMI). Here are the available actions :
 
@@ -113,7 +113,7 @@ These features are available in the 'Services' tab of the main form. Use the ico
 -   **Open directory** : opens the directory which contains the executable file.
 -   **File details** : shows details of the executable in the 'File' tab.
 -   **Internet search** : searches for the executable name on the Internet.
--   **Show dependencies** : opens the [Dependency viewer](#DependenciesViewer) to see dependencies of the selected service.
+-   **Show dependencies** : opens the [Dependency viewer](#dependency-viewer) to see dependencies of the selected service.
 -   **Pause/Resume** : pauses (or resumes) the selected service.
 -   **Stop** : stops the selected service
 -   **Start** : starts the selected service
