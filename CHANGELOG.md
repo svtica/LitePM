@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Removed
+- Precompiled `Aga.Controls.dll`, `SecurePasswordTextBox.dll` and `TaskDialog.dll` in `res/`: the
+  solution builds them from their projects (they were only a fallback of the build), and they held the
+  build path of the computer that compiled them.
+
 ## [1.1.7] - 2026-11-25
 
 ### Added
