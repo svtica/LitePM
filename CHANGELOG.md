@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Fixed
+- Dark mode: the bar of the main menu takes the color of the window (it stayed black); the strip
+  behind the tabs, the borders between them and the frame of the page are dark (they stayed light);
+  the group headers of the lists ("Default"...) are drawn light (they were dark blue, barely visible):
+  lists use the dark "items view" theme of Windows.
+
 ### Removed
 - Precompiled `Aga.Controls.dll`, `SecurePasswordTextBox.dll` and `TaskDialog.dll` in `res/`: the
   solution builds them from their projects (they were only a fallback of the build), and they held the

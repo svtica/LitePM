@@ -110,6 +110,14 @@ Public NotInheritable Class Theme
         End Get
     End Property
 
+    ' Visual style of a native list view: in dark mode the "items view" theme, which draws the group
+    ' headers light (with DarkMode_Explorer they stay dark blue on the dark background)
+    Public Shared ReadOnly Property ListViewThemeName() As String
+        Get
+            Return If(IsDark, "DarkMode_ItemsView", "explorer")
+        End Get
+    End Property
+
     Public Shared Sub Apply(ByVal form As Form)
         If form Is Nothing Then Exit Sub
         If IsDark Then
@@ -120,6 +128,7 @@ Public NotInheritable Class Theme
             Else
                 AddHandler form.HandleCreated, AddressOf OnFormHandleCreated
             End If
+            DarkMenuBar(form)
             For Each c As Control In form.Controls
                 ApplyTo(c)
             Next
@@ -154,6 +163,23 @@ Public NotInheritable Class Theme
 
     Private Shared Sub OnFormHandleCreated(ByVal sender As Object, ByVal e As EventArgs)
         DarkTitleBar(DirectCast(sender, Form))
+    End Sub
+
+    ' The bar of a MainMenu (Win32 menu) is painted by Windows: in dark mode its text is light but its
+    ' background stays black; give it the color of the window
+    Private Shared Sub DarkMenuBar(ByVal form As Form)
+        Try
+            If form.Menu Is Nothing Then Exit Sub
+            If _menuBrush = IntPtr.Zero Then _menuBrush = CreateSolidBrush(ColorTranslator.ToWin32(Window))
+            Dim info As New MENUINFO()
+            info.cbSize = Marshal.SizeOf(GetType(MENUINFO))
+            info.fMask = MIM_BACKGROUND
+            info.hbrBack = _menuBrush
+            SetMenuInfo(form.Menu.Handle, info)
+            If form.IsHandleCreated Then DrawMenuBar(form.Handle)
+        Catch ex As Exception
+            ' Older Windows: default menu bar
+        End Try
     End Sub
 
     Private Shared Sub OnControlHandleCreated(ByVal sender As Object, ByVal e As EventArgs)
@@ -385,27 +411,80 @@ Public NotInheritable Class Theme
     End Class
 
     ' Tabs drawn by Windows stay light in dark mode
+    Private Shared ReadOnly _tabPainters As New System.Runtime.CompilerServices.ConditionalWeakTable(Of TabControl, DarkTabStrip)()
+
     Private Shared Sub DarkTabs(ByVal tabs As TabControl)
         If tabs.DrawMode = TabDrawMode.OwnerDrawFixed Then Exit Sub
         tabs.DrawMode = TabDrawMode.OwnerDrawFixed
         AddHandler tabs.DrawItem, AddressOf OnDrawTab
+        ' Windows still paints the strip behind the tabs, their borders and the frame of the page light;
+        ' the painter lives as long as its TabControl
+        _tabPainters.Add(tabs, New DarkTabStrip(tabs))
     End Sub
 
     Private Shared Sub OnDrawTab(ByVal sender As Object, ByVal e As DrawItemEventArgs)
         Dim tabs As TabControl = DirectCast(sender, TabControl)
         If e.Index < 0 OrElse e.Index >= tabs.TabPages.Count Then Exit Sub
-        Dim selected As Boolean = (e.Index = tabs.SelectedIndex)
+        DrawTab(e.Graphics, tabs, e.Index, e.Bounds)
+    End Sub
+
+    Private Shared Sub DrawTab(ByVal g As Graphics, ByVal tabs As TabControl, ByVal index As Integer, ByVal bounds As Rectangle)
+        Dim selected As Boolean = (index = tabs.SelectedIndex)
         Using back As New SolidBrush(If(selected, Surface, Window))
-            e.Graphics.FillRectangle(back, e.Bounds)
+            g.FillRectangle(back, bounds)
         End Using
         If selected Then
             Using pen As New Pen(Accent, 2)
-                e.Graphics.DrawLine(pen, e.Bounds.Left + 2, e.Bounds.Bottom - 1, e.Bounds.Right - 2, e.Bounds.Bottom - 1)
+                g.DrawLine(pen, bounds.Left + 2, bounds.Bottom - 1, bounds.Right - 2, bounds.Bottom - 1)
             End Using
         End If
-        TextRenderer.DrawText(e.Graphics, tabs.TabPages(e.Index).Text, tabs.Font, e.Bounds, Text,
+        TextRenderer.DrawText(g, tabs.TabPages(index).Text, tabs.Font, bounds, Text,
             TextFormatFlags.HorizontalCenter Or TextFormatFlags.VerticalCenter Or TextFormatFlags.NoPrefix)
     End Sub
+
+    ' After Windows paints a dark owner-drawn TabControl: everything but the page (strip, borders
+    ' between the tabs, frame) in the window color, then the tabs again on top
+    Private NotInheritable Class DarkTabStrip
+        Inherits NativeWindow
+
+        Private Const WM_PAINT As Integer = &HF
+        Private ReadOnly _tabs As TabControl
+
+        Public Sub New(ByVal tabs As TabControl)
+            _tabs = tabs
+            If tabs.IsHandleCreated Then AssignHandle(tabs.Handle)
+            AddHandler tabs.HandleCreated, AddressOf OnHandleCreated
+            AddHandler tabs.HandleDestroyed, AddressOf OnHandleDestroyed
+        End Sub
+
+        Private Sub OnHandleCreated(ByVal sender As Object, ByVal e As EventArgs)
+            AssignHandle(_tabs.Handle)
+        End Sub
+
+        Private Sub OnHandleDestroyed(ByVal sender As Object, ByVal e As EventArgs)
+            ReleaseHandle()
+        End Sub
+
+        Protected Overrides Sub WndProc(ByRef m As Message)
+            MyBase.WndProc(m)
+            If m.Msg <> WM_PAINT Then Exit Sub
+            Try
+                Using g As Graphics = Graphics.FromHwnd(_tabs.Handle)
+                    Using area As New Region(_tabs.ClientRectangle)
+                        area.Exclude(_tabs.DisplayRectangle)
+                        Using back As New SolidBrush(Window)
+                            g.FillRegion(back, area)
+                        End Using
+                    End Using
+                    For i As Integer = 0 To _tabs.TabPages.Count - 1
+                        DrawTab(g, _tabs, i, _tabs.GetTabRect(i))
+                    Next
+                End Using
+            Catch ex As Exception
+                ' Painting only: never stop the window for it
+            End Try
+        End Sub
+    End Class
 
     ' Selection in menus and tool bars: the accent color (both modes); dark menus in dark mode
     Private NotInheritable Class Colors
@@ -597,6 +676,33 @@ Public NotInheritable Class Theme
     Private Shared Sub FlushMenuThemes()
     End Sub
 
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure MENUINFO
+        Public cbSize As Integer
+        Public fMask As Integer
+        Public dwStyle As Integer
+        Public cyMax As Integer
+        Public hbrBack As IntPtr
+        Public dwContextHelpID As Integer
+        Public dwMenuData As IntPtr
+    End Structure
+
+    <DllImport("user32.dll")>
+    Private Shared Function SetMenuInfo(ByVal hmenu As IntPtr, ByRef info As MENUINFO) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Shared Function DrawMenuBar(ByVal hwnd As IntPtr) As Boolean
+    End Function
+
+    <DllImport("gdi32.dll")>
+    Private Shared Function CreateSolidBrush(ByVal color As Integer) As IntPtr
+    End Function
+
+    Private Const MIM_BACKGROUND As Integer = &H2
+    ' One brush for every menu bar, kept for the life of LitePM
+    Private Shared _menuBrush As IntPtr = IntPtr.Zero
+
     Private Const DWMWA_USE_IMMERSIVE_DARK_MODE As Integer = 20
     Private Const DWMWA_USE_IMMERSIVE_DARK_MODE_OLD As Integer = 19   ' Windows 10 before 20H1
     Private Const LVM_GETHEADER As Integer = &H101F
@@ -628,7 +734,9 @@ Public NotInheritable Class Theme
 
     Private Shared Sub DarkScrollBars(ByVal c As Control)
         Try
-            SetWindowTheme(c.Handle, "DarkMode_Explorer", Nothing)
+            ' A list takes the dark "items view" theme of Windows: its group headers ("Default"...)
+            ' are then drawn light instead of dark blue
+            SetWindowTheme(c.Handle, If(TypeOf c Is ListView, "DarkMode_ItemsView", "DarkMode_Explorer"), Nothing)
             If TypeOf c Is ListView Then
                 Dim header As IntPtr = SendMessage(c.Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero)
                 If header <> IntPtr.Zero Then SetWindowTheme(header, "DarkMode_ItemsView", Nothing)
