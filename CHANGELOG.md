@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [1.1.7] - 2026-11-25
+
 ### Added
 - **Language** (Preferences > Display): Automatic (Windows display language),
   English or French. The whole interface is translated into French (Quebec
@@ -25,6 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - The code no longer relies on the displayed text of tabs, combo boxes and
   highlighting items (saved tab names, shutdown actions...): it reads their
   English name, so the saved settings stay the same in both languages.
+
+## [1.1.6] - 2026-11-17
 
 ### Removed
 - Bug report sent to the SourceForge tracker (no longer answers): the
